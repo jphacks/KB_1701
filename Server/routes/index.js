@@ -6,23 +6,41 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-<<<<<<< HEAD
-=======
 /* POST home page. */
 router.post('/', function(req, res, next) {
+  console.log('POST request to the index');
   console.log(req.body);
   res.send('POST request to the index');
 });
 
->>>>>>> 76a01f0b97760b0609263d24e71c7a6064a197a6
 router.post('/slack', function(req, res, next) {
+  console.log('POST request to the /slack');
   console.log(req.body);
-  res.send('POST request to the /slack');
+  res.json(req.body);
+});
+
+router.post('/slack/introduction', function(req, res, next) {
+  console.log('POST request to the /slack/introduction');
+  console.log(req.body);
+  res.json(req.body);
+});
+
+router.post('/slack/bgm', function(req, res, next) {
+  console.log('POST request to the /slack/bgm');
+  console.log(req.body);
+  res.json(req.body);
+});
+
+router.post('/slack/help', function(req, res, next) {
+  console.log('POST request to the /slack/help');
+  console.log(req.body);
+  res.json(req.body);
 });
 
 router.post('/github', function(req, res, next) {
+  console.log('POST request to the /github');
   console.log(req.body);
-  res.send('POST request to the /github');
+  res.json(req.body);
 });
 
 module.exports = router;
