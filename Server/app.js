@@ -55,7 +55,7 @@ app.use(function(err, req, res, next) {
 // サーバ立ち上げ
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
-    // mongoose.connect('mongodb://localhost/test');
+    mongoose.connect('mongodb://localhost/HackHack');
 });
 
 module.exports = app;
