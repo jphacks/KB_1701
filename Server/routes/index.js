@@ -11,8 +11,8 @@ const Message = require('../models/message');
 
 var client_id = '254821626421.255281971077';
 var client_secret = '6dbab0ed4bfeb2f602d0831e1edcaf47';
-var hostURL = '13.115.35.104:3000';
-// var hostURL = '172.20.11.172:3000';
+// var hostURL = '13.115.35.104:3000';
+var hostURL = '172.20.11.172:3000';
 
 var access_token;
 
@@ -22,6 +22,15 @@ var musicid = 0;
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
+});
+
+router.get('/get/token', function(req, res, next) {
+  console.log(access_token);
+  res.render('index', 
+    { title: 'Express' ,
+      token: access_token
+    }
+  );
 });
 
 
@@ -40,7 +49,8 @@ router.get('/slack/OAth', function(req, res, next) {
     if (!error && response.statusCode == 200) {
       console.log(body.access_token);
       access_token = body.access_token;
-      res.redirect('https://'+hostURL);
+      
+      res.redirect('https://'+hostURL+'/get/token');
     } else {
       console.log('error: '+ response.statusCode);
     }
