@@ -29,7 +29,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // ポート設定
-app.set('port', process.env.PORT || 3000);
+app.set('httpsport', process.env.PORT || 3000);
+app.set('httpport', process.env.PORT || 4000);
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -61,8 +62,8 @@ app.use(function(err, req, res, next) {
 });
 
 // サーバ立ち上げ
-https.createServer(ssloptions,app).listen(app.get('port'), function(){
-    console.log('Express server listening on port ' + app.get('port'));
+https.createServer(ssloptions,app).listen(app.get('httpsport'), function(){
+    console.log('Express HTTPS server listening on port ' + app.get('httpsport'));
     mongoose.connect('mongodb://localhost/HackHack');
 });
 

@@ -21,16 +21,30 @@ var musicid = 0;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', 
+    { title: 'Express' ,
+      token: ""
+    });
 });
+
 
 router.get('/get/token', function(req, res, next) {
   console.log(access_token);
-  res.render('index', 
-    { title: 'Express' ,
-      token: access_token
+
+  var options = {
+    url: 'https://slack.com/api/channels.create?token='+access_token
+      +'&name=MusicRequest',
+    json: true
+  };
+
+  request.get(options, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      console.log(body);
+      res.redirect('https://'+hostURL);
+    } else {
+      console.log('error: '+ response.statusCode);
     }
-  );
+  });
 });
 
 
@@ -55,10 +69,6 @@ router.get('/slack/OAth', function(req, res, next) {
       console.log('error: '+ response.statusCode);
     }
   });
-  
-
-  
-  
 });
 
 /* POST home page. */
@@ -157,8 +167,14 @@ router.post('/slack/bgm', function(req, res, next) {
 
 router.post('/slack/help', function(req, res, next) {
   console.log('POST request to the /slack/help');
-  console.log(req.body);
-  res.json(req.body);
+  console.log(req.body.challenge);
+  res.send(req.body.challenge);
+});
+
+router.post('/slack/events', function(req, res, next) {
+  console.log('POST request to the /slack/events');
+  console.log(req.body.challenge);
+  res.send(req.body.challenge);
 });
 
 router.post('/github', function(req, res, next) {
