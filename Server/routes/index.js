@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 const mongoose = require('mongoose');
 
+var request = require('request');
+
 const User = require('../models/user');
 const Youtube = require('../models/youtube');
 const Team = require('../models/team');
@@ -10,6 +12,9 @@ const Message = require('../models/message');
 var client_id = '254821626421.255281971077';
 var client_secret = '6dbab0ed4bfeb2f602d0831e1edcaf47';
 var hostURL = '13.115.35.104:3000';
+// var hostURL = '172.20.11.172:3000';
+
+var access_token;
 
 
 var musicid = 0;
@@ -23,13 +28,27 @@ router.get('/', function(req, res, next) {
 //slack appのOAth認証
 router.get('/slack/OAth', function(req, res, next) {
   console.log('GET request to the /slack/OAth');
-  console.log('code:'+req.query.code+'\n');
-  console.log(req.body.access_token+'\n');
-  res.redirect('https://slack.com/api/oauth.access?client_id='+client_id
-    +'&client_secret='
-    +client_secret
-    +'&code='+req.query.code
-    +'&redirect_uri=https://'+hostURL+'/slack/OAth');
+  var options = {
+    url: 'https://slack.com/api/oauth.access?client_id='+client_id
+      +'&client_secret='+client_secret
+      +'&code='+req.query.code
+      +'&redirect_uri=https://'+hostURL+'/slack/OAth',
+    json: true
+  };
+
+  request.get(options, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      console.log(body.access_token);
+      access_token = body.access_token;
+      res.redirect('https://'+hostURL);
+    } else {
+      console.log('error: '+ response.statusCode);
+    }
+  });
+  
+
+  
+  
 });
 
 /* POST home page. */
@@ -83,6 +102,9 @@ router.post('/slack/introduction', function(req, res, next) {
         });
       }
     res.json({ 'status' : 200 });
+  });
+
+  User.find({ 'tobacco' : true }, function(err, result){
   });
 });
 
