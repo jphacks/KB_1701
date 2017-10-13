@@ -5,12 +5,20 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var http = require('http');
+var https = require('https');
+var fs = require('fs');
+
 var mongoose = require('mongoose');
 
 var app = express();
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+
+var ssloptions = {
+  key: fs.readFileSync('./serverKey/localhost.key', 'utf8'),
+  cert: fs.readFileSync('./serverKey/localhost.crt', 'utf8')
+};
 
 mongoose.Promise = global.Promise;
 
@@ -53,9 +61,9 @@ app.use(function(err, req, res, next) {
 });
 
 // サーバ立ち上げ
-http.createServer(app).listen(app.get('port'), function(){
+https.createServer(ssloptions,app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
-    // mongoose.connect('mongodb://localhost/test');
+    mongoose.connect('mongodb://localhost/HackHack');
 });
 
 module.exports = app;
