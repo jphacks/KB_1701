@@ -7,7 +7,7 @@ const ipv4 = require('./modules/getMyIP');
 const liveInfo = require('../models/liveInfo');
 
 // skywayをnode向けに少しだけ変えたファイルを読み込む
-require('../public/javascript/SkyWay-MultiParty-master/dist/multiparty.node.js');
+require('../public/javascripts/SkyWay-MultiParty-master/dist/multiparty.node');
 
 // speaker stanby
 router.get('/', function(request, response){
@@ -41,6 +41,7 @@ router.get('/', function(request, response){
 	// liveInfo = {
 	//     room   : room,
 	//     peerID : randomId,
+	//     area   : String,
 	//     open   : Date,
 	// }
 

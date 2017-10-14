@@ -15,7 +15,7 @@ const app = express();
 const index = require('./routes/index');
 const users = require('./routes/users');
 const oauth = require('./routes/oauth');
-const lablive = require('./routes/liblive');
+const lablive = require('./routes/lablive');
 
 const ssloptions = {
   key: fs.readFileSync('./serverKey/localhost.key', 'utf8'),
