@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const mongoose = require('mongoose');
-
+var client = require('cheerio-httpcli');//スクレイピング用
 var request = require('request');
 
 const User = require('../models/user');
@@ -9,67 +9,32 @@ const Youtube = require('../models/youtube');
 const Team = require('../models/team');
 const Message = require('../models/message');
 
-var client_id = '254821626421.255281971077';
-var client_secret = '6dbab0ed4bfeb2f602d0831e1edcaf47';
-// var hostURL = '13.115.35.104:3000';
-var hostURL = '172.20.11.172:3000';
 
-var access_token;
-
+// var hostURL = 'https://13.115.41.122:3000';
+var hostURL = 'https://172.20.11.172:3000';
 
 var musicid = 0;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', 
-    { title: 'Express' ,
-      token: ""
-    });
+  console.log("GET request to the /")
+  res.render('index',{ title: 'Express'});
 });
 
-
-router.get('/get/token', function(req, res, next) {
-  console.log(access_token);
-
-  var options = {
-    url: 'https://slack.com/api/channels.create?token='+access_token
-      +'&name=MusicRequest',
-    json: true
-  };
-
-  request.get(options, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      console.log(body);
-      res.redirect('https://'+hostURL);
-    } else {
-      console.log('error: '+ response.statusCode);
-    }
-  });
+router.get('/music', function(req, res, next) {
+  console.log("GET request to the /music")
+  //DBから
+  res.render('music', { title: 'Express'});
 });
 
+router.get('/music/load', function(req, res, next) {
+  console.log("GET request to the /music/load")
+  //DBからyoutubeの動画IDを取得してフロントのyoutube.jsのvideoIdにセット
 
-//slack appのOAth認証
-router.get('/slack/OAth', function(req, res, next) {
-  console.log('GET request to the /slack/OAth');
-  var options = {
-    url: 'https://slack.com/api/oauth.access?client_id='+client_id
-      +'&client_secret='+client_secret
-      +'&code='+req.query.code
-      +'&redirect_uri=https://'+hostURL+'/slack/OAth',
-    json: true
-  };
-
-  request.get(options, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      console.log(body.access_token);
-      access_token = body.access_token;
-      
-      res.redirect('https://'+hostURL+'/get/token');
-    } else {
-      console.log('error: '+ response.statusCode);
-    }
-  });
+  
+  res.redirect(hostURL+'/music');
 });
+
 
 /* POST home page. */
 router.post('/', function(req, res, next) {
@@ -132,6 +97,13 @@ router.post('/slack/bgm', function(req, res, next) {
   console.log('POST request to the /slack/bgm')
   musicid = musicid + 1;
   res.setHeader('Content-Type', 'application/json');
+
+  //ここでスクレイピングを実施
+  client.fetch(req.body.url, function (err, $, res) {
+    // HTMLタイトルを表示
+    console.log($('simpleText').text());
+    
+  });
 
   // var musicid = musicid; //musicidは node.js側で連番をふるべき
   var url  = req.body.url;
