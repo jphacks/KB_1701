@@ -21,6 +21,7 @@ var youtube_client_secret = 'lA0NVS4TL1hKRXRJKLY3Ftob';
 
 // var hostURL = 'http://13.115.41.122:3000/oauth';
 var hostURL = 'https://172.20.11.172:3000/oauth';
+// var hostURL = 'https://localhost:3000/oauth';
 
 var slack_access_token;
 var github_access_token;
