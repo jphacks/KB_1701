@@ -67,7 +67,7 @@ app.use(function(err, req, res, next) {
 // サーバ立ち上げ
 https.createServer(ssloptions,app).listen(app.get('httpsport'), function(){
     console.log('Express HTTPS server listening on port ' + app.get('httpsport'));
-    mongoose.connect('mongodb://localhost/HackHack');
+    //mongoose.connect('mongodb://localhost/HackHack');
 });
 
 module.exports = app;
