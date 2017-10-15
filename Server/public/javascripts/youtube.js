@@ -1,4 +1,11 @@
 // 2. This code loads the IFrame Player API code asynchronously.
+
+
+        var hostURL = 'https://13.115.41.122:3000';
+        // var hostURL = 'https://172.20.11.172:3000';
+        // var hostURL = 'https://localhost:3000';
+
+
         var tag = document.createElement('script');
 
         tag.src = "https://www.youtube.com/iframe_api";
@@ -9,7 +16,9 @@
         //    after the API code downloads.
         var player;
         function onYouTubeIframeAPIReady() {
-          loadPlayer('M7lc1UVf-VE');
+          //最初に再生する動画IDを取りに行く
+          getMovieId(hostURL+'/music/load');
+          loadPlayer('0VECSnz1a_4');
         }
 
 
@@ -57,4 +66,21 @@
         }
         function stopVideo() {
           player.stopVideo();
+        }
+
+        function getMovieId(url){
+          var url = url; // リクエスト先URL
+          var request = new XMLHttpRequest();
+          request.open('GET', url);
+          request.onreadystatechange = function () {
+            if (request.readyState != 4) {
+              // リクエスト中
+            } else if (request.status != 200) {
+              // 失敗
+            } else {
+              // 取得成功
+              var result = request.responseText;
+            }
+          };
+          request.send(null);
         }
