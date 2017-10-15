@@ -1,17 +1,14 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html>
-    <head>
-     <link rel="stylesheet" href="/stylesheets/style.css" />
+  <head>
+    <meta charset="utf-8" />
+    <title>YouTube IFrame API：複数の動画を切り替えて再生</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <body>
+      <div id="player"></div>
 
 
-    <!--スクリプト読み込み-->
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    
-  <body>
-    <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
-    <div id="player"></div>
-    <script type="text/javascript" src="/javascripts/youtube.js"></script>
-
-  </body>
+      <!-- youtube.jsの読み込みは</body>の直前で行うこと -->
+      <script src="/javascripts/youtube.js"></script>
+    </body>
 </html>
