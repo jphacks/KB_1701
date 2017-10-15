@@ -1,4 +1,6 @@
 /*! multiparty.js build:1.0.0, development. Copyright (c) 2015-2016 NTT Communications Corporation */
+require('../../skyway-js-sdk/src/peer.node');
+
 module.exports = (function(exports){
 /*!
  * EventEmitter2
@@ -1230,7 +1232,7 @@ var CybozuLabs = {
 }; // end of CybozuLabs
 
 new function() {
-	CybozuLabs.MD5.calc = navigator.userAgent.match(/Firefox/) ? CybozuLabs.MD5.calc_Fx : CybozuLabs.MD5.calc_std;
+	CybozuLabs.MD5.calc = CybozuLabs.MD5.calc_std;
 };
 /**
  * MultiParty.js
@@ -1239,12 +1241,12 @@ new function() {
  */
 
 
-(function(global){
+(function(){
 
-  navigator.getUserMedia_ = navigator.getUserMedia
-    || navigator.webkitGetUserMedia
-    || navigator.mozGetUserMedia;
-  window.AudioContext = window.AudioContext || window.webkitAudioContext;
+  // navigator.getUserMedia_ = navigator.getUserMedia
+  //   || navigator.webkitGetUserMedia
+  //   || navigator.mozGetUserMedia;
+  // window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
   // コンストラクタ
   var MultiParty_ = function(opts){
@@ -1382,25 +1384,25 @@ new function() {
   MultiParty_.prototype.startMyStream_ = function() {
     var self = this;
 
-    navigator.getUserMedia_({"video": self.opts.video_stream, "audio": self.opts.audio_stream},
-      function(stream) {
-        if(self.opts.audio_stream){
-          self.tracks_.audio = stream.getAudioTracks()[0];
-        }
+    // navigator.getUserMedia_({"video": self.opts.video_stream, "audio": self.opts.audio_stream},
+    //   function(stream) {
+    //     if(self.opts.audio_stream){
+    //       self.tracks_.audio = stream.getAudioTracks()[0];
+    //     }
 
-        if(self.opts.video_stream){
-          self.tracks_.video = stream.getVideoTracks()[0];
-        }
+    //     if(self.opts.video_stream){
+    //       self.tracks_.video = stream.getVideoTracks()[0];
+    //     }
 
-        self.stream = stream;
+    //     self.stream = stream;
 
-        self.fire_('my_ms', {"src": URL.createObjectURL(self.stream), "id": self.opts.id});
-        self.startCall_();
+    //     self.fire_('my_ms', {"src": URL.createObjectURL(self.stream), "id": self.opts.id});
+    //     self.startCall_();
 
-      }, function(err) {
-        self.fire_('error', err)
-      }
-    );
+    //   }, function(err) {
+    //     self.fire_('error', err)
+    //   }
+    // );
   }
 
   // mute either media and audio track
@@ -1985,10 +1987,10 @@ new function() {
 
 
   // オブジェクトの宣言
-  if (!global.MultiParty) {
-    global.MultiParty = MultiParty_;
-  }
-}(window));
+  // if (MultiParty) {
+    exports.MultiParty = MultiParty_;
+  // }
+});
 
 
 
