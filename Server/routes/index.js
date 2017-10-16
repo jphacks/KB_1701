@@ -31,7 +31,8 @@ router.get('/music', function(req, res, next) {
 router.get('/music/load', function(req, res, next) {
   console.log("GET request to the /music/load")
   //DBからyoutubeの動画IDを取得してフロントのyoutube.jsのvideoIdにセット
-  res.send('videoID');
+
+  res.redirect(hostURL+'/music');
 });
 
 
@@ -94,15 +95,16 @@ router.post('/slack/introduction', function(req, res, next) {
 
 router.post('/slack/bgm', function(req, res, next) {
   console.log('POST request to the /slack/bgm')
+  console.log(req.body);
   musicid = musicid + 1;
   res.setHeader('Content-Type', 'application/json');
 
   //ここでスクレイピングを実施
-  client.fetch(req.body.url, function (err, $, res) {
-    // HTMLタイトルを表示
-    console.log($('simpleText').text());
+  // client.fetch(req.body.url, function (err, $, res) {
+  //   // HTMLタイトルを表示
+  //   console.log($('simpleText').text());
     
-  });
+  // });
 
   // var musicid = musicid; //musicidは node.js側で連番をふるべき
   var url  = req.body.url;

@@ -2,13 +2,17 @@ var express = require('express');
 var router = express.Router();
 const mongoose = require('mongoose');
 var client = require('cheerio-httpcli');//スクレイピング用
+
+
 var request = require('request');
+var headers = {'Content-Type':'application/json'};
 
 
 const User = require('../models/user');
 const Youtube = require('../models/youtube');
 const Team = require('../models/team');
 const Message = require('../models/message');
+
 
 //RTM用モジュール
 const RtmClient = require('@slack/client').RtmClient;
@@ -22,13 +26,14 @@ var slack_client_secret = '6dbab0ed4bfeb2f602d0831e1edcaf47';
 var github_client_id = '9bd1ccc0db7adf39ff87';
 var github_client_secret = 'f425b4c195b08d2099ba2e8e2847f8562944324f';
 
-// var hostURL = 'http://13.115.41.122:3000/oauth';
-var hostURL = 'https://172.20.11.172:3000/oauth';
-// var hostURL = 'https://localhost:3000/oauth';
+// var hostURL = 'http://13.115.41.122:3000';
+var hostURL = 'https://172.20.11.172:3000';
+// var hostURL = 'https://localhost:3000';
 
 var slack_access_token;
 var github_access_token;
 var musicid = 0;
+var videoID;
 var messageJson;
 
 /* GET home page. */
@@ -66,7 +71,7 @@ router.get('/slack', function(req, res, next) {
     url: 'https://slack.com/api/oauth.access?client_id='+slack_client_id
       +'&client_secret='+slack_client_secret
       +'&code='+req.query.code
-      +'&redirect_uri='+hostURL+'/slack',
+      +'&redirect_uri='+hostURL+'/oauth/slack',
     json: true
   };
 
@@ -74,11 +79,10 @@ router.get('/slack', function(req, res, next) {
     if (!error && response.statusCode == 200) {
       slack_access_token = body.access_token;
       console.log(body.scope+'\n');
-      console.log(body.bot.bot_access_token+'\n');
       console.log('Slack Token : '+slack_access_token+'\n');
       res.redirect('https://github.com/login/oauth/authorize?'
         +'client_id='+github_client_id
-        +'&redirect_uri='+hostURL+'/github');//Slackのoauth認証後はGithubのoauth認証へ
+        +'&redirect_uri='+hostURL+'/oauth/github');//Slackのoauth認証後はGithubのoauth認証へ
     } else {
       console.log('error: '+ response.statusCode);
     }
@@ -101,7 +105,7 @@ router.get('/github', function(req, res, next) {
     if (!error && response.statusCode == 200) {
       github_access_token = body.access_token;
       console.log('Github Token : '+github_access_token+'\n');
-      res.redirect(hostURL+'/makechannel');//Githubのoauth認証後はSlackのチャンネル生成へ
+      res.redirect(hostURL+'/oauth/makechannel');//Githubのoauth認証後はSlackのチャンネル生成へ
     } else {
       console.log('error: '+ response.statusCode);
     }
@@ -131,12 +135,13 @@ router.get('/makechannel', function(req, res, next) {
 });
 
 function startRTM(access_token){
-  let rtm = new RtmClient('xoxp-254821626421-255344150323-256829017844-53abe17f6fe6634fa512d40fa4b0397e');
+  let rtm = new RtmClient(slack_access_token);
   rtm.start();
   rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED, function (rtmStartData) {
     for (const c of rtmStartData.channels) {
-	  if (c.name ==='general') {
-      console.log("regist channel ID\n");
+      console.log(c.name + ' : ' + c.id);
+	  if (c.name ==='musicrequest') {
+      console.log("\nRegist Channel ID\n");
       channel = c.id 
     }
   }
@@ -147,13 +152,61 @@ function startRTM(access_token){
   });
   rtm.on(RTM_EVENTS.MESSAGE, function (message) {
     messageJson = JSON.parse(JSON.stringify(message));
+
+
+    if('message' in messageJson){
+      console.log('have attachments field');
+    }else if(messageJson.user != 'USLACKBOT'){
+      
+      console.log(videoID);
+      saveData(messageJson);
+      console.log(messageJson);
+    }
     
-    console.log(messageJson.channel);
-    console.log(messageJson.user);
-    console.log(messageJson.text);
+    // console.log(messageJson.channel);
+    // console.log(messageJson.user);
+    // console.log(messageJson.text);
   });
 }
 
+
+function saveData(data){
+  if(data.channel == 'C7HU7A7T6'){
+    
+    videoID = data.text.substring(33,44);//textからvideoIDのみを抽出，videoIDはすべての動画で11桁
+    musicid = musicid + 1;
+    // var musicid = musicid; //musicidは node.js側で連番をふるべき
+    var url  = videoID;
+    var title   = 'test title'; //フロントでスクレイピングする or サーバでスクレイピングする
+    var userid   = data.user;
+
+
+    // DBにyoutubeを格納．youtubeの構造は以下の通り
+      // youtube = {
+      //     musicid : musicid
+      //     url : url;
+      //     title : title;
+      //     userid : userid;
+      // }
+    Youtube.find({ 'musicid' : musicid }, function(err, result){
+      if (err) console.log(err);
+      // 新規登録
+      if (result.length == 0){
+        var youtube = new Youtube();
+
+        youtube.musicid = musicid;
+        youtube.url = url;
+        youtube.title = title;
+        youtube.userid = userid;
+        
+        youtube.save(function(err){
+          if (err) console.log(err);
+        });
+      }
+    });
+  }
+
+}
 
 
 
