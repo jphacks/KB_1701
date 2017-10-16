@@ -4,10 +4,16 @@ const mongoose = require('mongoose');
 var client = require('cheerio-httpcli');//スクレイピング用
 var request = require('request');
 
+
 const User = require('../models/user');
 const Youtube = require('../models/youtube');
 const Team = require('../models/team');
 const Message = require('../models/message');
+
+//RTM用モジュール
+const RtmClient = require('@slack/client').RtmClient;
+const CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS;
+const RTM_EVENTS = require('@slack/client').RTM_EVENTS;
 
 
 var slack_client_id = '254821626421.255281971077';
@@ -23,6 +29,7 @@ var hostURL = 'https://172.20.11.172:3000/oauth';
 var slack_access_token;
 var github_access_token;
 var musicid = 0;
+var messageJson;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -66,6 +73,8 @@ router.get('/slack', function(req, res, next) {
   request.get(options, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       slack_access_token = body.access_token;
+      console.log(body.scope+'\n');
+      console.log(body.bot.bot_access_token+'\n');
       console.log('Slack Token : '+slack_access_token+'\n');
       res.redirect('https://github.com/login/oauth/authorize?'
         +'client_id='+github_client_id
@@ -104,10 +113,10 @@ router.get('/makechannel', function(req, res, next) {
   console.log('Slack Token : '+slack_access_token+'\n');
   console.log('Github Token : '+github_access_token+'\n');
 
-  
+  startRTM(slack_access_token);
   var options = {
     url: 'https://slack.com/api/channels.create?token='+slack_access_token
-      +'&name=joinHirai',
+      +'&name=testbot',
     json: true
   };
 
@@ -120,5 +129,32 @@ router.get('/makechannel', function(req, res, next) {
     }
   });
 });
+
+function startRTM(access_token){
+  let rtm = new RtmClient('xoxp-254821626421-255344150323-256829017844-53abe17f6fe6634fa512d40fa4b0397e');
+  rtm.start();
+  rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED, function (rtmStartData) {
+    for (const c of rtmStartData.channels) {
+	  if (c.name ==='general') {
+      console.log("regist channel ID\n");
+      channel = c.id 
+    }
+  }
+  console.log(`Logged in as ${rtmStartData.self.name} of team ${rtmStartData.team.name}, but not yet connected to a channel`);
+  });
+  rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, function () {
+    rtm.sendMessage("Hello!", channel);
+  });
+  rtm.on(RTM_EVENTS.MESSAGE, function (message) {
+    messageJson = JSON.parse(JSON.stringify(message));
+    
+    console.log(messageJson.channel);
+    console.log(messageJson.user);
+    console.log(messageJson.text);
+  });
+}
+
+
+
 
 module.exports = router;
