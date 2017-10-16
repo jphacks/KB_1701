@@ -56,6 +56,7 @@ router.get('/', function(request, response){
 	    liveinfo.save(function(err){
 		if (err) console.log(err);
 		
+		console.log('before redirect: '+ randomId);
 		// リダイレクト
 		response.render('redirect', { 'action' : url });
 	    });
@@ -72,6 +73,7 @@ router.get('/onAir', function(request, response){
     console.log("catch the redirect");
     
     const peerID = request.query.id;
+    console.log('before redirect: '+ peerID);
 
     // DBからliveInfoを引当
     LiveInfo.find( { "peerID" : peerID }, function(err, result){
