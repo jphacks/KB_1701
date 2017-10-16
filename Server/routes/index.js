@@ -11,8 +11,8 @@ const Message = require('../models/message');
 
 
 // var hostURL = 'https://13.115.41.122:3000';
-// var hostURL = 'https://172.20.11.172:3000';
-var hostURL = 'https://localhost:3000';
+var hostURL = 'https://172.20.11.172:3000';
+// var hostURL = 'https://localhost:3000';
 
 var musicid = 0;
 
@@ -31,9 +31,7 @@ router.get('/music', function(req, res, next) {
 router.get('/music/load', function(req, res, next) {
   console.log("GET request to the /music/load")
   //DBからyoutubeの動画IDを取得してフロントのyoutube.jsのvideoIdにセット
-
-  
-  res.redirect(hostURL+'/music');
+  res.send('videoID');
 });
 
 
