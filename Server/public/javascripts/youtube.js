@@ -22,8 +22,8 @@
         function onYouTubeIframeAPIReady() {
           //最初に再生する動画IDを取りに行く
           m_id=1;
-          // getMovieId(hostURL+'/music/load?musicid='+m_id);
-          loadPlayer('0VECSnz1a_4');
+          getMovieId(hostURL+'/music/load?musicid='+m_id);
+          // loadPlayer('0VECSnz1a_4');
         }
 
 
