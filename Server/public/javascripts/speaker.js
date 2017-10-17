@@ -46,7 +46,46 @@ $(window).load(function(){
     // サーバとpeerに接続
     multiparty.start();
     
-    const socket = io.connect('https://172.20.11.172:8081');
+    // const socket = io.connect('https://172.20.11.172:8081');
+    var socket = new WebSocket('ws://localhost:8081/');
+
+
+    // When a connection is made
+    socket.onopen = function() {
+    console.log('Opened connection ');
+
+    // send data to the server
+    var json = JSON.stringify({ message: 'Hello ' });
+    socket.send(json);
+    }
+
+    // When data is received
+    // socket.onmessage = function(event) {
+    // console.log(event.data);
+    // alert(event.data);
+    // }
+
+    // A connection could not be made
+    socket.onerror = function(event) {
+    console.log(event);
+    }
+
+    // A connection was closed
+    // socket.onclose = function(code, reason) {
+    // console.log(code, reason);
+    // }
+
+    // // Close the connection when the window is closed
+    // window.addEventListener('beforeunload', function() {
+    // socket.close();
+    // });
+
+
+
+
+
+
+
     
     // 現在日時の表示
     const yyyy = openTime.getFullYear();
@@ -59,12 +98,19 @@ $(window).load(function(){
     $('#openTimeView').text( wd[w] +" "+ mon[m] +" "+ dd +", "+ yyyy +" at "+ hh +":"+ mi );
 
     // peerからテキストメッセージを受信したとき
-    socket.on('message', function(mesg) {
-	alert(mesg);
+    // socket.onmessage = function(event) {
+    // console.log(event.data);
+    // alert(event.data);
+    // }
+
+    socket.onmessage = function(event) {
+    
+    let message = JSON.parse(event.data);
+    alert(message.text);
 	$('.divided').prepend(
 		'<li>'+
 		    '<article class="box post-summary">' +
-		      '<h3>'+ mesg.text +'</h3>'+
+		      '<h3>'+ message.text +'</h3>'+
 		      // '<ul class="meta">'+
 		      //   '<li class="icon fa-clock-o">' + mesg.data.date.hh +':'+ mesg.data.date.mm +':'+ mesg.data.date.ss+'</li>'+
 		      //   '<li class="icon fa-comments">'+ mesg.data.username+'</li>'+
@@ -72,8 +118,8 @@ $(window).load(function(){
 		    '</article>'+
 		'</li>'
 	);
-	nicoScreenObj.comments.push(mesg.text);
-    });
+	nicoScreenObj.comments.push(message.text);
+    }
 
     // 放送時間
     $(function(){

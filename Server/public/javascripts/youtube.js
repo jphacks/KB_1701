@@ -26,14 +26,14 @@ socket.onerror = function(event) {
 }
 
 // A connection was closed
-socket.onclose = function(code, reason) {
-  console.log(code, reason);
-}
+// socket.onclose = function(code, reason) {
+//   console.log(code, reason);
+// }
 
 // Close the connection when the window is closed
-window.addEventListener('beforeunload', function() {
-  socket.close();
-});
+// window.addEventListener('beforeunload', function() {
+//   socket.close();
+// });
 
 
         // var hostURL = 'https://13.115.41.122:3000';
