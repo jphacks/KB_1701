@@ -3,7 +3,7 @@
 
 
         // Open a connection
-var socket = new WebSocket('ws://localhost:8081/');
+var socket = new WebSocket('ws://ec2-13-115-41-122.ap-northeast-1.compute.amazonaws.com:8081/');
 
 // When a connection is made
 socket.onopen = function() {
@@ -36,8 +36,8 @@ socket.onerror = function(event) {
 // });
 
 
-        // var hostURL = 'https://13.115.41.122:3000';
-        var hostURL = 'https://172.20.11.172:3000';
+        var hostURL = 'https://ec2-13-115-41-122.ap-northeast-1.compute.amazonaws.com:3000';
+        // var hostURL = 'https://172.20.11.172:3000';
         // var hostURL = 'https://localhost:3000';
 
 
@@ -101,19 +101,7 @@ socket.onerror = function(event) {
             
             // var nextMovieId = result.videoId;
             // console.log(nextMovieId);
-            loadPlayer('z94oQMmqF8s');
-
-            // $.get(hostURL+"/music/load",
-            //   { musicid: m_id},
-            //   function(data){
-            //     //リクエストが成功した際に実行する関数
-            //     nextMovieId = data;
-            //     console.log(data);
-            //     var nextMovieId = 'NKN6yZz0qls';
-            //     loadPlayer(nextMovieId);
-            //   }
-            // );
-            //動画IDを取得したらnextMovieIdに格納
+            // loadPlayer('z94oQMmqF8s');
             
             
           }else if(event.data == YT.PlayerState.CUED){

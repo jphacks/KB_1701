@@ -27,8 +27,8 @@ var slack_client_secret = '6dbab0ed4bfeb2f602d0831e1edcaf47';
 var github_client_id = '9bd1ccc0db7adf39ff87';
 var github_client_secret = 'f425b4c195b08d2099ba2e8e2847f8562944324f';
 
-// var hostURL = 'http://13.115.41.122:3000';
-var hostURL = 'https://172.20.11.172:3000';
+var hostURL = 'http://ec2-13-115-41-122.ap-northeast-1.compute.amazonaws.com:3000';
+// var hostURL = 'https://172.20.11.172:3000';
 // var hostURL = 'https://localhost:3000';
 
 var slack_access_token;
