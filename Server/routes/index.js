@@ -30,8 +30,21 @@ router.get('/music', function(req, res, next) {
 
 router.get('/music/load', function(req, res, next) {
   console.log("GET request to the /music/load")
+  console.log(req.query.musicid);
+  var musicid = req.query.musicid;
+  var videoId;
+  var user;
   //DBからyoutubeの動画IDを取得してフロントのyoutube.jsのvideoIdにセット
-  res.send('videoID');
+  Youtube.find({"musicid" : musicid},function(err,youtube){
+    if(err) console.log(err);
+    videoId = youtube[0].url;
+    userid = youtube[0].userid;
+    console.log(youtube[0].url);
+    console.log(youtube[0].userid);
+    // res.send(videoId);
+    res.json({"videoId": videoId, "userid": userid});
+  });
+  
 });
 
 
@@ -94,15 +107,16 @@ router.post('/slack/introduction', function(req, res, next) {
 
 router.post('/slack/bgm', function(req, res, next) {
   console.log('POST request to the /slack/bgm')
+  console.log(req.body);
   musicid = musicid + 1;
   res.setHeader('Content-Type', 'application/json');
 
   //ここでスクレイピングを実施
-  client.fetch(req.body.url, function (err, $, res) {
-    // HTMLタイトルを表示
-    console.log($('simpleText').text());
+  // client.fetch(req.body.url, function (err, $, res) {
+  //   // HTMLタイトルを表示
+  //   console.log($('simpleText').text());
     
-  });
+  // });
 
   // var musicid = musicid; //musicidは node.js側で連番をふるべき
   var url  = req.body.url;
