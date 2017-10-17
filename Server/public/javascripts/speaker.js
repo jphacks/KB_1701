@@ -46,7 +46,7 @@ $(window).load(function(){
     // サーバとpeerに接続
     multiparty.start();
     
-    const socket = io.connect('https://172.20.11.205:9000');
+    const socket = io.connect('https://172.20.11.172:8081');
     
     // 現在日時の表示
     const yyyy = openTime.getFullYear();
@@ -59,12 +59,12 @@ $(window).load(function(){
     $('#openTimeView').text( wd[w] +" "+ mon[m] +" "+ dd +", "+ yyyy +" at "+ hh +":"+ mi );
 
     // peerからテキストメッセージを受信したとき
-    socket.on('mesg', function(mesg) {
+    socket.on('message', function(mesg) {
 	alert(mesg);
 	$('.divided').prepend(
 		'<li>'+
 		    '<article class="box post-summary">' +
-		      '<h3>'+ mesg.mesg +'</h3>'+
+		      '<h3>'+ mesg.text +'</h3>'+
 		      // '<ul class="meta">'+
 		      //   '<li class="icon fa-clock-o">' + mesg.data.date.hh +':'+ mesg.data.date.mm +':'+ mesg.data.date.ss+'</li>'+
 		      //   '<li class="icon fa-comments">'+ mesg.data.username+'</li>'+
@@ -72,7 +72,7 @@ $(window).load(function(){
 		    '</article>'+
 		'</li>'
 	);
-	nicoScreenObj.comments.push(mesg.mesg);
+	nicoScreenObj.comments.push(mesg.text);
     });
 
     // 放送時間
