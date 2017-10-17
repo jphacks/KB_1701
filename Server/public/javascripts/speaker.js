@@ -20,8 +20,7 @@ $(window).load(function(){
 
     // MultiParty インスタンスを生成
     const multiparty = new MultiParty( {
-	// API key の再発行が必要
-	"key": "30c1f21a-2b6e-4200-97d2-74206e85c4f7",
+	"key": "b6e0144a-5606-44b2-a305-f89a92e7e0a9",
 	"reliable": true,
 	"room": room,
 	"debug": 3
@@ -34,7 +33,6 @@ $(window).load(function(){
 	$(vNode).appendTo("#streams");
 	console.log("MY: " + video);
     });
-
     // peerが切れたら、対象のvideoノードを削除する
     multiparty.on('ms_close', function(peer_id) {
 	$("#"+peer_id).remove();
@@ -48,6 +46,47 @@ $(window).load(function(){
     // サーバとpeerに接続
     multiparty.start();
     
+    // const socket = io.connect('https://172.20.11.172:8081');
+    var socket = new WebSocket('ws://localhost:8081/');
+
+
+    // When a connection is made
+    socket.onopen = function() {
+    console.log('Opened connection ');
+
+    // send data to the server
+    var json = JSON.stringify({ message: 'Hello ' });
+    socket.send(json);
+    }
+
+    // When data is received
+    // socket.onmessage = function(event) {
+    // console.log(event.data);
+    // alert(event.data);
+    // }
+
+    // A connection could not be made
+    socket.onerror = function(event) {
+    console.log(event);
+    }
+
+    // A connection was closed
+    // socket.onclose = function(code, reason) {
+    // console.log(code, reason);
+    // }
+
+    // // Close the connection when the window is closed
+    // window.addEventListener('beforeunload', function() {
+    // socket.close();
+    // });
+
+
+
+
+
+
+
+    
     // 現在日時の表示
     const yyyy = openTime.getFullYear();
     const m  = openTime.getMonth();
@@ -59,21 +98,28 @@ $(window).load(function(){
     $('#openTimeView').text( wd[w] +" "+ mon[m] +" "+ dd +", "+ yyyy +" at "+ hh +":"+ mi );
 
     // peerからテキストメッセージを受信したとき
-    multiparty.on('message', function(mesg) {
+    // socket.onmessage = function(event) {
+    // console.log(event.data);
+    // alert(event.data);
+    // }
 
+    socket.onmessage = function(event) {
+    
+    let message = JSON.parse(event.data);
+    alert(message.text);
 	$('.divided').prepend(
 		'<li>'+
 		    '<article class="box post-summary">' +
-		      '<h3>'+ mesg.data.message +'</h3>'+
-		      '<ul class="meta">'+
-		        '<li class="icon fa-clock-o">' + mesg.data.date.hh +':'+ mesg.data.date.mm +':'+ mesg.data.date.ss+'</li>'+
-		        '<li class="icon fa-comments">'+ mesg.data.username+'</li>'+
-		      '</ul>'+
+		      '<h3>'+ message.text +'</h3>'+
+		      // '<ul class="meta">'+
+		      //   '<li class="icon fa-clock-o">' + mesg.data.date.hh +':'+ mesg.data.date.mm +':'+ mesg.data.date.ss+'</li>'+
+		      //   '<li class="icon fa-comments">'+ mesg.data.username+'</li>'+
+		      // '</ul>'+
 		    '</article>'+
 		'</li>'
 	);
-	nicoScreenObj.comments.push(mesg.data.message);
-    });
+	nicoScreenObj.comments.push(message.text);
+    }
 
     // 放送時間
     $(function(){
@@ -85,22 +131,23 @@ $(window).load(function(){
 	    $("#currentTime").text( hh +":"+ mi +":"+ ss );
 	}, 100);
     });
+
 });
 
 
-$(window).unload(function() {
-    const hostUrl = 'https://172.20.11.237:3000/live/logout'; //このipは書き換え必須
-    const jsondata = {
-	"peerID"   : peerID
-    };
-    $.ajax({
-        type:          'post',
-	dataType:      'json',
-	contentType:   'application/json',
-	scriptCharset: 'utf-8',
-        async:          true,
-        url:            hostUrl,
-        data:           JSON.stringify(jsondata),
-        success: function(){}
-    });
-});
+// $(window).unload(function() {
+//     const hostUrl = 'https://172.20.11.237:3000/live/logout'; //このipは書き換え必須
+//     const jsondata = {
+// 	"peerID"   : peerID
+//     };
+//     $.ajax({
+//         type:          'post',
+// 	dataType:      'json',
+// 	contentType:   'application/json',
+// 	scriptCharset: 'utf-8',
+//         async:          true,
+//         url:            hostUrl,
+//         data:           JSON.stringify(jsondata),
+//         success: function(){}
+//     });
+// });

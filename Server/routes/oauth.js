@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const mongoose = require('mongoose');
 var client = require('cheerio-httpcli');//スクレイピング用
+var WSS = require('ws').Server;
 
 
 var request = require('request');
@@ -35,6 +36,10 @@ var github_access_token;
 var musicid = 0;
 var videoID;
 var messageJson;
+let rtm;
+
+// Start the server
+var wss = new WSS({ port: 8081 });
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -101,7 +106,27 @@ router.get('/makechannel', function(req, res, next) {
   console.log('Slack Token : '+slack_access_token+'\n');
   console.log('Github Token : '+github_access_token+'\n');
 
-  startRTM(slack_access_token);
+  wss.on('connection', function(socket) {
+    console.log('Opened connection ');
+    startRTM(slack_access_token,socket);
+    // Send data back to the client
+    var json = JSON.stringify({ message: 'Gotcha' });
+    socket.send(json);
+
+    // When data is received
+    socket.on('message', function(message) {
+      console.log('Received: ' + message);
+    });
+
+    // The connection was closed
+    socket.on('close', function() {
+      console.log('Closed Connection ');
+    });
+
+  });
+
+
+  // startRTM(slack_access_token);
   var options = {
     url: 'https://slack.com/api/channels.create?token='+slack_access_token
       +'&name=testbot',
@@ -118,8 +143,8 @@ router.get('/makechannel', function(req, res, next) {
   });
 });
 
-function startRTM(access_token){
-  let rtm = new RtmClient(slack_access_token);
+function startRTM(access_token,socket){
+  rtm = new RtmClient(slack_access_token);
   rtm.start();
   rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED, function (rtmStartData) {
     for (const c of rtmStartData.channels) {
@@ -136,20 +161,14 @@ function startRTM(access_token){
   });
   rtm.on(RTM_EVENTS.MESSAGE, function (message) {
     messageJson = JSON.parse(JSON.stringify(message));
-
-
     if('message' in messageJson){
       console.log('have attachments field');
     }else if(messageJson.user != 'USLACKBOT'){
-      
+      socket.send(JSON.stringify(message));
       console.log(videoID);
       saveData(messageJson);
       console.log(messageJson);
     }
-    
-    // console.log(messageJson.channel);
-    // console.log(messageJson.user);
-    // console.log(messageJson.text);
   });
 }
 

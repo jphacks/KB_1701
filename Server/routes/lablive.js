@@ -5,10 +5,8 @@ const mongoose = require('mongoose');
 const moment = require('moment');
 const ipv4 = require('./modules/getMyIP');
 const LiveInfo = require('../models/liveInfo');
-
-// skywayをnode向けに少しだけ変えたファイルを読み込む
-require('../public/javascripts/skyway-js-sdk/src/peer.node');
-require('../public/javascripts/SkyWay-MultiParty-master/dist/multiparty.node');
+const SocketIO = require('./socketio');
+let io = new SocketIO();
 
 // speaker stanby
 router.get('/', function(request, response){
@@ -108,83 +106,45 @@ router.get('/onAir', function(request, response){
 });
 
 // slack comment for lablive
-router.post('/liveComment', function(request, response){
-
+// router.post('/liveComment', function(request, response){
+router.get('/liveComment', function(request, response){
     const username = request.query.username;
     const message  = request.query.message;
     const area     = 'Kobe';
+
+    console.log('username: '+ username);
+    console.log('message: '+ message);
+
+    io.send('mesg', { mesg : message });
 
     // Areaをuserと紐付けてroomIDを取得するのか
     // slackのchannelをpostしてもらってroomIDを引き当てるのか
     // いずれにしてもroomIDの取得方法は要検討
 
-    LiveInfo.find( { 'area' : area }, function(err, result){
-	if (err)
-	    console.log(err);
+    // LiveInfo.find( { 'area' : area }, function(err, result){
+    // 	if (err)
+    // 	    console.log(err);
 
-	// DBに存在しない場合
-	if (result.length == 0){
-	    console.log("no match");
-	    response.render('error', { 'errorCode' : "No match"});
-	}
-	// DBから引当
-	else{
-	    if (result.length != 1){
-		console.log("Duplication");
-		response.render('error', { 'errorCode' : "Duplication in DB"});
-	    }
-	    else{
-		const room     = result[0].room;
-		const peerID   = result[0].peerID;
-		const openTime = result[0].open;
-
-		const multiparty = new MultiParty( {
-		    "key": "b6e0144a-5606-44b2-a305-f89a92e7e0a9",
-		    "reliable": true,
-		    "room": room,
-		    "debug": 3
-		});
-
-		multiparty.on('ms_close', function(peer_id) {
-		    $("#"+peer_id).remove();
-		});
-
-		multiparty.on('error', function(err) {
-		    console.log(err);
-		    alert(err);
-		});
-
-		multiparty.start();
-
-		const nowTime = new Date();
-		const watchingTime = {
-		    hh : ( "00" + Math.floor( 
-			nowTime.getTime() / ( 1000*60*60 ) % 24	
-		    )).slice(-2),
-
-		    mm : ( "00" + Math.floor( 
-			nowTime.getTime() / ( 1000*60 ) % 60	
-		    )).slice(-2),
-
-		    ss : ( "00" + Math.floor( 
-			nowTime.getTime() / ( 1000 ) % 60	
-		    )).slice(-2)
-		};
-		const data = {
-		    date    : watchingTime,
-		    username: username,
-		    message : message
-		};
-
-		multiparty.send(data);
-	    }
-	}
-
-    });
-
-
-
+    // 	// DBに存在しない場合
+    // 	if (result.length == 0){
+    // 	    console.log("no match");
+    // 	    response.render('error', { 'errorCode' : "No match"});
+    // 	}
+    // 	// DBから引当
+    // 	else{
+    // 	    if (result.length != 1){
+    // 		console.log("Duplication");
+    // 		response.render('error', { 'errorCode' : "Duplication in DB"});
+    // 	    }
+    // 	    else{
+    // 		const room     = result[0].room;
+    // 		const peerID   = result[0].peerID;
+    // 		const openTime = result[0].open;
+    // 	    }
+    // 	}
+    // });
 });
+
 
 // speaker log out
 router.post('/logout', function(request, response){
@@ -192,7 +152,7 @@ router.post('/logout', function(request, response){
 
     const peerID = request.body.peerID;
 
-    liveInfo.remove(
+    LiveInfo.remove(
 	{ "peerID" : peerID }, function(err, result){
 	    if (err)
 		console.log(err);
