@@ -17,7 +17,7 @@ socket.onopen = function() {
 // When data is received
 socket.onmessage = function(event) {
   console.log(event.data);
-  alert(event.data);
+  // alert(event.data);
 }
 
 // A connection could not be made
