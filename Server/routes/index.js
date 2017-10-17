@@ -30,9 +30,21 @@ router.get('/music', function(req, res, next) {
 
 router.get('/music/load', function(req, res, next) {
   console.log("GET request to the /music/load")
+  console.log(req.query.musicid);
+  var musicid = req.query.musicid;
+  var videoId;
+  var user;
   //DBからyoutubeの動画IDを取得してフロントのyoutube.jsのvideoIdにセット
-
-  res.redirect(hostURL+'/music');
+  Youtube.find({"musicid" : musicid},function(err,youtube){
+    if(err) console.log(err);
+    videoId = youtube[0].url;
+    userid = youtube[0].userid;
+    console.log(youtube[0].url);
+    console.log(youtube[0].userid);
+    // res.send(videoId);
+    res.json({"videoId": videoId, "userid": userid});
+  });
+  
 });
 
 

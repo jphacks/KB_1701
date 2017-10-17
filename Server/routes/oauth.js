@@ -47,22 +47,6 @@ router.get('/', function(req, res, next) {
 
 
 
-router.get('/music', function(req, res, next) {
-  console.log("GET request to the /music")
-  //DBから
-  res.render('music', { title: 'Express'});
-});
-
-router.get('/music/load', function(req, res, next) {
-  console.log("GET request to the /music/load")
-  //DBからyoutubeの動画IDを取得してフロントのyoutube.jsのvideoIdにセット
-
-  
-  res.redirect(hostURL+'/music');
-});
-
-
-
 //slack appのoauth認証
 router.get('/slack', function(req, res, next) {
   console.log('GET request to the /oauth/slack');
@@ -127,7 +111,7 @@ router.get('/makechannel', function(req, res, next) {
   request.get(options, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       console.log(body);
-      res.redirect(hostURL+'/music/load');//チャンネル生成後は○○へ(今はmusic/loadへ)
+      res.redirect(hostURL+'/music');//チャンネル生成後は○○へ(今はmusic/loadへ)
     } else {
       console.log('error: '+ response.statusCode);
     }
