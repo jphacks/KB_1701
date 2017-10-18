@@ -125,22 +125,12 @@ router.get('/makechannel', function(req, res, next) {
 
   });
 
+  makeChannnel('test makeChannel func');
+
+  res.redirect(hostURL+'/music');//チャンネル生成後は○○へ(今はmusic/loadへ)
 
   // startRTM(slack_access_token);
-  var options = {
-    url: 'https://slack.com/api/channels.create?token='+slack_access_token
-      +'&name=testbot',
-    json: true
-  };
-
-  request.get(options, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      console.log(body);
-      res.redirect(hostURL+'/music');//チャンネル生成後は○○へ(今はmusic/loadへ)
-    } else {
-      console.log('error: '+ response.statusCode);
-    }
-  });
+  
 });
 
 function startRTM(access_token,socket){
@@ -209,6 +199,23 @@ function saveData(data){
     });
   }
 
+}
+
+function makeChannnel(chName){
+  var options = {
+    url: 'https://slack.com/api/channels.create?token='+slack_access_token
+      +'&name='+chName,
+    json: true
+  };
+
+  request.get(options, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      console.log(body);
+      // res.redirect(hostURL+'/music');//チャンネル生成後は○○へ(今はmusic/loadへ)
+    } else {
+      console.log('error: '+ response.statusCode);
+    }
+  });
 }
 
 
