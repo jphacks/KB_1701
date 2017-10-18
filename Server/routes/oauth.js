@@ -65,7 +65,7 @@ router.get('/slack', function(req, res, next) {
   request.get(options, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       slack_access_token = body.access_token;
-      rtm = new RtmClient(slack_access_token);
+      
       console.log(body.scope+'\n');
       console.log('Slack Token : '+slack_access_token+'\n');
       res.redirect('https://github.com/login/oauth/authorize?'
@@ -109,6 +109,7 @@ router.get('/makechannel', function(req, res, next) {
 
   wss.on('connection', function(socket) {
     console.log('Opened connection ');
+    let rtm = new RtmClient(slack_access_token);
     slackRequests.startRTM(rtm,slack_access_token,socket);
     // Send data back to the client
     var json = JSON.stringify({ message: 'Gotcha' });

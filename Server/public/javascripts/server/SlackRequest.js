@@ -29,7 +29,7 @@ module.exports.makeChannnel = function(slack_access_token,chName){
     if (!error && response.statusCode == 200) {
       console.log(body);
       // ここで作成したチャンネルのchannelIdとchannelNameをDBに登録
-      accessDB.saveChannel(body.channel.id,body.channel.name);
+    //   accessDB.saveChannel(body.channel.id,body.channel.name);
     } else {
       console.log('error: '+ response.statusCode);
     }

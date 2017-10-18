@@ -118,6 +118,8 @@ function getMovieId(url){
       
       loadPlayer(result.videoId);
       document.getElementById("username").textContent=result.username;
+      document.getElementById("musicid").textContent=result.musicid;
+      document.getElementById("allMusicNum").textContent=result.allMusicNum;
       // alert(result.username);
       
     }

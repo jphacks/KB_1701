@@ -34,6 +34,7 @@ router.get('/music/load', function(req, res, next) {
   var musicid = req.query.musicid;
   var videoId;
   var name;
+  var allMusicNum;
   //DBからyoutubeの動画IDを取得してフロントのyoutube.jsのvideoIdにセット
   Youtube.find({"musicid" : musicid},function(err,youtube){
     if(err) console.log(err);
@@ -42,15 +43,17 @@ router.get('/music/load', function(req, res, next) {
     console.log(youtube[0].url);
     console.log(youtube[0].userid);
 
-    User.find({"userid" : userid},function(error,user){
+
+    Youtube.count(function(err,allMusicNum){
       if(err) console.log(err);
-      name = user[0].username;
-      console.log("User Name: "+name);
-      res.json({"videoId": videoId,"username": name});
-    });
+      User.find({"userid" : userid},function(error,user){
+        if(err) console.log(err);
+        name = user[0].username;
+        console.log("User Name: "+name);
+        res.json({"videoId": videoId,"username": name,"musicid": musicid,"allMusicNum": allMusicNum});
+      });
+    }); 
   });
-  
-  
 });
 
 
