@@ -54,6 +54,11 @@ module.exports.startRTM = function(rtm,slack_access_token,socket){
         rtm.sendMessage("Hello!", channel);
     });
 
+
+    rtm.on(CLIENT_EVENTS.RTM.DISCONNECT, function () {
+        console.log('ws closed');
+    });
+
     rtm.on(RTM_EVENTS.MESSAGE, function (message) {
         messageJson = JSON.parse(JSON.stringify(message));
         if('message' in messageJson){

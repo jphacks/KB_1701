@@ -120,9 +120,16 @@ router.get('/makechannel', function(req, res, next) {
       console.log('Received: ' + message);
     });
 
+
+    socket.on('onclose', function() {
+      console.log('On Close ');
+      // wss = new WSS({ port: 8081 });
+    });
+
     // The connection was closed
     socket.on('close', function() {
       console.log('Closed Connection ');
+      // wss = new WSS({ port: 8081 });
     });
 
   });
