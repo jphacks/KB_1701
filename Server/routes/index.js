@@ -33,7 +33,7 @@ router.get('/music/load', function(req, res, next) {
   console.log(req.query.musicid);
   var musicid = req.query.musicid;
   var videoId;
-  var user;
+  var name;
   //DBからyoutubeの動画IDを取得してフロントのyoutube.jsのvideoIdにセット
   Youtube.find({"musicid" : musicid},function(err,youtube){
     if(err) console.log(err);
@@ -41,9 +41,15 @@ router.get('/music/load', function(req, res, next) {
     userid = youtube[0].userid;
     console.log(youtube[0].url);
     console.log(youtube[0].userid);
-    // res.send(videoId);
-    res.json({"videoId": videoId, "userid": userid});
+
+    User.find({"userid" : userid},function(error,user){
+      if(err) console.log(err);
+      name = user[0].username;
+      console.log("User Name: "+name);
+      res.json({"videoId": videoId,"username": name});
+    });
   });
+  
   
 });
 

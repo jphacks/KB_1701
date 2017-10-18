@@ -8,6 +8,13 @@ const RtmClient = require('@slack/client').RtmClient;
 const CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS;
 const RTM_EVENTS = require('@slack/client').RTM_EVENTS;
 
+//DBスキーマ
+const User = require('../../../models/user');
+const Youtube = require('../../../models/youtube');
+const Team = require('../../../models/team');
+const Message = require('../../../models/message');
+const Channel = require('../../../models/channel');
+
 
 
 
@@ -21,7 +28,8 @@ module.exports.makeChannnel = function(slack_access_token,chName){
   request.get(options, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       console.log(body);
-      // res.redirect(hostURL+'/music');//チャンネル生成後は○○へ(今はmusic/loadへ)
+      // ここで作成したチャンネルのchannelIdとchannelNameをDBに登録
+      accessDB.saveChannel(body.channel.id,body.channel.name);
     } else {
       console.log('error: '+ response.statusCode);
     }
@@ -51,6 +59,11 @@ module.exports.startRTM = function(rtm,slack_access_token,socket){
         if('message' in messageJson){
             console.log('have attachments field');
         }else if(messageJson.user != 'USLACKBOT'){
+            //自己紹介チャンネルにメッセージが届いた時
+            //musicチャンネルにメッセージが届いた時
+            //helpチャンネルにメッセージが届いた時
+            //noticeチャンネルにメッセージが届いた時
+
             socket.send(JSON.stringify(message));//slackへの投稿をviewへ送信
             accessDB.saveData(channel,messageJson);
             console.log(messageJson);

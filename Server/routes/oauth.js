@@ -105,6 +105,8 @@ router.get('/makechannel', function(req, res, next) {
   console.log('Slack Token : '+slack_access_token+'\n');
   console.log('Github Token : '+github_access_token+'\n');
 
+  slackRequests.makeChannnel(slack_access_token,'regist DB test');
+
   wss.on('connection', function(socket) {
     console.log('Opened connection ');
     slackRequests.startRTM(rtm,slack_access_token,socket);
@@ -124,9 +126,7 @@ router.get('/makechannel', function(req, res, next) {
 
   });
 
-  slackRequests.makeChannnel(slack_access_token,'test makeChannel func');
-
-  res.redirect(hostURL+'/music');//チャンネル生成後は○○へ(今はmusic/loadへ)
+  res.redirect(hostURL+'/music');//チャンネル生成後は○○へ(今は/musicへ)
   
 });
 module.exports = router;
