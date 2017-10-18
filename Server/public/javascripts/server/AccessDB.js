@@ -18,7 +18,7 @@ module.exports.saveChannel = function(chID,chName){
 
                 channel.channelId = chID;
                 channel.channelName = chName;
-                  
+
                 channel.save(function(err){
                 if (err) console.log(err);
                 });
@@ -28,8 +28,12 @@ module.exports.saveChannel = function(chID,chName){
 module.exports.saveData = function(chID,data){
     
     if(data.channel == chID){
+
+        //正規表現を用いてtextからvideoIDのみを抽出
+        var mat = data.text.match(/[/?=]([-\w]{11})/);
+        let videoID = mat[1];
         
-        let videoID = data.text.substring(33,44);//textからvideoIDのみを抽出，videoIDはすべての動画で11桁
+        console.log(videoID);
         musicid = musicid + 1;
         // var musicid = musicid; //musicidは node.js側で連番をふるべき
         var url  = videoID;
