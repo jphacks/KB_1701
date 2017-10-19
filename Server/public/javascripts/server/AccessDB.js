@@ -34,7 +34,14 @@ module.exports.saveData = function(chID,data){
         let videoID = mat[1];
         
         console.log(videoID);
-        musicid = musicid + 1;
+        Youtube.count(function(err,allMusicNum){
+                if (err) console.log(err);
+                musicid = allMusicNum + 1;
+                
+        });
+
+        
+        
         // var musicid = musicid; //musicidは node.js側で連番をふるべき
         var url  = videoID;
         var title   = 'test title'; //フロントでスクレイピングする or サーバでスクレイピングする
@@ -53,7 +60,7 @@ module.exports.saveData = function(chID,data){
             // 新規登録
             if (result.length == 0){
                 var youtube = new Youtube();
-
+                console.log(musicid);
                 youtube.musicid = musicid;
                 youtube.url = url;
                 youtube.title = title;
