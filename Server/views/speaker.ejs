@@ -5,8 +5,10 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="/assets/js/jquery.js"></script>
     <script type="text/javascript" src="/assets/js/nicoscreen.js"></script>
-    <script type="text/javascript" src="https://skyway.io/dist/0.3/peer.min.js"></script> <!-- 書き換え必須 -->
+    <script type="text/javascript" src="https://cdn.webrtc.ecl.ntt.com/skyway-1.0.1.js"></script> <!-- 書き換え必須 -->
+    <!-- <script type="text/javascript" src="/javascripts/skyway-js-sdk/src/peer.js/"></script> -->
     <script type="text/javascript" src="/javascripts/SkyWay-MultiParty-master/dist/multiparty.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     
     <style> video { width:100%;height:auto; } </style>
     <style type="text/css">
@@ -16,7 +18,7 @@
     </style>
   </head>
   <body>
-    <!-- <span style="display:none;" id="username"><%= username %></span> -->
+
     <span style="display:none;" id="peerID"><%= peerID %></span>
     <span style="display:none;" id="room"><%= room %></span>
     <span style="display:none;" id="openTime"><%= openTime %></span>
@@ -26,7 +28,7 @@
       <div class="inner">
 	<nav>
 	  <ul>
-	    <!-- <li><a href="#two"><%= roomName %></a></li> -->
+
 	    <li><a onclick="history.back()">Back＜＜</a></li>
 	    <!-- <li><a href="#intro">Home</a></li>     -->
 	    <!-- <li><a href="#one">Live Room</a></li>  -->
@@ -59,8 +61,7 @@
 	  </DIV>
 	</div>
 	<div id="complementary" style="width: 64%; ">		
-	  <!-- <h1><%= roomName %></h1> -->
-	  <!-- <h2>by <%= username %></h2> -->
+
 	  <h2 id="openTimeView"></h2>
 	  <h2 id="currentTime"></h2>
 

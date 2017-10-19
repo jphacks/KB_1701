@@ -7,7 +7,6 @@ const bodyParser = require('body-parser');
 const http = require('http');
 const https = require('https');
 const fs = require('fs');
-
 const mongoose = require('mongoose');
 
 const app = express();
@@ -23,7 +22,13 @@ const ssloptions = {
 };
 
 mongoose.Promise = global.Promise;
-
+const mongodbUri = 'mongodb://localhost/HackHack';
+const mongOptions = {
+    useMongoClient: true,
+    socketTimeoutMS: 0,
+    keepAlive: true,
+    reconnectTries: 30
+};
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -65,9 +70,10 @@ app.use(function(err, req, res, next) {
 });
 
 // サーバ立ち上げ
-https.createServer(ssloptions,app).listen(app.get('httpsport'), function(){
+var server = https.createServer(ssloptions,app).listen(app.get('httpsport'), function(){
     console.log('Express HTTPS server listening on port ' + app.get('httpsport'));
-    //mongoose.connect('mongodb://localhost/HackHack');
+    mongoose.connect(mongodbUri, mongOptions);
 });
 
 module.exports = app;
+
