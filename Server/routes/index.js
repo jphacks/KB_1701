@@ -33,7 +33,8 @@ router.get('/music/load', function(req, res, next) {
   console.log(req.query.musicid);
   var musicid = req.query.musicid;
   var videoId;
-  var user;
+  var name;
+  var allMusicNum;
   //DBからyoutubeの動画IDを取得してフロントのyoutube.jsのvideoIdにセット
   Youtube.find({"musicid" : musicid},function(err,youtube){
     if(err) console.log(err);
@@ -41,10 +42,18 @@ router.get('/music/load', function(req, res, next) {
     userid = youtube[0].userid;
     console.log(youtube[0].url);
     console.log(youtube[0].userid);
-    // res.send(videoId);
-    res.json({"videoId": videoId, "userid": userid});
+
+
+    Youtube.count(function(err,allMusicNum){
+      if(err) console.log(err);
+      User.find({"userid" : userid},function(error,user){
+        if(err) console.log(err);
+        name = user[0].username;
+        console.log("User Name: "+name);
+        res.json({"videoId": videoId,"username": name,"musicid": musicid,"allMusicNum": allMusicNum});
+      });
+    }); 
   });
-  
 });
 
 
@@ -105,39 +114,26 @@ router.post('/slack/introduction', function(req, res, next) {
   });
 });
 
+
+
+//music DB が空の時に最初の1つめを入れるための臨時エンドポイント
 router.post('/slack/bgm', function(req, res, next) {
   console.log('POST request to the /slack/bgm')
   console.log(req.body);
   musicid = musicid + 1;
   res.setHeader('Content-Type', 'application/json');
 
-  //ここでスクレイピングを実施
-  // client.fetch(req.body.url, function (err, $, res) {
-  //   // HTMLタイトルを表示
-  //   console.log($('simpleText').text());
-    
-  // });
-
-  // var musicid = musicid; //musicidは node.js側で連番をふるべき
   var url  = req.body.url;
   var title   = req.body.title; //フロントでスクレイピングする or サーバでスクレイピングする
   var userid   = req.body.userid;
   Youtube.find({ 'musicid' : musicid }, function(err, result){
       if (err) console.log(err);
 
-    // DBにyoutubeを格納．youtubeの構造は以下の通り
-    // youtube = {
-    //     musicid : musicid
-    //     url : url;
-    //     title : title;
-    //     userid : userid;
-    // }
-
     // 新規登録
       if (result.length == 0){
         var youtube = new Youtube();
 
-        youtube.musicid = musicid;
+        youtube.musicid = 1;
         youtube.url = url;
         youtube.title = title;
         youtube.userid = userid;

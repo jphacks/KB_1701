@@ -106,7 +106,7 @@ $(window).load(function(){
     socket.onmessage = function(event) {
     
     let message = JSON.parse(event.data);
-    alert(message.text);
+    // alert(message.text);
 	$('.divided').prepend(
 		'<li>'+
 		    '<article class="box post-summary">' +

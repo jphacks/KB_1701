@@ -1,18 +1,15 @@
 var express = require('express');
 var router = express.Router();
+
 const mongoose = require('mongoose');
 var client = require('cheerio-httpcli');//スクレイピング用
 var WSS = require('ws').Server;
-
-
 var request = require('request');
 var headers = {'Content-Type':'application/json'};
 
+//自作jsの読み込み
+var slackRequests = require('../public/javascripts/server/SlackRequest');
 
-const User = require('../models/user');
-const Youtube = require('../models/youtube');
-const Team = require('../models/team');
-const Message = require('../models/message');
 
 
 //RTM用モジュール
@@ -52,6 +49,7 @@ router.get('/', function(req, res, next) {
 
 
 
+
 //slack appのoauth認証
 router.get('/slack', function(req, res, next) {
   console.log('GET request to the /oauth/slack');
@@ -67,6 +65,7 @@ router.get('/slack', function(req, res, next) {
   request.get(options, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       slack_access_token = body.access_token;
+      
       console.log(body.scope+'\n');
       console.log('Slack Token : '+slack_access_token+'\n');
       res.redirect('https://github.com/login/oauth/authorize?'
@@ -106,9 +105,12 @@ router.get('/makechannel', function(req, res, next) {
   console.log('Slack Token : '+slack_access_token+'\n');
   console.log('Github Token : '+github_access_token+'\n');
 
+  slackRequests.makeChannnel(slack_access_token,'regist DB test');
+
   wss.on('connection', function(socket) {
     console.log('Opened connection ');
-    startRTM(slack_access_token,socket);
+    let rtm = new RtmClient(slack_access_token);
+    slackRequests.startRTM(rtm,slack_access_token,socket);
     // Send data back to the client
     var json = JSON.stringify({ message: 'Gotcha' });
     socket.send(json);
@@ -118,99 +120,21 @@ router.get('/makechannel', function(req, res, next) {
       console.log('Received: ' + message);
     });
 
+
+    socket.on('onclose', function() {
+      console.log('On Close ');
+      // wss = new WSS({ port: 8081 });
+    });
+
     // The connection was closed
     socket.on('close', function() {
       console.log('Closed Connection ');
+      // wss = new WSS({ port: 8081 });
     });
 
   });
 
-
-  // startRTM(slack_access_token);
-  var options = {
-    url: 'https://slack.com/api/channels.create?token='+slack_access_token
-      +'&name=testbot',
-    json: true
-  };
-
-  request.get(options, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      console.log(body);
-      res.redirect(hostURL+'/music');//チャンネル生成後は○○へ(今はmusic/loadへ)
-    } else {
-      console.log('error: '+ response.statusCode);
-    }
-  });
+  res.redirect(hostURL+'/music');//チャンネル生成後は○○へ(今は/musicへ)
+  
 });
-
-function startRTM(access_token,socket){
-  rtm = new RtmClient(slack_access_token);
-  rtm.start();
-  rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED, function (rtmStartData) {
-    for (const c of rtmStartData.channels) {
-      console.log(c.name + ' : ' + c.id);
-	  if (c.name ==='musicrequest') {
-      console.log("\nRegist Channel ID\n");
-      channel = c.id 
-    }
-  }
-  console.log(`Logged in as ${rtmStartData.self.name} of team ${rtmStartData.team.name}, but not yet connected to a channel`);
-  });
-  rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, function () {
-    rtm.sendMessage("Hello!", channel);
-  });
-  rtm.on(RTM_EVENTS.MESSAGE, function (message) {
-    messageJson = JSON.parse(JSON.stringify(message));
-    if('message' in messageJson){
-      console.log('have attachments field');
-    }else if(messageJson.user != 'USLACKBOT'){
-      socket.send(JSON.stringify(message));
-      console.log(videoID);
-      saveData(messageJson);
-      console.log(messageJson);
-    }
-  });
-}
-
-
-function saveData(data){
-  if(data.channel == 'C7HU7A7T6'){
-    
-    videoID = data.text.substring(33,44);//textからvideoIDのみを抽出，videoIDはすべての動画で11桁
-    musicid = musicid + 1;
-    // var musicid = musicid; //musicidは node.js側で連番をふるべき
-    var url  = videoID;
-    var title   = 'test title'; //フロントでスクレイピングする or サーバでスクレイピングする
-    var userid   = data.user;
-
-
-    // DBにyoutubeを格納．youtubeの構造は以下の通り
-      // youtube = {
-      //     musicid : musicid
-      //     url : url;
-      //     title : title;
-      //     userid : userid;
-      // }
-    Youtube.find({ 'musicid' : musicid }, function(err, result){
-      if (err) console.log(err);
-      // 新規登録
-      if (result.length == 0){
-        var youtube = new Youtube();
-
-        youtube.musicid = musicid;
-        youtube.url = url;
-        youtube.title = title;
-        youtube.userid = userid;
-        
-        youtube.save(function(err){
-          if (err) console.log(err);
-        });
-      }
-    });
-  }
-
-}
-
-
-
 module.exports = router;
