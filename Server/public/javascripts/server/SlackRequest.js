@@ -18,6 +18,7 @@ const Channel = require('../../../models/channel');
 
 
 
+
 module.exports.makeChannnel = function(slack_access_token,chName){
   var options = {
     url: 'https://slack.com/api/channels.create?token='+slack_access_token
@@ -67,7 +68,7 @@ module.exports.startRTM = function(rtm,slack_access_token,socket){
             //自己紹介チャンネルにメッセージが届いた時
             //musicチャンネルにメッセージが届いた時
             //helpチャンネルにメッセージが届いた時
-            //noticeチャンネルにメッセージが届いた時
+            //all_kobeチャンネルにメッセージが届いた時
 
             socket.send(JSON.stringify(message));//slackへの投稿をviewへ送信
             accessDB.saveData(channel,messageJson);
