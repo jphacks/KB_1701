@@ -25,7 +25,7 @@ router.get('/', function(req, res, next) {
 router.get('/music', function(req, res, next) {
   console.log("GET request to the /music")
   //DBから
-  res.render('music', { title: 'Express'});
+  res.render('main', { title: 'Express'});
 });
 
 router.get('/music/load', function(req, res, next) {

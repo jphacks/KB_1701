@@ -1,0 +1,145 @@
+#content {
+	width: 100%;
+	height: 80%;
+	border: solid 1px black;
+}
+
+.css-fukidashi {
+	padding: 0;
+	margin: 0;
+}
+.fukidashi0 {
+	position: absolute;
+	/* top: 0;    */
+	/* left: 5px; */
+	padding: 16px;
+	border-radius: 5px;
+	background: #7fbfff;
+	border: solid 3px darkgray;
+	display: inline-block;
+	color: #2b2b2b;
+	font-weight: bold;
+}
+.fukidashi1 {
+	position: absolute;
+	/* top: 0;    */
+	/* left: 5px; */
+	padding: 16px;
+	border-radius: 5px;
+	background: #bfff7f;
+	border: solid 3px darkgray;
+	display: inline-block;
+	color: #2b2b2b;
+	font-weight: bold;
+}
+.fukidashi2 {
+	position: absolute;
+	/* top: 0;    */
+	/* left: 5px; */
+	padding: 16px;
+	border-radius: 5px;
+	background: #ff93c9;
+	border: solid 3px darkgray;
+	display: inline-block;
+	color: #2b2b2b;
+	font-weight: bold;
+}
+.fukidashi3 {
+	position: absolute;
+	/* top: 0;    */
+	/* left: 5px; */
+	padding: 16px;
+	border-radius: 5px;
+	background: #ffff7f;
+	border: solid 3px darkgray;
+	display: inline-block;
+	color: #2b2b2b;
+	font-weight: bold;
+}
+.fukidashi4 {
+	position: absolute;
+	/* top: 0;    */
+	/* left: 5px; */
+	padding: 16px;
+	border-radius: 5px;
+	background: #ffc489;
+	border: solid 3px darkgray;
+	display: inline-block;
+	color: #2b2b2b;
+	font-weight: bold;
+}
+.fukidashi5 {
+	position: absolute;
+	/* top: 0;    */
+	/* left: 5px; */
+	padding: 16px;
+	border-radius: 5px;
+	background: #ff7f7f;
+	border: solid 3px darkgray;
+	display: inline-block;
+	color: #2b2b2b;
+	font-weight: bold;
+}
+.fukidashi6 {
+	position: absolute;
+	/* top: 0;    */
+	/* left: 5px; */
+	padding: 16px;
+	border-radius: 5px;
+	background: #93ffff;
+	border: solid 3px darkgray;
+	display: inline-block;
+	color: #2b2b2b;
+	font-weight: bold;
+}
+.fukidashi7 {
+	position: absolute;
+	/* top: 0;    */
+	/* left: 5px; */
+	padding: 16px;
+	border-radius: 5px;
+	background: #93ffc9;
+	border: solid 3px darkgray;
+	display: inline-block;
+	color: #2b2b2b;
+	font-weight: bold;
+}
+.fukidashi8 {
+	position: absolute;
+	/* top: 0;    */
+	/* left: 5px; */
+	padding: 16px;
+	border-radius: 5px;
+	background: #d1a3ff;
+	border: solid 3px darkgray;
+	display: inline-block;
+	color: #2b2b2b;
+	font-weight: bold;
+}
+.fukidashi9 {
+	position: absolute;
+	/* top: 0;    */
+	/* left: 5px; */
+	padding: 16px;
+	border-radius: 5px;
+	background: #d3d3d3;
+	border: solid 3px darkgray;
+	display: inline-block;
+	color: #2b2b2b;
+	font-weight: bold;
+}
+/* 下に付いてる吹き出し感でるやつ、枠つけたりするのめんどいから一旦なしで */
+/* .fukidashi:after {                                                                                              */
+/* position: absolute;                                                                                             */
+/* width: 0;                                                                                                       */
+/* height: 0;                                                                                                      */
+/* left: 0;                                                                                                        */
+/* bottom: -19px;                                                                                                  */
+/* margin-left: 10px;                                                                                              */
+/* border: solid transparent;                                                                                      */
+/* border-color: rgba(51, 204, 153, 0);                                                                            */
+/* border-top-color: #33cc99;                                                                                      */
+/* border-width: 10px;                                                                                             */
+/* pointer-events: none;                                                                                           */
+/* content: " ";                                                                                                   */
+/* }                                                                                                               */

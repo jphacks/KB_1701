@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html >
+	<head>
+		<meta charset="UTF-8">
+		<title>hackhack</title>
+
+		<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css"> -->
+
+		<!-- <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Abel'>                    -->
+
+		<link rel="stylesheet" href="/stylesheets/grid_main.css">
+		<link rel="stylesheet" href="/stylesheets/commit_balloon.css">
+		<script type="text/javascript" src="/javascripts/commit_balloon.js"></script> 
+
+
+	</head>
+
+	<body>
+		<div class="container">
+			<div class="item a">icon</div>
+
+			<div class="item b">
+				<!--youtube player  by takaya-->
+				<div id="player"></div>	
+			</div>
+
+			<div class="item c">
+				<div id="content"></div>
+				<form name="form1" id="id_form1" action="">
+					<p>チーム<input type="text" id="id_tname" name="tname" value="">
+					チーム番号<input type="number" name="tnum" id="tnumbox" value="">
+					コミット数<input type="number" name="noc" id="nocbox" value="">
+					add<input type="number" name="add" id="addbox" value="">
+					del<input type="number" name="del" id="delbox" value="">
+					コメント<input type="text" name="comment" id="commentbox" value="">
+					<input type="button" value="OK" onclick='viewBalloon();'/>
+				</form>
+			</div>
+
+			<div class="item d">message and image</div>
+
+			<div class="item e">Hack Time!! 00:00:00</div>
+
+			<div class="item f">Video</div>
+		</div>
+		<!-- youtube.jsの読み込みは</body>の直前で行うこと -->
+		<script src="/javascripts/youtube.js"></script>
+	</body>
+
+</html>
