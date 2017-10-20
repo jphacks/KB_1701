@@ -16,6 +16,22 @@ const Message = require('../../../models/message');
 const Channel = require('../../../models/channel');
 
 
+module.exports.getIcon = function(slack_access_token){
+  var options = {
+    url: 'https://slack.com/api/team.info?token='+slack_access_token,
+    json: true
+  };
+
+  request.get(options, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      console.log(body);
+      // JSONから画像のURL取得
+      console.log(body.team.icon.image_230);
+    } else {
+      console.log('error: '+ response.statusCode);
+    }
+  });
+}
 
 
 
