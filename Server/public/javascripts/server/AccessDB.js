@@ -26,9 +26,8 @@ module.exports.saveChannel = function(chID,chName){
     });
 }
 module.exports.saveData = function(chID,data){
-    
+    //youtubeURLをDB登録
     if(data.channel == chID){
-
         //正規表現を用いてtextからvideoIDのみを抽出
         var mat = data.text.match(/[/?=]([-\w]{11})/);
         let videoID = mat[1];
@@ -37,16 +36,12 @@ module.exports.saveData = function(chID,data){
         Youtube.count(function(err,allMusicNum){
                 if (err) console.log(err);
                 musicid = allMusicNum + 1;
-                
         });
 
-        
-        
         // var musicid = musicid; //musicidは node.js側で連番をふるべき
         var url  = videoID;
         var title   = 'test title'; //フロントでスクレイピングする or サーバでスクレイピングする
         var userid   = data.user;
-
 
         // DBにyoutubeを格納．youtubeの構造は以下の通り
         // youtube = {
@@ -72,5 +67,4 @@ module.exports.saveData = function(chID,data){
             }
         });
     }
-
 }
