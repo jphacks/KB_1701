@@ -4,12 +4,21 @@ const mongoose = require('mongoose');
 var client = require('cheerio-httpcli');//スクレイピング用
 var request = require('request');
 
+var WSS = require('ws').Server;
+
+var slackRequests = require('../public/javascripts/server/SlackRequest');
+
+//RTM用モジュール
+const RtmClient = require('@slack/client').RtmClient;
+const CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS;
+const RTM_EVENTS = require('@slack/client').RTM_EVENTS;
+
 const User = require('../models/user');
 const Youtube = require('../models/youtube');
 const Team = require('../models/team');
 const Message = require('../models/message');
 const Limit = require('../models/limit');
-
+const AccessToken = require('../models/accesstoken');
 
 // var hostURL = 'https://13.115.41.122:3000';
 // var hostURL = 'https://172.20.11.172:3000';
@@ -17,6 +26,11 @@ var hostURL = 'https://192.168.100.32:3000';
 
 var musicid = 0;
 
+
+// Start the websocket server
+var wss = new WSS({ port: 8081 });
+
+var slack_access_token;
 /* GET home page. */
 router.get('/', function(req, res, next) {
   console.log("GET request to the /")
@@ -25,13 +39,53 @@ router.get('/', function(req, res, next) {
 
 router.get('/main', function(req, res, next) {
   console.log("GET request to the /music")
-  //DBから
+  
+
   res.render('main', { title: 'Express'});
 });
 
 router.get('/start', function(req, res, next) {
   console.log("GET request to the /start")
-  //DBから
+  //AccessToken DBからslackのaccessトークンを取得
+  AccessToken.count(function(err,accessTokenNum){
+    
+    if (err) console.log(err);
+    AccessToken.find({"id": accessTokenNum-1},function(err,result){
+      if (err) console.log(err);
+      // let slack_access_token = result.slack;
+      console.log(result[0].slack);
+
+      slack_access_token = result[0].slack;
+    })
+  })
+  //そのアクセストークンを使ってwebsocketの開通
+
+  wss.on('connection', function(socket) {
+    console.log('Opened connection ');
+    let rtm = new RtmClient(slack_access_token);
+    slackRequests.startRTM(rtm,slack_access_token,socket);
+    // Send data back to the client
+    var json = JSON.stringify({ message: 'Gotcha' });
+    socket.send(json);
+
+    // When data is received
+    socket.on('message', function(message) {
+      console.log('Received: ' + message);
+    });
+
+
+    socket.on('onclose', function() {
+      console.log('On Close ');
+      // wss = new WSS({ port: 8081 });
+    });
+
+    // The connection was closed
+    socket.on('close', function() {
+      console.log('Closed Connection ');
+      // wss = new WSS({ port: 8081 });
+    });
+
+  });
   res.render('start', { title: 'Express'});
 });
 
@@ -179,6 +233,8 @@ router.post('/slack/bgm', function(req, res, next) {
   });
 });
 
+
+//タイマー制限時間セット用エンドポイント
 router.post('/regist/limit', function(req, res, next) {
   console.log('POST request to the /regist/limit');
   res.setHeader('Content-Type', 'application/json');
