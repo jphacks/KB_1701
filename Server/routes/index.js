@@ -95,6 +95,13 @@ router.get('/regist/schema', function(req, res, next) {
   res.render('registSchema', { title: 'Express'});
 });
 
+router.post('/regist/schema', function(req, res, next) {
+  console.log("GET request to the /regist/schema")
+  //DBから
+  res.render('registSchema', { title: 'Express'});
+});
+
+
 router.get('/regist/limit', function(req, res, next) {
   console.log("GET request to the /regist/limit")
   var limitid = req.query.limitid;
