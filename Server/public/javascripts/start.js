@@ -1,6 +1,6 @@
 // var hostURL = 'https://13.115.41.122:3000';
 // var hostURL = 'https://172.20.11.172:3000';
-var hostURL = 'https://192.168.100.32:3000';
+// var hostURL = 'https://192.168.100.32:3000';
 var endpoint = 'https://192.168.100.32:3000/regist/limit';  // リクエスト先URL
 
 function setLimit(){
@@ -31,43 +31,11 @@ var url = endpoint;
 request.open("POST",url,true);
 request.setRequestHeader('Content-Type', 'application/json');
 
-request.onreadystatechange = function () {
-  if (request.readyState != 4) {
-    // リクエスト中
-    alert("posting")
-  } else if (request.status != 200) {
-    // 失敗
-    alert("failed")
-  } else {
-    // 送信成功
-    alert("success")
-  }
-};
-// alert(url);
+request.onreadystatechange = function() {//Call a function when the state changes.
+    if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+        alert('ok')
+    }
+}
 
 request.send(data);
-
-
-// var url = endpoint;
-// var request = new XMLHttpRequest();
-//
-// request.open('POST', url);
-// request.setRequestHeader('Content-Type', 'application/json');
-//
-// request.onreadystatechange = function () {
-//   if (request.readyState != 4) {
-//     // リクエスト中
-//     alert("posting")
-//   } else if (request.status != 200) {
-//     // 失敗
-//     alert("failed")
-//   } else {
-//     // 送信成功
-//     alert("success")
-//   }
-// };
-// // alert(url);
-//
-// request.send(data);
-// alert(data)
 }
