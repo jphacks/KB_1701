@@ -1,16 +1,8 @@
-const ip = '192.168.128.102';
-const hostUrl = 'https://' + ip + ':3000';
+const getHostUlr = function (){
+    const ip = '192.168.128.102';
+    const hostUrl = 'https://' + ip + ':3000';
 
-class IP {
+    return hostUrl;
+};
 
-    get IP(){
-	return ip;
-    }
-
-    get hostUrl(){
-	return hostUrl;
-    }
-}
-
-export default IP;
-module.exports = IP;
+export default getHostUlr;
