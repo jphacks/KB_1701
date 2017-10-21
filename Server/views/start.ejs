@@ -13,9 +13,60 @@
 
     <body>
 
-      <a href="https://slack.com/oauth/authorize?client_id=254821626421.255281971077&scope=client&redirect_uri=https://172.20.11.172:3000/oauth/slack">
-          <img alt="Add to Slack"hspace="20" style="width:10%;" src="/stylesheets/img/start/gif" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" />
+
+
+      <form>
+
+      <!-- <input type="time" name="example" value="20:40"> -->
+
+      <!-- <p>終了時刻：<input type="date" name="example" list="data1"> -->
+
+      <input id="year"type="number" name="year" min="2017" max="3000" style="color:black; font-size:200%;text-align: right;">
+      <!-- <input id="year"type="text" name="year"style="color:black; font-size:200%;text-align: right;"> -->
+
+      年
+      <input id="mon" type="number" name="mon" min="1" max="12" value="1"style="color:black; font-size:200%;text-align: right;">
+      月
+      <input id="day" type="number" name="day" min="1" max="31"value="1"style="color:black; font-size:200%;text-align: right;">
+      日
+      <input id="hour" type="number" name="hour" min="0" max="24" value="0"style="color:black; font-size:200%;text-align: right;">
+      時
+      <input id="min" type="number" name="min" min="0" max="59"value="0"style="color:black; font-size:200%;text-align: right;"step="10">
+      分
+      </form>
+<!-- localhostで実装 -->
+      <a href="https://localhost:3000/music">
+          <img alt="Add to Slack"hspace="20" style="width:20%;" src="/stylesheets/img/start.gif"/>
       </a>
 
+      <script>
+
+      //今日の日付データを変数hidukeに格納
+      var hiduke=new Date();
+
+      //年・月・日・曜日を取得する
+      var year = hiduke.getFullYear();
+      var month = hiduke.getMonth()+1;
+      var week = hiduke.getDay();
+      var day = hiduke.getDate();
+      //時・分・秒を取得する
+      var jikan= new Date();
+      var hour = jikan.getHours();
+      var minute = jikan.getMinutes();
+      var second = jikan.getSeconds();
+
+      var yobi= new Array("日","月","火","水","木","金","土");
+      // var x = document.getElementById("year");
+      // document.write("西暦"+year+"年"+month+"月"+day+"日 "+yobi[week]+"曜日");
+
+      document.getElementById("year").value=year;
+      document.getElementById("mon").value=month;
+      document.getElementById("day").value=day;
+      document.getElementById("hour").value=hour;
+      document.getElementById("min").value=minute;
+      // document.getElementById("year").defaultValue = "year";
+      // document.getElementById("year").innerHTML=11;
+
+      </script>
     </body>
 </html>
