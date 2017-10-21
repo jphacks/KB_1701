@@ -29,24 +29,48 @@ data=JSON.stringify(array);
 
 send(data);
 // alert(data);
-function send(data){
-  var url = endpoint;
-  var request = new XMLHttpRequest();
-  request.onreadystatechange = function () {
-    if (request.readyState != 4) {
-      // リクエスト中
-      alert("posting")
-    } else if (request.status != 200) {
-      // 失敗
-      alert("failed")
-    } else {
-      // 送信成功
-      alert("success")
+
+var xmlHttpRequest = new XMLHttpRequest();
+xmlHttpRequest.onreadystatechange = function()
+{
+    var READYSTATE_COMPLETED = 4;
+    var HTTP_STATUS_OK = 200;
+
+    if( this.readyState == READYSTATE_COMPLETED
+     && this.status == HTTP_STATUS_OK )
+    {
+        // レスポンスの表示
+        alert( this.responseText );
     }
-  };
-  request.setRequestHeader('Content-Type', 'application/json');
-  request.open('POST', url);
-  request.send(JSON.stringify(data));
 }
+
+xmlHttpRequest.open( 'POST', endpoint );
+
+// サーバに対して解析方法を指定する
+xmlHttpRequest.setRequestHeader( 'Content-Type', 'application/x-www-form-urlencoded' );
+
+
+// // データをリクエスト ボディに含めて送信する
+// xmlHttpRequest.send( EncodeHTMLForm( data ) );
+// function send(data){
+//   var url = endpoint;
+//   var request = new XMLHttpRequest();
+//
+//   request.onreadystatechange = function () {
+//     if (request.readyState != 4) {
+//       // リクエスト中
+//       alert("posting")
+//     } else if (request.status != 200) {
+//       // 失敗
+//       alert("failed")
+//     } else {
+//       // 送信成功
+//       alert("success")
+//     }
+//   };
+//   request.setRequestHeader('Content-Type', 'application/json');
+//   request.open('POST', url);
+//   request.send(JSON.stringify(data));
+// }
 
 }
