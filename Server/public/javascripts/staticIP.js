@@ -2,12 +2,12 @@
 // <script src="/javascripts/staticIP.js">
 
 // 他のJSファイル内での使い方
-// const url = getHostUrl();
+// const url = getHostUrl('/nameOfEndpoint/...');
 // (特にimport等をする必要はなし)
 
-function getHostUlr(){
+function getHostUlr(endpoint){
     const ip = '192.168.128.102';
-    const hostUrl = 'https://' + ip + ':3000';
+    const hostUrl = 'https://' + ip + ':3000' + endpoint;
 
     return hostUrl;
 };
