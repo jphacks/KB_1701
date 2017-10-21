@@ -66,7 +66,7 @@ module.exports.startRTM = function(rtm,slack_access_token,socket){
     });
 
     rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, function () {
-        rtm.sendMessage("Hello!", 'C7KP6ABL0');
+        rtm.sendMessage("Hello!", 'C7GMP2G2G');
     });
 
 
@@ -92,7 +92,7 @@ module.exports.startRTM = function(rtm,slack_access_token,socket){
                 //helpチャンネルにメッセージが届いた時
                 socket.send(JSON.stringify(message));//slackへの投稿をviewへ送信
                 console.log(messageJson);
-            }else if(messageJson.channel == 'C7KP6ABL0'){
+            }else if(messageJson.channel == 'C7GL1UJ8J'){ //今はrandom
                 //all_kobeチャンネルにメッセージが届いた時
                 // console.log(messageJson.file.url_private);
                 socket.send(JSON.stringify(message));//slackへの投稿をviewへ送信

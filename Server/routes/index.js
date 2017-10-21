@@ -39,6 +39,13 @@ router.get('/', function(req, res, next) {
 
 router.get('/main', function(req, res, next) {
   console.log("GET request to the /music")
+  
+
+  res.render('main', { title: 'Express'});
+});
+
+router.get('/start', function(req, res, next) {
+  console.log("GET request to the /start")
   //AccessToken DBからslackのaccessトークンを取得
   AccessToken.count(function(err,accessTokenNum){
     
@@ -79,13 +86,6 @@ router.get('/main', function(req, res, next) {
     });
 
   });
-
-  res.render('main', { title: 'Express'});
-});
-
-router.get('/start', function(req, res, next) {
-  console.log("GET request to the /start")
-  //DBから
   res.render('start', { title: 'Express'});
 });
 

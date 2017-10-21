@@ -116,6 +116,7 @@ function getMovieId(url){
      
       result = JSON.parse(request.responseText);
       
+      
       loadPlayer(result.videoId);
       document.getElementById("username").textContent=result.username;
       document.getElementById("musicid").textContent=result.musicid;
