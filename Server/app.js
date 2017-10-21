@@ -22,7 +22,7 @@ const ssloptions = {
 };
 
 mongoose.Promise = global.Promise;
-const mongodbUri = 'mongodb://localhost/HackHack';
+const mongodbUri = 'mongodb://192.168.100.32/HackHack';
 const mongOptions = {
     useMongoClient: true,
     socketTimeoutMS: 0,
@@ -76,4 +76,3 @@ var server = https.createServer(ssloptions,app).listen(app.get('httpsport'), fun
 });
 
 module.exports = app;
-
