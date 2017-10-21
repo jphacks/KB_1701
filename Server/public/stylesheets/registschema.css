@@ -115,3 +115,7 @@ padding: 0;
   clear: both;
   content: "";
 }
+
+.text_box {
+  width:50%;
+}

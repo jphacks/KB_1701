@@ -1,5 +1,7 @@
 var data={}
 var id=1;
+var fs = require('fs');
+
 function add(){
     var div_element = document.createElement("div");
     div_element.innerHTML = '<input type="text" name="title" size="20" value="作りたいキー">  <input id="text'+id+'" type="text" name="title" size="20" value="作りたいキー">   <button onclick="add();">このボタンを押して動的にUIを追加！</button>';
@@ -10,6 +12,11 @@ function add(){
     addToJSON(document.getElementById("text"+(id-1)).value);
     // alert(id);
     id++;
+
+    var data = "write text test!";
+    fs.writeFile('test.txt', data , function (err) {
+        console.log(err);
+    });alert('aaa');
 }
 function ChangeTxt() {
   var first_flag=true;
