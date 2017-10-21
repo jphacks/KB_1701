@@ -1,23 +1,21 @@
 var content={}
-var id=1;
+var id=0;
 // var endpoint = 'https://192.168.128.102:3000/regist/schema';
 var endpoint = 'https://localhost:3000/regist/schema';
 var userid_key='userid'
 var userid_value='{type: String, require: true, unique: true}'
-initContent();
-function initContent(){
-  content={}
-  addtoContent(userid_key,userid_value);
-}
+addtoContent(userid_key,userid_value);
 
-function add(){
+function add(clicked_button_id){
+  if (id==clicked_button_id) {
+    id++;
     var div_element = document.createElement("div");
-    div_element.innerHTML = '<input type="text" name="title" size="20" value="作りたいキー">  <input id="text'+id+'" type="text" name="title" size="20" value="作りたいキー">   <button onclick="add();">このボタンを押して動的にUIを追加！</button>';
+    div_element.innerHTML = '<input type="text" name="title" size="20" value="作りたいキー">  <input id="text'+id+'" type="text" name="title" size="20" value="作りたいキー">   <button onclick="add('+id+');">このボタンを押して動的にUIを追加！</button>';
     var parent_object = document.getElementById("entry");
     parent_object.appendChild(div_element);
-
-    addtoContent(document.getElementById("text"+(id-1)).value,'{type: String}');
-    id++;
+  }
+    addtoContent(document.getElementById("text"+(clicked_button_id)).value,'{type: String}');
+    showContent();
 }
 
 function showContent() {
@@ -33,12 +31,17 @@ function showContent() {
     }
   }
   txt+='<br>}';
-  document.getElementById("text").innerHTML=txt;
+  document.getElementById("content_text").innerHTML=txt;
     // postrequest(txt);
 }
 
 function addtoContent(key,value){
   content[key]=value;
+}
+
+function initContent(){
+  content={}
+  addtoContent(userid_key,userid_value);
   showContent();
 }
 
