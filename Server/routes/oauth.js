@@ -134,6 +134,7 @@ router.get('/makechannel', function(req, res, next) {
 
   });
 
+  // res.redirect(hostURL+'/regist/schema');//チャンネル生成後は○○へ(今は/musicへ)
   res.redirect(hostURL+'/music');//チャンネル生成後は○○へ(今は/musicへ)
   
 });

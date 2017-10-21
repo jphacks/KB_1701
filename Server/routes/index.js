@@ -8,6 +8,7 @@ const User = require('../models/user');
 const Youtube = require('../models/youtube');
 const Team = require('../models/team');
 const Message = require('../models/message');
+const Limit = require('../models/limit');
 
 
 // var hostURL = 'https://13.115.41.122:3000';
@@ -22,7 +23,7 @@ router.get('/', function(req, res, next) {
   res.render('index',{ title: 'Express'});
 });
 
-router.get('/music', function(req, res, next) {
+router.get('/main', function(req, res, next) {
   console.log("GET request to the /music")
   //DBから
   res.render('main', { title: 'Express'});
@@ -32,6 +33,32 @@ router.get('/start', function(req, res, next) {
   console.log("GET request to the /start")
   //DBから
   res.render('start', { title: 'Express'});
+});
+
+router.get('/regist/schema', function(req, res, next) {
+  console.log("GET request to the /regist/schema")
+  //DBから
+  res.render('registSchema', { title: 'Express'});
+});
+
+router.get('/regist/limit', function(req, res, next) {
+  console.log("GET request to the /regist/limit")
+  var limitid = req.query.limitid;
+  var year;
+  var month;
+  var day;
+  var hour;
+  var minute;
+
+  Limit.find({"limitid" : limitid},function(err,limit){
+    if(err) console.log(err);
+    year = limit[0].year;
+    month = limit[0].month;
+    day = limit[0].day;
+    hour = limit[0].hour;
+    minute = limit[0].minute;
+    res.json({"year": year,"month": month,"day": day,"hour": hour,"minute": minute}); 
+  });
 });
 
 router.get('/music/load', function(req, res, next) {
@@ -152,22 +179,39 @@ router.post('/slack/bgm', function(req, res, next) {
   });
 });
 
-router.post('/slack/help', function(req, res, next) {
-  console.log('POST request to the /slack/help');
-  console.log(req.body.challenge);
-  res.send(req.body.challenge);
+router.post('/regist/limit', function(req, res, next) {
+  console.log('POST request to the /regist/limit');
+  res.setHeader('Content-Type', 'application/json');
+
+  var limitid  = req.body.limitid;
+  var year   = req.body.year;
+  var month   = req.body.month;
+  var day = req.body.day;
+  var hour = req.body.hour;
+  var minute = req.body.minute;
+
+  Limit.find({ 'limitid' : limitid }, function(err, result){
+      if (err) console.log(err);
+
+    // 新規登録
+      if (result.length == 0){
+        var limit = new Limit();
+
+        limit.limitid  = limitid;
+        limit.year   = year; 
+        limit.month   = month;
+        limit.day = day;
+        limit.hour = hour;
+        limit.minute = minute;
+        
+        limit.save(function(err){
+          if (err) console.log(err);
+        });
+      }
+    res.json({ 'status' : 200 });
+  });
+
 });
 
-router.post('/slack/events', function(req, res, next) {
-  console.log('POST request to the /slack/events');
-  console.log(req.body.challenge);
-  res.send(req.body.challenge);
-});
-
-router.post('/github', function(req, res, next) {
-  console.log('POST request to the /github');
-  console.log(req.body);
-  res.json(req.body);
-});
 
 module.exports = router;
