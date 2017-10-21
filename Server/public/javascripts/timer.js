@@ -16,8 +16,6 @@ var color1 = "FFFFFF";var color2 = "00FF00";var color3 = "000000";
 var hostURL = 'https://192.168.100.32:3000';
 var endpoint = hostURL+'/regist/limit?limitid=';
 
-getTimer('1');
-
 function getTimer(l_id){
   var url = endpoint+l_id; // リクエスト先URL
   var request = new XMLHttpRequest();
@@ -25,25 +23,19 @@ function getTimer(l_id){
   request.onreadystatechange = function () {
     if (request.readyState != 4) {
       // リクエスト中
-      // alert('on requesting');
-      
+
     } else if (request.status != 200) {
       // 失敗
-      alert('fail request');
-     
+
     } else {
       // 取得成功
-      alert('success request');
-      
       var result = JSON.parse(request.responseText);
-      
+
       year=result.year;
       month=result.month;
       day=result.day;
       hour=result.hour;
-      minute=result.minute;   
-      
-      alert(year);
+      minute=result.minute;
     }
   };
   request.response = 'json';
