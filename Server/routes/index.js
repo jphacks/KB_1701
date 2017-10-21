@@ -28,6 +28,12 @@ router.get('/music', function(req, res, next) {
   res.render('main', { title: 'Express'});
 });
 
+router.get('/start', function(req, res, next) {
+  console.log("GET request to the /start")
+  //DBから
+  res.render('start', { title: 'Express'});
+});
+
 router.get('/music/load', function(req, res, next) {
   console.log("GET request to the /music/load")
   console.log(req.query.musicid);
