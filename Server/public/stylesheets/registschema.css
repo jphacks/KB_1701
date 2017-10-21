@@ -47,20 +47,6 @@ width : 10%;/* 画像を枠の100%の横幅にする */
 /*並べるやつ*/
 .example {/*親div*/
   position: relative;/*相対配置*/
-  }
-
-
-.square_btn {
-display: inline-block;
-padding: 0.3em 1em;
-text-decoration: none;
-color: #ccffcc;
-border: solid 2sspx #33cc66;
-border-radius: 3px;
-transition: .4s;
-}.square_btn:hover {
-background: #33cc66;
-color: white;
 }
 
 .box2 {
@@ -69,12 +55,6 @@ margin: 2em 0;
 font-weight: bold;
 color: #6091d3;/*文字色*/
 background: #FFF;
-border: solid 3px #6091d3;/*線*/
-border-radius: 10px;/*角の丸み*/ }
-
-.box2 p {
-margin: 0;
-padding: 0;
 }
 
 .box_left {
@@ -98,20 +78,11 @@ padding: 0;
     font-weight: bold;
     color: #000000;/*文字色*/
     height:auto;
-	  overflow:hidden
+	  overflow:hidden;
+    font-size: medium;
     /*background-color:#F00;*/
     /*border: 1px solid #ccc;*/
 }
 .boxContainer{
   overflow: hidden;
-}
-.box_wrap {
-    width:1500px;
-    height:auto;
-    border:1px solid #000;
-}
-.clearfix:after {
-  display: block;
-  clear: both;
-  content: "";
 }
