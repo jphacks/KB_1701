@@ -292,6 +292,7 @@ router.post('/regist/limit', function(req, res, next) {
   var hour = req.body.hour;
   var minute = req.body.minute;
 
+
   Limit.find({ 'limitid' : limitid }, function(err, result){
       if (err) console.log(err);
 
