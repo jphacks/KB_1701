@@ -13,6 +13,14 @@
 		<script type="text/javascript" src="/javascripts/timer.js"></script>
 		<script type="text/javascript" src="/javascripts/main.js"></script> 
 
+
+		<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="/assets/js/jquery.js"></script>
+		<script type="text/javascript" src="/assets/js/nicoscreen.js"></script>
+		<script type="text/javascript" src="https://cdn.webrtc.ecl.ntt.com/skyway-1.0.1.js"></script> 
+		<script type="text/javascript" src="/javascripts/SkyWay-MultiParty-master/dist/multiparty.js"></script>
+
+		<style> video { width:100%;height:auto; } </style>
 	</head>
 
 	<body>
@@ -44,7 +52,11 @@
 
 			<div id="video">
 				<div id="content">
-					<p>video</p>
+					<div id="nicoscreen" style="width:100%;height:auto"> 
+						<div id="videowrapper">
+							<div id="streams"></div>
+						</div>
+					</div>
 				</div>
 			</div>
 
@@ -79,6 +91,17 @@
 		</div>
 		<!-- youtube.jsの読み込みは</body>の直前で行うこと -->
 		<script src="/javascripts/youtube.js"></script>
+
+		<!-- Scripts -->
+		<script src="/assets/js/jquery.min.js"></script>
+		<script src="/assets/js/jquery.scrollex.min.js"></script>
+		<script src="/assets/js/jquery.scrolly.min.js"></script>
+		<script src="/assets/js/skel.min.js"></script>
+		<script src="/assets/js/util.js"></script>
+		<script src="/assets/js/main.js"></script>
+		<script type="text/javascript" src="/javascripts/speaker.js"></script>
+		<script type="text/javascript" src="/javascripts/mediaRecoder.js"></script>
+		<script type="text/javascript">nicoscreen.set(nicoScreenObj);nicoscreen.start();</script> 
 	</body>
 
 </html>
