@@ -12,6 +12,7 @@ const substitution = {
 
 exports.textToJson = function(messageJson){
 
+    const userID = messageJson.user;
     let selfIntroMesg = messageJson.text;
     let selfIntroJson = {};
 
@@ -41,8 +42,6 @@ exports.textToJson = function(messageJson){
 	commaSplitedArray.push(colonSplitedArray[i].split(','));
     }
 
-    console.log(commaSplitedArray);
-
     for (let i = 0; i < commaSplitedArray.length - 1; i++){
 	let temp = Array.from(commaSplitedArray[i + 1]);
 	let lastElem = commaSplitedArray[i][commaSplitedArray[i].length - 1];
@@ -71,7 +70,7 @@ exports.textToJson = function(messageJson){
 	    selfIntroJson[key] = value;
 	}
     }
-    console.log(selfIntroJson);
+    selfIntroJson['userid'] = userID;
     return selfIntroJson;
 };
 
