@@ -36,6 +36,7 @@ var request = new XMLHttpRequest();
 var url = endpoint;
 request.open("POST",url,true);
 request.setRequestHeader('Content-Type', 'application/json');
+
 request.onreadystatechange = function() {//Call a function when the state changes.
     if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
         alert('ok')
