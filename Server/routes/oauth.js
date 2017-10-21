@@ -99,8 +99,8 @@ router.get('/makechannel', function(req, res, next) {
         var accesstoken = new AccessToken();
         accesstoken.id = allAccessTokenNum;
         accesstoken.slack  = slack_access_token;
-        accesstoken.github = github_access_token; 
-        
+        accesstoken.github = github_access_token;
+
         accesstoken.save(function(err){
           if (err) console.log(err);
         });
@@ -116,6 +116,6 @@ router.get('/makechannel', function(req, res, next) {
 
   res.redirect(hostURL+'/regist/schema');//チャンネル生成後は/regist/schemaへ
   // res.redirect(hostURL+'/main');//チャンネル生成後はmainへ
-  
+
 });
 module.exports = router;
