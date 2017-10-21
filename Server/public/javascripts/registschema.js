@@ -1,6 +1,6 @@
 var content={}
 var id=4;
-var endpoint = 'https://192.168.128.102:3000/regist/schema';
+var endpoint = 'https://ec2-13-115-41-122.ap-northeast-1.compute.amazonaws.com:3000/regist/schema';
 // var endpoint = 'https://localhost:3000/regist/schema';
 var userid_key='userid'
 var userid_value='{type: String, require: true, unique: true}'
