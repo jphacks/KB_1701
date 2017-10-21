@@ -124,11 +124,11 @@ router.get('/regist/limit', function(req, res, next) {
 router.get('/slack/get/channel', function(req, res, next) {
   console.log("GET request to the /regist/limit")
   var channelName = req.query.channelName;
-  var channelId;
+  // var channelId;
 
   Channel.find({"channelName" : channelName},function(err,channel){
     if(err) console.log(err);
-    channelId = channel[0].channelId;
+    var channelId = channel[0].channelId;
 
     res.json({"channelId": channelId});
   });
