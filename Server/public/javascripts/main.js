@@ -1,4 +1,5 @@
-var socket = new WebSocket('ws://localhost:8081/');
+const url = getHostUlr('ws', '/');
+var socket = new WebSocket(url);
 
 // When a connection is made
 socket.onopen = function() {

@@ -1,5 +1,6 @@
-var hostURL = 'https://192.168.128.102:3000';
+// var hostURL = 'https://192.168.128.102:3000';
 var endpoint = '/regist/limit?limitid=';
+var hostURL = getHostUlr('https', endpoint);
 var year = "2017";var month = "10";var day = "22";var hour = "15";var minute = "0";var centi = "1";
 getLimit(1);
 
@@ -20,7 +21,7 @@ alert(minute)
 
 
 function getLimit(l_id){
-  var url = hostURL+endpoint+l_id; // リクエスト先URL
+  var url = hostURL+l_id; // リクエスト先URL
   var request = new XMLHttpRequest();
 
   request.onreadystatechange = function () {
