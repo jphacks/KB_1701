@@ -3,6 +3,8 @@ var request = require('request');
 
 var accessDB = require('./AccessDB');
 
+var ToJson = require('./TextToJson')
+
 //RTM用モジュール
 const RtmClient = require('@slack/client').RtmClient;
 const CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS;
@@ -80,12 +82,15 @@ module.exports.startRTM = function(rtm,slack_access_token,socket){
             console.log('have attachments field');
         }else if(messageJson.user != 'USLACKBOT'){
             
-            if(messageJson.channel == 'C7J90T4SW'){
+            if(messageJson.channel == 'C7M9LQ03G'){//regist db test
                 //自己紹介チャンネルにメッセージが届いた時
+                console.log('on introduction');
+                
                 accessDB.saveData(messageJson.channel,messageJson);
                 console.log(messageJson);
             }else if(messageJson.channel == 'C7HU7A7T6'){
                 //musicチャンネルにメッセージが届いた時
+                console.log('on music');
                 accessDB.saveData(messageJson.channel,messageJson);
                 console.log(messageJson);
             }else if(messageJson.channel == 'C7LDL0PM5'){
@@ -99,6 +104,8 @@ module.exports.startRTM = function(rtm,slack_access_token,socket){
                 // console.log(messageJson);
             }else{
                 console.log(messageJson);
+                let user = ToJson.textToJson(messageJson);
+                console.log(user);
             }
         }
     });
