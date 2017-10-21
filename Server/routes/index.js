@@ -23,7 +23,7 @@ router.get('/', function(req, res, next) {
   res.render('index',{ title: 'Express'});
 });
 
-router.get('/music', function(req, res, next) {
+router.get('/main', function(req, res, next) {
   console.log("GET request to the /music")
   //DBから
   res.render('main', { title: 'Express'});
