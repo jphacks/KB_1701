@@ -88,10 +88,25 @@ module.exports.startRTM = function(rtm,slack_access_token,socket){
 
             if(messageJson.channel == 'C7M9LQ03G'){//regist db test
                 //自己紹介チャンネルにメッセージが届いた時
-                console.log('on introduction');
-
-                accessDB.saveData(messageJson.channel,messageJson);
                 console.log(messageJson);
+                let user = ToJson.textToJson(messageJson);
+                console.log(user);
+                var userJson = JSON.parse(JSON.stringify(user));
+
+                User.find({"userid":userJson.userid},function(err,result){
+                    if (result.length == 0){
+                        var user = new User();
+                        user.userid = userJson.userid;
+                        user.name = userJson.username;
+                        user.team = userJson.teamName;
+                        user.githubAccount = userJson.github;
+                        user.specialty = userJson.specialty;
+                        user.tobacco = userJson.tobacco;
+                        user.save(function(err){
+                          if (err) console.log(err);
+                        });
+                      }
+                } );
             }else if(messageJson.channel == 'C7HU7A7T6'){
                 //musicチャンネルにメッセージが届いた時
                 console.log('on music');
@@ -110,6 +125,8 @@ module.exports.startRTM = function(rtm,slack_access_token,socket){
                 console.log(messageJson);
                 let user = ToJson.textToJson(messageJson);
                 console.log(user);
+                
+
             }
         }
     });
