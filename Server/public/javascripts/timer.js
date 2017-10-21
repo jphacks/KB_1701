@@ -7,14 +7,14 @@ getLimit(1);
 // console.log(minute)
 var convert = "1";var roop = "";
 var cnt1 = "日";var cnt2 = "：";var cnt3 = "：";var cnt4 = ".";
-var baseoffset = "-9";var cuttime = "";
+var baseoffset = "none";var cuttime = "1";
 var br1 = "";var br2 = "";var br3 = "";var br4 = "";
-var com1 = "";var com2 = "";var com3 = "";var com4 = "HackTime終了";var end = "2";
-var width = "400";var height = "50";
-var font = "arial";var font2 = "7seg4";var size = "27";var l_height = "27";var bold = "";var italic = "";var line = "";
-var space = "0px 0px 0px 0px";
-var align = "2";var img = "";
-var color1 = "FFFFFF";var color2 = "00FF00";var color3 = "000000";
+var com1 = "";var com2 = "";var com3 = "";var com4 = "HackTimeしゅうりょう";var end = "2";
+var width = "500";var height = "65";
+var font = "arial";var font2 = "7seg4";var size = "60";var l_height = "60";var bold = "";var italic = "";var line = "";
+var space = "15px 15px 15px 15px";
+var align = "3";var img = "";
+var color1 = "00FF00";var color2 = "00FF00";var color3 = "000000";
 alert(minute)
 // var hostURL = 'https://13.115.41.122:3000';
 // var hostURL = 'https://172.20.11.172:3000';
