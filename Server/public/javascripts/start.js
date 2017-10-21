@@ -3,7 +3,7 @@
 var hostURL = 'https://192.168.100.32:3000';
 var url = hostURL+'/regist/limit';
 
-function startTimer(){
+function setLimit(){
 // id = document.forms.id_form1.id_tname.value;
 // year = document.forms.id_form1.tnumbox.value;
 // month = document.forms.id_form1.nocbox.value;
