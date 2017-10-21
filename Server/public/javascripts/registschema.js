@@ -4,13 +4,13 @@ var endpoint = 'https://192.168.128.102:3000/regist/schema';
 // var endpoint = 'https://localhost:3000/regist/schema';
 var userid_key='userid'
 var userid_value='{type: String, require: true, unique: true}'
-addtoContent(userid_key,userid_value);
-
+// addtoContent(userid_key,userid_value);
+var content={userid:'{type: String, require: true, unique: true}',name:'{type: String}',nickname:'{type: String}',team:'{type: String}',githubaccount:'{type: String}'}
 function add(clicked_button_id){
   if (id==clicked_button_id) {
     id++;
     var div_element = document.createElement("div");
-    div_element.innerHTML = '<input type="text" name="title" size="20" placeholder="自己紹介フォーマット">  <input id="text'+id+'" type="text" name="title" size="20" placeholder="作りたいキー">   <button onclick="add('+id+');">このボタンを押して動的にUIを追加！</button>';
+    div_element.innerHTML = '<input type="text" name="title" size="20" placeholder="自己紹介フォーマット">  <input id="text'+id+'" type="text" name="title" size="20" placeholder="作りたいキー">   <button onclick="add('+id+');">このボタンを押して動的にUIを追加！</button><br>';
     // div_element.innerHTML = '<input id="text'+id+'" type="text" name="title" size="20" value="作りたいキー">   <button onclick="add('+id+');">このボタンを押して動的にUIを追加！</button>';
     var parent_object = document.getElementById("entry");
     parent_object.appendChild(div_element);
