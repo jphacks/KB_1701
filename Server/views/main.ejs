@@ -12,7 +12,9 @@
 		<link rel="stylesheet" href="/stylesheets/commit_balloon.css">
 
 		<script type="text/javascript" src="/javascripts/commit_balloon.js"></script> 
+		<script type="text/javascript" src="/javascripts/timer.js"></script> 
 		<script type="text/javascript" src="/javascripts/main.js"></script> 
+
 
 
 
@@ -20,16 +22,25 @@
 
 	<body>
 		<div class="container">
-			<div class="item a">icon</div>
+			<div class="item hacktime">
+				<script type="text/javascript" src="//countdown.reportitle.com/js/neo1.js"></script>
+				<a href="//countdown.reportitle.com/">カウントダウンタイマー</a>
+				<script type="text/javascript" src="//countdown.reportitle.com/js/neo2.js"></script>
+			</div>
+			
+			<div class="item icon">
+				<img src="http://mashupaward.jp/wp-content/uploads/2016/11/3e9b440ec45a27664f61932c3d21e3b8.png" alt="icon" width="100%"  />
+			</div>
 
-			<div class="item b">
+
+			<div class="item bgm">
 				<!--youtube player  by takaya-->
 				<div id="player"></div>
 				<div id="username"></div><br>
       			<div id="musicid"></div>/<div id="allMusicNum"></div>
 			</div>
 
-			<div class="item c">
+			<div class="item commit">
 				<div id="content"></div>
 				<form name="form1" id="id_form1" action="">
 					<p>チーム<input type="text" id="id_tname" name="tname" value="">
@@ -45,16 +56,17 @@
 				</form>
 			</div>
 
-			<div class="item d">
+
+			<div class="item image">
 				<div id="word"></div>
 				<img id="icon">
 			</div>
 
-			<div class="item e">Hack Time!! 00:00:00</div>
 
 
 
-			<div class="item f">Video</div>
+			<div class="item video">Video</div>
+
 		</div>
 		<!-- youtube.jsの読み込みは</body>の直前で行うこと -->
 		<script src="/javascripts/youtube.js"></script>
