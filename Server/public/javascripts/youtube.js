@@ -14,7 +14,7 @@ var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 var player;
-var socket = new WebSocket('ws://192.168.100.32:8081/');
+var socket = new WebSocket('ws://192.168.128.102:8081/');
 
 
 // When a connection is made

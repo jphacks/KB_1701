@@ -13,9 +13,11 @@ function add(){
 }
 function ChangeTxt() {
   var first_flag=true;
+  var userid='userid: {type: String, require: true, unique: true},'
   for (var key in data) {
     if (first_flag) {
       var txt='{';
+      txt += userid;
       txt += key+':'+data[key];
       first_flag=false;
     }else{
@@ -27,7 +29,7 @@ function ChangeTxt() {
 }
 
 function addToJSON(key){
-  data[key]="a";
+  data[key]="{type: String}";
   // json=JSON.stringify(data);
   // alert(json);
   ChangeTxt();
