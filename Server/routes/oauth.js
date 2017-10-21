@@ -41,7 +41,7 @@ var wss = new WSS({ port: 8081 });
 /* GET home page. */
 router.get('/', function(req, res, next) {
   console.log("GET request to the /")
-  res.render('index', 
+  res.render('index',
     { title: 'Express' ,
       token: ""
     });
@@ -65,7 +65,7 @@ router.get('/slack', function(req, res, next) {
   request.get(options, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       slack_access_token = body.access_token;
-      
+
       console.log(body.scope+'\n');
       console.log('Slack Token : '+slack_access_token+'\n');
       res.redirect('https://github.com/login/oauth/authorize?'
@@ -135,7 +135,7 @@ router.get('/makechannel', function(req, res, next) {
   });
 
   // res.redirect(hostURL+'/regist/schema');//チャンネル生成後は○○へ(今は/musicへ)
-  res.redirect(hostURL+'/music');//チャンネル生成後は○○へ(今は/musicへ)
-  
+  res.redirect(hostURL+'/main');//チャンネル生成後は○○へ(今は/musicへ)
+
 });
 module.exports = router;
