@@ -110,6 +110,8 @@ module.exports.startRTM = function(rtm,slack_access_token,socket){
                 console.log(messageJson);
                 let user = ToJson.textToJson(messageJson);
                 console.log(user);
+                
+
             }
         }
     });
