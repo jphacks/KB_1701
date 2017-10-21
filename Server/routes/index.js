@@ -168,7 +168,7 @@ router.post('/regist/schema', function(req, res, next) {
         var schema = new MakeSchema();
 
         schema.schemaid = schemaid;
-        schema.schema  = schema;
+        schema.content  = schema;
         
         schema.save(function(err){
           if (err) console.log(err);
