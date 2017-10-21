@@ -1,10 +1,8 @@
 // var hostURL = 'https://13.115.41.122:3000';
 // var hostURL = 'https://172.20.11.172:3000';
 // var hostURL = 'https://192.168.100.32:3000';
-import IP from './staticIP';
-const ipData = new IP();
-const ip = ipData.IP();
-const hostUrl = ipData.hostUrl();
+import HostUlr from './staticIP';
+const hostUrl = HostUlr.getHostUlr();
 alert(hostUrl);
 
 var endpoint = 'https://192.168.128.102:3000/regist/limit';  // リクエスト先URL
@@ -42,5 +40,6 @@ request.onreadystatechange = function() {//Call a function when the state change
     }
 }
 
+alert(hostUrl);
 request.send(data);
 }
