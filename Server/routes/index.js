@@ -20,6 +20,7 @@ const Message = require('../models/message');
 const Limit = require('../models/limit');
 const AccessToken = require('../models/accesstoken');
 const Channel = require('../models/channel');
+const MakeSchema = require('../models/schema');
 
 // var hostURL = 'https://13.115.41.122:3000';
 // var hostURL = 'https://172.20.11.172:3000';
@@ -97,6 +98,9 @@ router.get('/regist/schema', function(req, res, next) {
   res.render('registSchema', { title: 'Express'});
 });
 
+
+
+
 router.get('/regist/limit', function(req, res, next) {
   console.log("GET request to the /regist/limit")
   var limitid = req.query.limitid;
@@ -165,6 +169,34 @@ router.post('/', function(req, res, next) {
   console.log('POST request to the index');
   console.log(req.body);
   res.send('POST request to the index');
+});
+
+router.post('/regist/schema', function(req, res, next) {
+  console.log("POST request to the /regist/schema")
+  res.setHeader('Content-Type', 'application/json');
+
+  var schemaid = req.body.schemaid;
+  var schema = req.body.schema;
+
+  MakeSchema.find({'schemaid': schemaid},function(err,result){
+    if (err) console.log(err);
+    if (result.length == 0){
+        var schema = new MakeSchema();
+
+        schema.schemaid = schemaid;
+        schema.schema  = schema;
+        
+        schema.save(function(err){
+          if (err) console.log(err);
+        });
+      }
+    res.json({ 'status' : 200 });
+
+  })
+
+
+  //DBから
+  res.render('registSchema', { title: 'Express'});
 });
 
 //自己紹介から取得したデータをDBへ格納
