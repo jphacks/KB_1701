@@ -283,6 +283,8 @@ router.post('/regist/limit', function(req, res, next) {
   console.log('POST request to the /regist/limit');
   res.setHeader('Content-Type', 'application/json');
 
+
+  console.log(req.body);
   var limitid  = req.body.limitid;
   var year   = req.body.year;
   var month   = req.body.month;
