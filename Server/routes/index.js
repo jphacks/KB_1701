@@ -57,7 +57,7 @@ router.get('/regist/limit', function(req, res, next) {
     day = limit[0].day;
     hour = limit[0].hour;
     minute = limit[0].minute;
-    res.json({"year": year,"month": month,"day": day,"hour": huor,"minute": minute}); 
+    res.json({"year": year,"month": month,"day": day,"hour": hour,"minute": minute}); 
   });
 });
 
