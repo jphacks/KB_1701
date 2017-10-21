@@ -1,6 +1,6 @@
 // var hostURL = 'https://13.115.41.122:3000';
 // var hostURL = 'https://172.20.11.172:3000';
-var hostURL = 'https://192.168.100.32:3000';
+var hostURL = 'https://192.168.128.102:3000';
 
 
 var nextMovieId;
