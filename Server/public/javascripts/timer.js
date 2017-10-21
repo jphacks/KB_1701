@@ -14,27 +14,36 @@ var color1 = "FFFFFF";var color2 = "00FF00";var color3 = "000000";
 // var hostURL = 'https://13.115.41.122:3000';
 // var hostURL = 'https://172.20.11.172:3000';
 var hostURL = 'https://192.168.100.32:3000';
-var url = hostURL+'/regist/limit?limitid=';
+var endpoint = hostURL+'/regist/limit?limitid=';
+
+getTimer('1');
 
 function getTimer(l_id){
-  var url = url+l_id; // リクエスト先URL
+  var url = endpoint+l_id; // リクエスト先URL
   var request = new XMLHttpRequest();
 
   request.onreadystatechange = function () {
     if (request.readyState != 4) {
       // リクエスト中
+      // alert('on requesting');
+      
     } else if (request.status != 200) {
       // 失敗
+      alert('fail request');
+     
     } else {
       // 取得成功
-
-      result = JSON.parse(request.responseText);
-
+      alert('success request');
+      
+      var result = JSON.parse(request.responseText);
+      
       year=result.year;
       month=result.month;
       day=result.day;
       hour=result.hour;
-      minute=resulut.minute;
+      minute=result.minute;   
+      
+      alert(year);
     }
   };
   request.response = 'json';
