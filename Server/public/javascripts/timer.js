@@ -1,4 +1,4 @@
-var hostURL = 'https://192.168.100.32:3000';
+var hostURL = 'https://192.168.128.102:3000';
 var endpoint = '/regist/limit?limitid=';
 var year = "2017";var month = "10";var day = "22";var hour = "15";var minute = "0";var centi = "1";
 getLimit(1);
