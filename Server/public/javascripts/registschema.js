@@ -1,5 +1,5 @@
 var content={}
-var id=0;
+var id=4;
 var endpoint = 'https://192.168.128.102:3000/regist/schema';
 // var endpoint = 'https://localhost:3000/regist/schema';
 var userid_key='userid'
@@ -10,8 +10,8 @@ function add(clicked_button_id){
   if (id==clicked_button_id) {
     id++;
     var div_element = document.createElement("div");
-    // div_element.innerHTML = '<input type="text" name="title" size="20" value="作りたいキー">  <input id="text'+id+'" type="text" name="title" size="20" value="作りたいキー">   <button onclick="add('+id+');">このボタンを押して動的にUIを追加！</button>';
-    div_element.innerHTML = '<input id="text'+id+'" type="text" name="title" size="20" value="作りたいキー">   <button onclick="add('+id+');">このボタンを押して動的にUIを追加！</button>';
+    div_element.innerHTML = '<input type="text" name="title" size="20" placeholder="自己紹介フォーマット">  <input id="text'+id+'" type="text" name="title" size="20" placeholder="作りたいキー">   <button onclick="add('+id+');">このボタンを押して動的にUIを追加！</button>';
+    // div_element.innerHTML = '<input id="text'+id+'" type="text" name="title" size="20" value="作りたいキー">   <button onclick="add('+id+');">このボタンを押して動的にUIを追加！</button>';
     var parent_object = document.getElementById("entry");
     parent_object.appendChild(div_element);
   }
