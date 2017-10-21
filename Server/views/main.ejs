@@ -10,8 +10,12 @@
 
 		<link rel="stylesheet" href="/stylesheets/grid_main.css">
 		<link rel="stylesheet" href="/stylesheets/commit_balloon.css">
+
 		<script type="text/javascript" src="/javascripts/commit_balloon.js"></script> 
 		<script type="text/javascript" src="/javascripts/timer.js"></script> 
+		<script type="text/javascript" src="/javascripts/main.js"></script> 
+
+
 
 
 	</head>
@@ -31,7 +35,9 @@
 
 			<div class="item bgm">
 				<!--youtube player  by takaya-->
-				<div id="player"></div>	
+				<div id="player"></div>
+				<div id="username"></div><br>
+      			<div id="musicid"></div>/<div id="allMusicNum"></div>
 			</div>
 
 			<div class="item commit">
@@ -44,13 +50,23 @@
 					del<input type="number" name="del" id="delbox" value="">
 					コメント<input type="text" name="comment" id="commentbox" value="">
 					<input type="button" value="OK" onclick='viewBalloon();'/>
+
+					<!-- git班が各部分はここ!!!!!!!!!!! -->
+
 				</form>
 			</div>
 
-			<div class="item image">message and image</div>
+
+			<div class="item image">
+				<div id="word"></div>
+				<img id="icon">
+			</div>
+
+
 
 
 			<div class="item video">Video</div>
+
 		</div>
 		<!-- youtube.jsの読み込みは</body>の直前で行うこと -->
 		<script src="/javascripts/youtube.js"></script>
