@@ -176,7 +176,7 @@ router.post('/regist/schema', function(req, res, next) {
   res.setHeader('Content-Type', 'application/json');
 
   var schemaid = req.body.schemaid;
-  var schema = req.body.schema;
+  var content = req.body.content;
 
   MakeSchema.find({'schemaid': schemaid},function(err,result){
     if (err) console.log(err);
@@ -184,7 +184,7 @@ router.post('/regist/schema', function(req, res, next) {
         var schema = new MakeSchema();
 
         schema.schemaid = schemaid;
-        schema.content  = schema;
+        schema.content  = content;
         
         schema.save(function(err){
           if (err) console.log(err);
@@ -193,10 +193,6 @@ router.post('/regist/schema', function(req, res, next) {
     res.json({ 'status' : 200 });
 
   })
-
-
-  //DBから
-  res.render('registSchema', { title: 'Express'});
 });
 
 //自己紹介から取得したデータをDBへ格納
