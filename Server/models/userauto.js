@@ -8,7 +8,7 @@ MakeSchema.find({"schemaid" : 1},function(err,response){
   // res.json({"year": year,"month": month,"day": day,"hour": hour,"minute": minute});
 });
 
-console.console.log(content);
+// console.console.log(content);
 var UserAuto = new Schema({
     content
 });
