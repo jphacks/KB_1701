@@ -9,7 +9,6 @@ var User = new Schema({
     githubAccount : {type: String, require: true},
     specialty : {type: String, require: true},
     tobacco : {type: Boolean}
-
 });
 
 module.exports = mongoose.model('user', User);
