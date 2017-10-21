@@ -53,6 +53,9 @@ module.exports.makeChannnel = function(slack_access_token,chName){
   });
 }
 
+
+
+
 module.exports.startRTM = function(rtm,slack_access_token,socket){
     rtm.start();
     rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED, function (rtmStartData) {
@@ -61,7 +64,7 @@ module.exports.startRTM = function(rtm,slack_access_token,socket){
             accessDB.saveChannel(c.id,c.name);
             if (c.name =='test') {
                 console.log("\nRegist Channel ID\n");
-                channel = c.id 
+                channel = c.id
             }
         }
     console.log(`Logged in as ${rtmStartData.self.name} of team ${rtmStartData.team.name}, but not yet connected to a channel`);
@@ -81,11 +84,12 @@ module.exports.startRTM = function(rtm,slack_access_token,socket){
         if('message' in messageJson){
             console.log('have attachments field');
         }else if(messageJson.user != 'USLACKBOT'){
-            
+
+
             if(messageJson.channel == 'C7M9LQ03G'){//regist db test
                 //自己紹介チャンネルにメッセージが届いた時
                 console.log('on introduction');
-                
+
                 accessDB.saveData(messageJson.channel,messageJson);
                 console.log(messageJson);
             }else if(messageJson.channel == 'C7HU7A7T6'){

@@ -19,10 +19,13 @@ const Team = require('../models/team');
 const Message = require('../models/message');
 const Limit = require('../models/limit');
 const AccessToken = require('../models/accesstoken');
+const Channel = require('../models/channel');
+const MakeSchema = require('../models/schema');
 
 // var hostURL = 'https://13.115.41.122:3000';
 // var hostURL = 'https://172.20.11.172:3000';
-var hostURL = 'https://192.168.100.32:3000';
+// var hostURL = 'https://192.168.100.32:3000';
+var hostURL ='https://192.168.128.102:3000'
 
 var musicid = 0;
 
@@ -39,7 +42,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/main', function(req, res, next) {
   console.log("GET request to the /music")
-  
+
 
   res.render('main', { title: 'Express'});
 });
@@ -48,7 +51,7 @@ router.get('/start', function(req, res, next) {
   console.log("GET request to the /start")
   //AccessToken DBからslackのaccessトークンを取得
   AccessToken.count(function(err,accessTokenNum){
-    
+
     if (err) console.log(err);
     AccessToken.find({"id": accessTokenNum-1},function(err,result){
       if (err) console.log(err);
@@ -95,11 +98,7 @@ router.get('/regist/schema', function(req, res, next) {
   res.render('registSchema', { title: 'Express'});
 });
 
-router.post('/regist/schema', function(req, res, next) {
-  console.log("GET request to the /regist/schema")
-  //DBから
-  res.render('registSchema', { title: 'Express'});
-});
+
 
 
 router.get('/regist/limit', function(req, res, next) {
@@ -118,9 +117,23 @@ router.get('/regist/limit', function(req, res, next) {
     day = limit[0].day;
     hour = limit[0].hour;
     minute = limit[0].minute;
-    res.json({"year": year,"month": month,"day": day,"hour": hour,"minute": minute}); 
+    res.json({"year": year,"month": month,"day": day,"hour": hour,"minute": minute});
   });
 });
+
+router.get('/slack/get/channel', function(req, res, next) {
+  console.log("GET request to the /regist/limit")
+  var channelName = req.query.channelName;
+  var channelId;
+
+  Channel.find({"channelName" : channelName},function(err,channel){
+    if(err) console.log(err);
+    channelId = channel[0].channelId;
+
+    res.json({"channelId": channelId});
+  });
+});
+
 
 router.get('/music/load', function(req, res, next) {
   console.log("GET request to the /music/load")
@@ -146,7 +159,7 @@ router.get('/music/load', function(req, res, next) {
         console.log("User Name: "+name);
         res.json({"videoId": videoId,"username": name,"musicid": musicid,"allMusicNum": allMusicNum});
       });
-    }); 
+    });
   });
 });
 
@@ -156,6 +169,34 @@ router.post('/', function(req, res, next) {
   console.log('POST request to the index');
   console.log(req.body);
   res.send('POST request to the index');
+});
+
+router.post('/regist/schema', function(req, res, next) {
+  console.log("POST request to the /regist/schema")
+  res.setHeader('Content-Type', 'application/json');
+
+  var schemaid = req.body.schemaid;
+  var schema = req.body.schema;
+
+  MakeSchema.find({'schemaid': schemaid},function(err,result){
+    if (err) console.log(err);
+    if (result.length == 0){
+        var schema = new MakeSchema();
+
+        schema.schemaid = schemaid;
+        schema.schema  = schema;
+        
+        schema.save(function(err){
+          if (err) console.log(err);
+        });
+      }
+    res.json({ 'status' : 200 });
+
+  })
+
+
+  //DBから
+  res.render('registSchema', { title: 'Express'});
 });
 
 //自己紹介から取得したデータをDBへ格納
@@ -170,7 +211,7 @@ router.post('/slack/introduction', function(req, res, next) {
     var githubAccount = req.body.githubAccount;
     var specialty = req.body.specialty;
     var tobacco = req.body.tobacco;
-      
+
     User.find({ 'userid' : userid }, function(err, result){
       if (err) console.log(err);
 
@@ -196,7 +237,7 @@ router.post('/slack/introduction', function(req, res, next) {
         user.githubAccount = githubAccount;
         user.specialty = specialty;
         user.tobacco = tobacco;
-        
+
         user.save(function(err){
           if (err) console.log(err);
         });
@@ -231,7 +272,7 @@ router.post('/slack/bgm', function(req, res, next) {
         youtube.url = url;
         youtube.title = title;
         youtube.userid = userid;
-        
+
         youtube.save(function(err){
           if (err) console.log(err);
         });
@@ -261,12 +302,12 @@ router.post('/regist/limit', function(req, res, next) {
         var limit = new Limit();
 
         limit.limitid  = limitid;
-        limit.year   = year; 
+        limit.year   = year;
         limit.month   = month;
         limit.day = day;
         limit.hour = hour;
         limit.minute = minute;
-        
+
         limit.save(function(err){
           if (err) console.log(err);
         });

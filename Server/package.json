@@ -12,7 +12,7 @@
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.3",
     "enum": "^2.4.0",
-    "express": "~4.15.2",
+    "express": "^4.15.5",
     "jade": "~1.11.0",
     "js-binarypack": "0.0.9",
     "moment": "^2.19.1",
