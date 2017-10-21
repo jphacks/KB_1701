@@ -16,7 +16,7 @@ var color1 = "FFFFFF";var color2 = "00FF00";var color3 = "000000";
 var hostURL = 'https://192.168.100.32:3000';
 var url = hostURL+'/regist/limit?limitid=';
 
-function getTimer(url,l_id){
+function getTimer(l_id){
   var url = url+l_id; // リクエスト先URL
   var request = new XMLHttpRequest();
 
