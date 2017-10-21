@@ -1,7 +1,7 @@
 // var hostURL = 'https://13.115.41.122:3000';
 // var hostURL = 'https://172.20.11.172:3000';
 var hostURL = 'https://192.168.100.32:3000';
-var url = hostURL+'/regist/limit';  // リクエスト先URL
+var endpoint = 'https://192.168.100.32:3000/regist/limit';  // リクエスト先URL
 
 function setLimit(){
 // var limitid = document.forms.id_form1.id_tname.value;
@@ -26,19 +26,27 @@ array.hour=hour;
 array.minute=minute;
 
 data=JSON.stringify(array);
-// alert(data);
 
-// var request = new XMLHttpRequest();
-// request.onreadystatechange = function () {
-//   if (request.readyState != 4) {
-//     // リクエスト中
-//   } else if (request.status != 200) {
-//     // 失敗
-//   } else {
-//     // 送信成功
-//   }
-// };
-// request.setRequestHeader('Content-Type', 'application/json');
-// request.open('POST', url);
-// request.send(JSON.stringify(data));
+send(data);
+// alert(data);
+function send(data){
+  var url = endpoint;
+  var request = new XMLHttpRequest();
+  request.onreadystatechange = function () {
+    if (request.readyState != 4) {
+      // リクエスト中
+      alert("posting")
+    } else if (request.status != 200) {
+      // 失敗
+      alert("failed")
+    } else {
+      // 送信成功
+      alert("success")
+    }
+  };
+  request.setRequestHeader('Content-Type', 'application/json');
+  request.open('POST', url);
+  request.send(JSON.stringify(data));
+}
+
 }
