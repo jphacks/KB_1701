@@ -33,8 +33,6 @@ module.exports.getIcon = function(slack_access_token){
   });
 }
 
-
-
 module.exports.makeChannnel = function(slack_access_token,chName){
   var options = {
     url: 'https://slack.com/api/channels.create?token='+slack_access_token
@@ -46,7 +44,7 @@ module.exports.makeChannnel = function(slack_access_token,chName){
     if (!error && response.statusCode == 200) {
       console.log(body);
       // ここで作成したチャンネルのchannelIdとchannelNameをDBに登録
-    //   accessDB.saveChannel(body.channel.id,body.channel.name);
+      // accessDB.saveChannel(body.channel.id,body.channel.name);
     } else {
       console.log('error: '+ response.statusCode);
     }
@@ -59,7 +57,7 @@ module.exports.startRTM = function(rtm,slack_access_token,socket){
         for (const c of rtmStartData.channels) {
             console.log(c.name + ' : ' + c.id);
             accessDB.saveChannel(c.id,c.name);
-            if (c.name ==='musicrequest') {
+            if (c.name =='test') {
                 console.log("\nRegist Channel ID\n");
                 channel = c.id 
             }
@@ -68,7 +66,7 @@ module.exports.startRTM = function(rtm,slack_access_token,socket){
     });
 
     rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, function () {
-        rtm.sendMessage("Hello!", channel);
+        rtm.sendMessage("Hello!", 'C7KP6ABL0');
     });
 
 
@@ -81,14 +79,27 @@ module.exports.startRTM = function(rtm,slack_access_token,socket){
         if('message' in messageJson){
             console.log('have attachments field');
         }else if(messageJson.user != 'USLACKBOT'){
-            //自己紹介チャンネルにメッセージが届いた時
-            //musicチャンネルにメッセージが届いた時
-            //helpチャンネルにメッセージが届いた時
-            //all_kobeチャンネルにメッセージが届いた時
-
-            socket.send(JSON.stringify(message));//slackへの投稿をviewへ送信
-            accessDB.saveData(channel,messageJson);
-            console.log(messageJson);
+            
+            if(messageJson.channel == 'C7J90T4SW'){
+                //自己紹介チャンネルにメッセージが届いた時
+                accessDB.saveData(messageJson.channel,messageJson);
+                console.log(messageJson);
+            }else if(messageJson.channel == 'C7HU7A7T6'){
+                //musicチャンネルにメッセージが届いた時
+                accessDB.saveData(messageJson.channel,messageJson);
+                console.log(messageJson);
+            }else if(messageJson.channel == 'C7LDL0PM5'){
+                //helpチャンネルにメッセージが届いた時
+                socket.send(JSON.stringify(message));//slackへの投稿をviewへ送信
+                console.log(messageJson);
+            }else if(messageJson.channel == 'C7KP6ABL0'){
+                //all_kobeチャンネルにメッセージが届いた時
+                // console.log(messageJson.file.url_private);
+                socket.send(JSON.stringify(message));//slackへの投稿をviewへ送信
+                // console.log(messageJson);
+            }else{
+                console.log(messageJson);
+            }
         }
     });
 }
