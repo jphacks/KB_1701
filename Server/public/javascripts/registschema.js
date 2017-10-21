@@ -1,6 +1,7 @@
 var data={}
 var id=1;
 var fs = require('fs');
+var endpoint = 'https://192.168.128.102:3000/regist/schema';
 
 function add(){
     var div_element = document.createElement("div");
@@ -20,7 +21,7 @@ function add(){
 }
 function ChangeTxt() {
   var first_flag=true;
-  var userid='userid: {type: String, require: true, unique: true},'
+  var userid='userid: {type: String, require: true, unique: true},<br>&nbsp;'
   for (var key in data) {
     if (first_flag) {
       var txt='{';
@@ -32,7 +33,8 @@ function ChangeTxt() {
     }
   }
   txt+='<br>}';
-    document.getElementById("text").innerHTML=txt;
+  document.getElementById("text").innerHTML=txt;
+    postrequest(txt);
 }
 
 function addToJSON(key){
@@ -40,4 +42,19 @@ function addToJSON(key){
   // json=JSON.stringify(data);
   // alert(json);
   ChangeTxt();
+}
+function postrequest(txt){
+  var array={limitid:'',year:'',month:'',day:'',hour:'',minute:''};
+data=JSON.stringify(array);
+var request = new XMLHttpRequest();
+var url = endpoint;
+request.open("POST",url,true);
+request.setRequestHeader('Content-Type', 'application/json');
+request.onreadystatechange = function() {//Call a function when the state changes.
+    if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+        alert('ok')
+    }
+}
+
+request.send(data);
 }
