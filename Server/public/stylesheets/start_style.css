@@ -27,19 +27,3 @@ body {
 
 
 }
-
-a {
-text-decoration: none;
-}
-#main_image img {
-width : 30%; /* 画像を枠の100%の横幅にする */
-}
-#logo_image img {
-width : 20%; /* 画像を枠の100%の横幅にする */
-}
-
-/*#button_image img {
-width : 10%;/* 画像を枠の100%の横幅にする */
-}*/
-
-

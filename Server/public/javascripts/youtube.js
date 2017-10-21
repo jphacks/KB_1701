@@ -1,6 +1,6 @@
 // var hostURL = 'https://13.115.41.122:3000';
 // var hostURL = 'https://172.20.11.172:3000';
-var hostURL = 'https://192.168.100.32:3000';
+var hostURL = 'https://192.168.128.102:3000';
 
 
 var nextMovieId;
@@ -14,7 +14,7 @@ var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 var player;
-var socket = new WebSocket('ws://192.168.100.32:8081/');
+var socket = new WebSocket('ws://192.168.128.102:8081/');
 
 
 // When a connection is made
@@ -105,7 +105,7 @@ function stopVideo() {
 function getMovieId(url){
   var url = url; // リクエスト先URL
   var request = new XMLHttpRequest();
-  
+
   request.onreadystatechange = function () {
     if (request.readyState != 4) {
       // リクエスト中
@@ -113,15 +113,15 @@ function getMovieId(url){
       // 失敗
     } else {
       // 取得成功
-     
+
       result = JSON.parse(request.responseText);
-      
+
       loadPlayer(result.videoId);
       document.getElementById("username").textContent=result.username;
       document.getElementById("musicid").textContent=result.musicid;
       document.getElementById("allMusicNum").textContent=result.allMusicNum;
-      // alert(result.username);
-      
+      // alert(result);
+
     }
   };
   request.response = 'json';
