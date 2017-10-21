@@ -11,8 +11,8 @@ const Message = require('../models/message');
 
 
 // var hostURL = 'https://13.115.41.122:3000';
-var hostURL = 'https://172.20.11.172:3000';
-// var hostURL = 'https://localhost:3000';
+// var hostURL = 'https://172.20.11.172:3000';
+var hostURL = 'https://192.168.100.32:3000';
 
 var musicid = 0;
 
@@ -26,6 +26,12 @@ router.get('/music', function(req, res, next) {
   console.log("GET request to the /music")
   //DBから
   res.render('main', { title: 'Express'});
+});
+
+router.get('/start', function(req, res, next) {
+  console.log("GET request to the /start")
+  //DBから
+  res.render('start', { title: 'Express'});
 });
 
 router.get('/music/load', function(req, res, next) {

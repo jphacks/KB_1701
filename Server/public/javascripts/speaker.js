@@ -111,10 +111,6 @@ $(window).load(function(){
 		'<li>'+
 		    '<article class="box post-summary">' +
 		      '<h3>'+ message.text +'</h3>'+
-		      // '<ul class="meta">'+
-		      //   '<li class="icon fa-clock-o">' + mesg.data.date.hh +':'+ mesg.data.date.mm +':'+ mesg.data.date.ss+'</li>'+
-		      //   '<li class="icon fa-comments">'+ mesg.data.username+'</li>'+
-		      // '</ul>'+
 		    '</article>'+
 		'</li>'
 	);
