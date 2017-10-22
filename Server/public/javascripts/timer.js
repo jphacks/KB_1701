@@ -8,7 +8,7 @@ var convert = "1";var roop = "";
 var cnt1 = "日";var cnt2 = "：";var cnt3 = "：";var cnt4 = ".";
 var baseoffset = "none";var cuttime = "1";
 var br1 = "";var br2 = "";var br3 = "";var br4 = "";
-var com1 = "";var com2 = "";var com3 = "";var com4 = "HackTimeしゅうりょう";var end = "2";
+var com1 = "";var com2 = "";var com3 = "";var com4 = "Code Freeze";var end = "2";
 var width = "500";var height = "65";
 var font = "arial";var font2 = "7seg4";var size = "60";var l_height = "60";var bold = "";var italic = "";var line = "";
 var space = "15px 15px 15px 15px";
