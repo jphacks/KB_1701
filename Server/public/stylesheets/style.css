@@ -1,0 +1,98 @@
+body {
+  padding: 50px;
+  /*background: #000000;*/
+  /*background-image: url(img/sample.jpg);*/
+  text-align: center;
+  font: 30px "Lucida Grande", Helvetica, Arial, sans-serif;
+ /* 画像を常に天地左右の中央に配置 */
+ background-position: center center;
+
+ /* 画像をタイル状に繰り返し表示しない */
+ background-repeat: no-repeat;
+
+ /* コンテンツの高さが画像の高さより大きい時、動かないように固定 */
+ background-attachment: fixed;
+
+ /* 表示するコンテナの大きさに基づいて、背景画像を調整 */
+ background-size: cover;
+
+ /* 背景画像が読み込まれる前に表示される背景のカラー */
+ /*background-color: #464646;*/
+
+ img {
+ width:100%;
+ max-width: 100%;
+ height: auto;
+ }
+
+
+}
+
+a {
+text-decoration: none;
+}
+#main_image img {
+width : 30%; /* 画像を枠の100%の横幅にする */
+}
+#logo_image img {
+width : 20%; /* 画像を枠の100%の横幅にする */
+}
+
+/*#button_image img {
+width : 10%;/* 画像を枠の100%の横幅にする */
+}*/
+
+
+
+/*並べるやつ*/
+.example {/*親div*/
+  position: relative;/*相対配置*/
+  }
+
+
+.square_btn {
+display: inline-block;
+padding: 0.3em 1em;
+text-decoration: none;
+color: #ccffcc;
+border: solid 2sspx #33cc66;
+border-radius: 3px;
+transition: .4s;
+}.square_btn:hover {
+background: #33cc66;
+color: white;
+}
+
+.box2 {
+padding: 0.5em 1em;
+margin: 2em 0;
+font-weight: bold;
+color: #6091d3;/*文字色*/
+background: #FFF;
+border: solid 3px #6091d3;/*線*/
+border-radius: 10px;/*角の丸み*/ }
+
+.box2 p {
+margin: 0;
+padding: 0;
+}
+
+.box_left {
+    color: #FFF;
+    width:200px;
+    height:150px;
+    margin-left:300px;
+    float:left;
+    /*background-color:#F00;*/
+    /*border: 1px solid #ccc;*/
+}
+.box_wrap {
+    width:1500px;
+    height:auto;
+    border:1px solid #000;
+}
+.clearfix:after {
+  display: block;
+  clear: both;
+  content: "";
+}

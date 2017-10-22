@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link rel="stylesheet" href="/assets/css/speaker2.css" />
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.js"></script>
+    <script type="text/javascript" src="/assets/js/nicoscreen.js"></script>
+    <script type="text/javascript" src="https://cdn.webrtc.ecl.ntt.com/skyway-1.0.1.js"></script> <!-- 書き換え必須 -->
+    <!-- <script type="text/javascript" src="/javascripts/skyway-js-sdk/src/peer.js/"></script> -->
+    <script type="text/javascript" src="/javascripts/SkyWay-MultiParty-master/dist/multiparty.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    
+    <style> video { width:100%;height:auto; } </style>
+    <style type="text/css">
+      .scroll {
+      overflow-y: scroll;   /* スクロール表示 */
+      height:100vh}
+    </style>
+  </head>
+  <body>
+
+    <span style="display:none;" id="peerID"><%= peerID %></span>
+    <span style="display:none;" id="room"><%= room %></span>
+    <span style="display:none;" id="openTime"><%= openTime %></span>
+    
+    <!-- Sidebar -->
+    <section id="sidebar">
+      <div class="inner">
+	<nav>
+	  <ul>
+
+	    <li><a onclick="history.back()">Back＜＜</a></li>
+	    <!-- <li><a href="#intro">Home</a></li>     -->
+	    <!-- <li><a href="#one">Live Room</a></li>  -->
+	    <!-- <li><a href="#three">Account</a></li>  -->
+	  </ul>
+	</nav>
+      </div>
+    </section>
+    
+    <!-- Wrapper -->
+    <div id="wrapper" style="heght=100vh">
+      
+      <!-- One -->
+      <section id="two" style="heght=100%" class="wrapper">
+	<div id="main" style="width: 64%;">
+	  <div id="nicoscreen" style="width:100%;height:auto"> 
+	    <div id="videowrapper">
+	      <div id="streams"></div>
+	    </div>
+	  </div>
+	  <!-- <form><input style="width: 80%; display: inline;" type="text"><button style="float:right;width: 18%" type="submit">send</button></form> -->
+	</div>
+	<div id="navigation" height="1000px" style="width: 34%; height:100%">
+	  <DIV class="scroll">
+	    <div class="sidebar">
+	      <!-- Archives -->
+	      <ul class="divided">
+	      </ul>
+	    </div>
+	  </DIV>
+	</div>
+	<div id="complementary" style="width: 64%; ">		
+
+	  <h2 id="openTimeView"></h2>
+	  <h2 id="currentTime"></h2>
+
+	  <!-- <button id="start_button" onclick="startVideo()">StartVideo</button> -->
+	  <!-- <button style="float:right;" id="start_record_button">Start Record</button> -->
+	  <!-- <button style="float:right;" id="stop_record_button" >Stop Record</button> -->
+	  
+	  <!-- <a href="#" id="downloadlink" class="download"><button id="downloadbtn" style="float:right;">Download</button></a> -->
+					
+	  <video id="playback_video" width="320px" height="240px" autoplay="1" style="display:none"></video>
+	</div>
+	
+      </section> 
+    </div>
+
+    <!-- Scripts -->
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/jquery.scrollex.min.js"></script>
+    <script src="/assets/js/jquery.scrolly.min.js"></script>
+    <script src="/assets/js/skel.min.js"></script>
+    <script src="/assets/js/util.js"></script>
+    <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+    <script src="/assets/js/main.js"></script>
+    <script type="text/javascript" src="/javascripts/speaker.js"></script>
+    <script type="text/javascript" src="/javascripts/mediaRecoder.js"></script>
+    <script type="text/javascript">
+      nicoscreen.set(nicoScreenObj);
+      nicoscreen.start();
+    </script> 
+  </body>
+</html>

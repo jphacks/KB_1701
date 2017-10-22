@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<!-- <div class="example">
+  <img src="/views/sample.jpg" />
+  <p>SUNSET</p>
+</div> -->
+
+<head>
+     <link rel="stylesheet" href="/stylesheets/registschema.css" />
+
+    <!--スクリプト読み込み-->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/javascripts/registschema.js"></script>
+    <title>HackHack</title>
+    <link rel="shortcut icon" href="/stylesheets/img/icon.png" type="image/png">
+
+</head>
+    <body>
+        <h1>自己紹介フォーマット作成</h1>
+        <div class="boxContainer">
+          <div class="box_left">
+            <div id="entry">
+                <input type="text" name="title" size="20" value="作りたいキー">  <input id="text0" type="text" name="title" size="20" value="作りたいキー">   <button onclick="add(0);">このボタンを押して動的にUIを追加！</button>
+            </div>
+          </div>
+          <div class="box_right">
+            <div id="content_text">text</div>
+          </div>
+        </div>
+
+        <div class="box2">
+          <img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" onclick="initContent();"/>
+        <a href="https://192.168.128.102:3000/start">
+
+              <img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" onclick="postrequest();"/>
+          </a>
+        </div>
+    </body>
+</html>

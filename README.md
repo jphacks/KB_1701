@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # サンプル（プロダクト名）
 
 [![Product Name](https://raw.github.com/GabLeRoux/WebMole/master/ressources/WebMole_Youtube_Video.png)](https://www.youtube.com/channel/UC4PtjOfZTbVp9DwtJv82Lzg)
@@ -57,3 +58,18 @@
 #### 2日間に開発した独自の機能・技術
 * 独自で開発したものの内容をこちらに記載してください
 * 特に力を入れた部分をファイルリンク、またはcommit_idを記載してください（任意）
+=======
+# README #
+
+# JPhack2017用リポジトリ
+
+## base URL
+http://172.20.11.170:3000
+
+## endopoint
+### POST
+- /slack/introduction
+- /slack/bgm
+- /slack/help
+- /github
+>>>>>>> fd6b08a1c59b6c8198ae7e8a2263785d8f2bcdf0
