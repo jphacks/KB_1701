@@ -1,6 +1,8 @@
 var content={}
+
 var id=4;
 var endpoint = 'https://192.168.128.102:3000/regist/schema';
+
 // var endpoint = 'https://localhost:3000/regist/schema';
 var userid_key='userid'
 var userid_value='{type: String, require: true, unique: true}'

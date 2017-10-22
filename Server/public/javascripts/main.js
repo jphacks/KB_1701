@@ -1,4 +1,6 @@
-var socket = new WebSocket('ws://192.168.128.102:8081/');
+
+var socket = new WebSocket('ws://localhost:8081/');
+
 
 // When a connection is made
 socket.onopen = function() {

@@ -5,8 +5,10 @@
 // const hostUrl = HostUlr.getHostUlr();
 // alert(hostUrl);
 
+
 // var endpoint = 'https://192.168.128.102:3000/regist/limit';  // リクエスト先URL
 var endpoint = 'https://192.168.128.102:3000/regist/limit'
+
 
 function setLimit(){
     

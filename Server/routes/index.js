@@ -146,19 +146,19 @@ router.get('/music/load', function(req, res, next) {
   Youtube.find({"musicid" : musicid},function(err,youtube){
     if(err) console.log(err);
     videoId = youtube[0].url;
-    //userid = youtube[0].userid;
+    userid = youtube[0].userid;
     console.log(youtube[0].url);
     console.log(youtube[0].userid);
 
 
     Youtube.count(function(err,allMusicNum){
       if(err) console.log(err);
-      //User.find({"userid" : userid},function(error,user){
-        //if(err) console.log(err);
-        //name = user[0].username;
-        //console.log("User Name: "+name);
+      User.find({"userid" : userid},function(error,user){
+        if(err) console.log(err);
+        name = user[0].username;
+        console.log("User Name: "+name);
         res.json({"videoId": videoId,"username": name,"musicid": musicid,"allMusicNum": allMusicNum});
-      //});
+      });
     });
   });
 });
