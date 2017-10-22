@@ -1,6 +1,6 @@
 # HackHack
 
-[![Product Name](https://raw.github.com/GabLeRoux/WebMole/master/ressources/WebMole_Youtube_Video.png)](https://www.youtube.com/channel/UC4PtjOfZTbVp9DwtJv82Lzg)
+[![Product Name](https://github.com/jphacks/KB_1701/blob/readme/Server/public/stylesheets/img/icon.png)](https://www.youtube.com/channel/UC4PtjOfZTbVp9DwtJv82Lzg)
 
 ## 製品概要
 ### 'X Tech' × Tch
