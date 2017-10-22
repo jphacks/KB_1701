@@ -23,7 +23,7 @@ const ssloptions = {
 };
 
 mongoose.Promise = global.Promise;
-const mongodbUri = 'mongodb://192.168.128.102/HackHack';
+const mongodbUri = 'mongodb://ec2-13-115-41-122.ap-northeast-1.compute.amazonaws.com/HackHack';
 const mongOptions = {
     useMongoClient: true,
     socketTimeoutMS: 0,
