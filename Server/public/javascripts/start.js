@@ -6,7 +6,7 @@
 // alert(hostUrl);
 
 // var endpoint = 'https://192.168.128.102:3000/regist/limit';  // リクエスト先URL
-var endpoint = 'https://ec2-13-115-41-122.ap-northeast-1.compute.amazonaws.com/regist/limit'
+var endpoint = 'https://192.168.128.102:3000/regist/limit'
 
 function setLimit(){
     

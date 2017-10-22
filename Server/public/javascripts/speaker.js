@@ -40,7 +40,7 @@ $(window).load(function(){
     multiparty.start();
     
     // const socket = io.connect('https://172.20.11.172:8081');
-    var socket = new WebSocket('ws://ec2-13-115-41-122.ap-northeast-1.compute.amazonaws.com:8081/');
+    var socket = new WebSocket('ws://192.168.128.102:8081/');
 
     // When a connection is made
     socket.onopen = function() {
