@@ -45,7 +45,7 @@ slack上の専用チャンネルを用意し，投稿した情報をスクリー
 
 #### 1. 自己紹介情報のフォーマット自動生成
 <div align="center">
-<img src="https://github.com/jphacks/KB_1701/blob/lastspart/Server/public/stylesheets/img/manyregist.png" title="self introduction format" width="200" height="200">
+<img src="https://github.com/jphacks/KB_1701/blob/lastspart/Server/public/stylesheets/img/manyregist.png" title="self introduction format" width="800" height="450">
 </div>
 ##### 運営側はハッカソン開催前に行う自己紹介のフォーマットを容易に形式化でき，slack上で参加者が行う自己紹介情報を簡単にデータベース化できる．
 
