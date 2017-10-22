@@ -3,7 +3,7 @@
 [![Product name](https://github.com/jphacks/KB_1701/blob/readme/Server/public/stylesheets/img/icon.png)](https://www.youtube.com/channel/UC4PtjOfZTbVp9DwtJv82Lzg)
 
 ## 製品概要
-### 'X Tech' × Tch
+### 'X Tech' × Tech
 
 ### 背景
 - 近年，オープンイノベーションを狙ったハッカソンが増加している．
@@ -65,6 +65,7 @@ slack上の専用チャンネルを用意し，投稿した情報をスクリー
 * Slack
 * Github
 * SkyWay
+* YouTube
 
 #### フレームワーク・ライブラリ・モジュール
 * node.js
