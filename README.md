@@ -1,8 +1,3 @@
-# HackHack
-<div align="center">
-<img src="https://github.com/jphacks/KB_1701/blob/readme/Server/public/stylesheets/img/img_2.png" alt="https://github.com/jphacks/KB_1701/blob/readme/Server/public/stylesheets/img/img_2" title="hackhack" width="200" height="200">
-</div>
-
 ## 製品概要
 ### 'X Tech' × Tech
 
