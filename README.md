@@ -39,7 +39,7 @@ slack上の専用チャンネルを用意し，投稿した情報をスクリー
 
 ### 特長
 <div align="center">
-<img src="https://github.com/jphacks/KB_1701/blob/lastspart/Server/public/stylesheets/img/main.png" alt="https://github.com/jphacks/KB_1701/blob/lastspart/Server/public/stylesheets/img/main.png" title="Main UI" width="800" height="450">
+<img src="https://github.com/jphacks/KB_1701/blob/lastspart/Server/public/stylesheets/img/main.png" alt="https://github.com/jphacks/KB_1701/blob/lastspart/Server/public/stylesheets/img/main.png" title="Main UI" width="600" height="450">
 </div>
 
 本プロダクトは，以下のことが可能となる．
