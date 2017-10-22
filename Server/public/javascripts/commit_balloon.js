@@ -1,15 +1,15 @@
 function setRandomLeft(imageWidth) {
-	var targetElement = document.getElementById( "content" ) ;
-	var clientRect = targetElement.getBoundingClientRect() ;	// 要素の位置座標を取得
-	var x = clientRect.left ;									// 画面の左端から、要素の左端までの距離
-	return (Math.random() * (document.getElementById("content").clientWidth - imageWidth))+ x + "px";
+	var targetElement = document.getElementById( "commitcontent" ) ;
+	// var clientRect = targetElement.getBoundingClientRect() ;	// 要素の位置座標を取得
+	// var x = clientRect.left ;									// 画面の左端から、要素の左端までの距離
+	return (Math.random() * (document.getElementById("commitcontent").clientWidth - imageWidth))-50 + "px";
 }
 
 function setRandomTop(imageHeight) {
-	var targetElement = document.getElementById( "content" ) ;
-	var clientRect = targetElement.getBoundingClientRect() ;	// 要素の位置座標を取得
-	var y = clientRect.top ;									// 画面の上端から、要素の上端までの距離
-	return (Math.random() * (document.getElementById("content").clientHeight - imageHeight))+ y + "px";
+	var targetElement = document.getElementById( "commitcontent" ) ;
+	// var clientRect = targetElement.getBoundingClientRect() ;	// 要素の位置座標を取得
+	// var y = clientRect.top ;									// 画面の上端から、要素の上端までの距離
+	return (Math.random() * (document.getElementById("commitcontent").clientHeight - imageHeight)) + "px";
 }
 
 function viewBalloon() {
@@ -25,5 +25,5 @@ function viewBalloon() {
 	image.style.position = "absolute";
 	image.style.top = setRandomTop("100");//画像の横の長さをsetRandomTopに。
 	image.style.left = setRandomLeft("100");//画像の縦の長さをsetRandomLeftに。
-	document.getElementById("content").appendChild(image);
+	document.getElementById("commitcontent").appendChild(image);
 }

@@ -64,7 +64,7 @@ body {
 #youtubeframe{
     position: relative;
     width: 80%;
-	height:33%;
+	height:0%;
 	/* background: black; */
   margin: auto;
   margin-top:10%;
@@ -186,10 +186,14 @@ background-position: center;
   object-fit: cover;
   /* position: absolute; */
   height: 80%;
-  width: auto;
+  width: 40%;
   /* background: black; */
   margin: 5%;
   /* border: 1px solid #ccc; */
+background-image:url("img/image.png");
+background-size: contain;
+background-repeat: no-repeat;
+background-position: center;
 }
 .imagetext {
     position: relative;

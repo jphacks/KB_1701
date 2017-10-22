@@ -5,9 +5,14 @@
 }
  
 #youtube-movie-content {
+  margin-top: 20%;
   padding-top: 56.25%;
   position: relative;
   width: 100%;
+  background-image:url("img/YouTube.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
  
 #youtube-movie-content iframe {

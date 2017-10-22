@@ -1,6 +1,7 @@
 // var hostURL = 'https://13.115.41.122:3000';
 // var hostURL = 'https://172.20.11.172:3000';
-var hostURL = 'https://ec2-13-115-41-122.ap-northeast-1.compute.amazonaws.com:3000';
+// var hostURL = getHostUlr('https', '/');
+var hostURL = 'https://192.168.128.102:3000';
 
 
 var nextMovieId;
@@ -13,8 +14,7 @@ tag.src = "https://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-var player;
-var socket = new WebSocket('ws://ec2-13-115-41-122.ap-northeast-1.compute.amazonaws.com:8081/');
+var socket = new WebSocket('ws://localhost:8081/');
 
 
 // When a connection is made
@@ -57,8 +57,10 @@ function onYouTubeIframeAPIReady() {
 
 
 function loadPlayer(videoID) {
+  
   /* 埋め込むオブジェクトを生成（すでにある場合は削除）*/
-  if(!player){
+  if(player){
+    // alert('aaaaaaaaaaa')
     player = new YT.Player(
       'player',{
         width: '640',   /* 動画プレーヤーの幅 */
@@ -117,10 +119,10 @@ function getMovieId(url){
       result = JSON.parse(request.responseText);
 
       loadPlayer(result.videoId);
-     //document.getElementById("username").textContent=result.username;
-      //document.getElementById("musicid").textContent=result.musicid;
-      //document.getElementById("allMusicNum").textContent=result.allMusicNum;
-      // alert(result);
+      document.getElementById("username").textContent=result.username;
+      document.getElementById("musicid").textContent=result.musicid;
+      document.getElementById("allMusicNum").textContent=result.allMusicNum;
+      alert(result);
 
     }
   };

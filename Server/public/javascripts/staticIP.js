@@ -6,7 +6,9 @@
 // (特にimport等をする必要はなし)
 
 function getHostUlr(type, endpoint){
-    const host = 'ec2-13-115-41-122.ap-northeast-1.compute.amazonaws.com';
+    // const host = 'ec2-13-115-41-122.ap-northeast-1.compute.amazonaws.com'; // for deploy
+    const host = '192.168.128.102'; // for local
+    
     const httpsPort = 3000;
     const wsPort    = 8081;
     let port;
