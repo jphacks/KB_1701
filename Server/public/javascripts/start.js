@@ -41,7 +41,7 @@ function setLimit(){
 
     request.onreadystatechange = function() {//Call a function when the state changes.
         if(request.readyState == XMLHttpRequest.DONE && request.status == 200) {
-            alert('ok')
+            // alert('ok')
         }
     }
 

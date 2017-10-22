@@ -60,7 +60,7 @@ function loadPlayer(videoID) {
   
   /* 埋め込むオブジェクトを生成（すでにある場合は削除）*/
   if(player){
-    alert('aaaaaaaaaaa')
+    // alert('aaaaaaaaaaa')
     player = new YT.Player(
       'player',{
         width: '640',   /* 動画プレーヤーの幅 */
