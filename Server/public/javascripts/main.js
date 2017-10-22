@@ -1,4 +1,5 @@
-var socket = new WebSocket('ws://localhost:8081/');
+const url = getHostUlr('ws', '/');
+var socket = new WebSocket(url);
 
 // When a connection is made
 socket.onopen = function() {
@@ -12,7 +13,8 @@ socket.onopen = function() {
 // When data is received
 socket.onmessage = function(event) {
   let message = JSON.parse(event.data);
-  document.getElementById("word").textContent=message.text;
+  // document.getElementById("word").textContent=message.text;//文章だけの時
+  document.getElementById("word").textContent=message.file.initial_comment.comment;//画像にコメントがある時
   alert(message.file.url_private);
   document.getElementById("icon").src = message.file.url_private;
   // alert(event.data);

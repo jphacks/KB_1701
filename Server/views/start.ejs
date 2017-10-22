@@ -8,7 +8,15 @@
     <!--スクリプト読み込み-->
     <title>HackHack</title>
     <link rel="shortcut icon" href="/stylesheets/img/icon.png" type="image/png">
+    <script type="text/javascript" src="/javascripts/staticIP.js"></script>
     <script type="text/javascript" src="/javascripts/start.js"></script>
+
+    <script type="text/javascript">
+      var target = document.getElementById("url");
+      target.href = getHostUrl('https', '/main');
+    </script>
+
+
 
 </head>
 
@@ -38,9 +46,13 @@
       </form>
 <!-- localhostで実装 -->
 
+<<<<<<< HEAD
       <a href="https://localhost:3000/main">
+=======
+      <!-- <a href="https://192.168.128.102:3000/main"> -->
+      <a id="url" href="">
+>>>>>>> c0bce9d36c504279a1e0e80539557a1df35a9d44
           <img alt="Add to Slack"hspace="20" style="width:20%;" src="/stylesheets/img/start.gif"onClick="setLimit()"/>
-
       </a>
       <script>
 

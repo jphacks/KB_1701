@@ -40,7 +40,8 @@ $(window).load(function(){
     multiparty.start();
     
     // const socket = io.connect('https://172.20.11.172:8081');
-    var socket = new WebSocket('ws://localhost:8081/');
+    const url = getHostUrl('ws', '/');
+    var socket = new WebSocket(url);
 
     // When a connection is made
     socket.onopen = function() {
