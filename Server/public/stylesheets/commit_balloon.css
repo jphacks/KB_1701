@@ -1,8 +1,11 @@
-/* #content {                */
-/* 	width: 100%;             */
-/* 	height: 70%;             */
-/* 	border: solid 1px black; */
-/* }                         */
+#commitcontent {
+	width: 100%;
+	height: 100%;
+background-image:url("img/git.png");
+background-size: contain;
+background-repeat: no-repeat;
+background-position: center;
+}
 
 .css-fukidashi {
 	padding: 0;
