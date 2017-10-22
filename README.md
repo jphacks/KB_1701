@@ -2,6 +2,8 @@
 
 [![Product name](https://github.com/jphacks/KB_1701/blob/readme/Server/public/stylesheets/img/img_2.png)](https://www.youtube.com/channel/UC4PtjOfZTbVp9DwtJv82Lzg)
 
+<img src="https://github.com/jphacks/KB_1701/blob/readme/Server/public/stylesheets/img/img_2.png" alt="https://github.com/jphacks/KB_1701/blob/readme/Server/public/stylesheets/img/img_2" title="hackhack" width="200" height="200">
+
 ## 製品概要
 ### 'X Tech' × Tech
 
