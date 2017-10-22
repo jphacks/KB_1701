@@ -38,8 +38,11 @@
 slack上の専用チャンネルを用意し，投稿した情報をスクリーン上に反映する．
 
 ### 特長
-本プロダクトは，以下のことが可能となる．
+<div align="center">
+<img src="https://github.com/jphacks/KB_1701/blob/lastspart/Server/public/stylesheets/img/main.png" alt="https://github.com/jphacks/KB_1701/blob/lastspart/Server/public/stylesheets/img/main.png" title="Main UI" width="800" height="450">
+</div>
 
+本プロダクトは，以下のことが可能となる．
 #### 1. 自己紹介情報のフォーマット自動生成
 ##### 運営側はハッカソン開催前に行う自己紹介のフォーマットを容易に形式化でき，slack上で参加者が行う自己紹介情報を簡単にデータベース化できる．
 
