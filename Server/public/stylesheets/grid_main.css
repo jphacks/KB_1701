@@ -61,6 +61,17 @@ body {
     display: block;
     padding-top:75%;
 }
+#youtubeframe{
+    position: relative;
+    width: 25%;
+	margin: 15px;
+	background: black;
+}
+#youtubeframe:before {
+    content:"";
+    display: block;
+    padding-top:75%;
+}
 #bgm{
     position: relative;
     width: 33%;
@@ -122,7 +133,7 @@ body {
     bottom: 0;
     right: 0;
     /* background-color: yellow; */
-	 background-image: url("img/main_contentback.gif")
+	 background-image: url("img/main_contentback.png")
 }
 
 #contentline {
