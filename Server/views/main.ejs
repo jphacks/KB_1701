@@ -23,7 +23,12 @@
 		<script type="text/javascript" src="/javascripts/SkyWay-MultiParty-master/dist/multiparty.js"></script>
 
 		<style> video { width:100%;height:auto; } </style>
-		
+
+		<script language="JavaScript">
+			function Key_on(key){
+				if(key == 13){viewBalloon();}
+			}
+		</script>
 	</head>
 
 	<body>
@@ -95,18 +100,20 @@
 			<div id="commit">
 				<div id="content">
 					<div id="commitcontent"></div>
-					<form name="form1" id="id_form1" action="">                            
-					<p>チーム<input type="text" id="id_tname" name="tname" value="">    
-					チーム番号<input type="number" name="tnum" id="tnumbox" value=""> 
-					コミット数<input type="number" name="noc" id="nocbox" value="">   
-					add<input type="number" name="add" id="addbox" value="">               
-					del<input type="number" name="del" id="delbox" value="">               
-					コメント<input type="text" name="comment" id="commentbox" value="">
-					<input type="button" value="OK" onclick='viewBalloon();'/>             
+					<!-- <form name="form1" id="id_form1" action="">                             -->
+					<!-- <p>チーム<input type="text" id="id_tname" name="tname" value="">     -->
+					<!-- チーム番号<input type="number" name="tnum" id="tnumbox" value="">  -->
+					<!-- コミット数<input type="number" name="noc" id="nocbox" value="">    -->
+					<!-- add<input type="number" name="add" id="addbox" value="">                -->
+					<!-- del<input type="number" name="del" id="delbox" value="">                -->
+					<!-- コメント<input type="text" name="comment" id="commentbox" value=""> -->
+					<!-- <input type="button" value="OK" onclick='viewBalloon();'/>              -->
 					<!-- git班が各部分はここ!!!!!!!!!!! -->
-					</form>                                                                 
+					<!-- </form>                                                                  -->
+
 				</div>
 			</div>
+<body onKeyPress="Key_on(window.event.keyCode)">
 		</div>
 		<!-- youtube.jsの読み込みは</body>の直前で行うこと -->
 		<!-- <script src="/javascripts/youtube.js"></script> -->
