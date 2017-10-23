@@ -84,8 +84,16 @@ router.get('/start', function(req, res, next) {
 
   var wss = ws.attach(ssl_server);
   wss.on('connection', function(socket) {
+    console.log('connection')
     let rtm = new RtmClient('xoxp-254821626421-255344150323-255592928501-523d5e89f3c371e794c2467a4762bbe6');
     slackRequests.startRTM(rtm,slack_access_token,socket);
+
+
+    
+    // 受信したメッセージを全てのクライアントに送信する
+    server.clients.forEach(function(client) {
+      client.send("test wss");
+    });
 
     // クライアントからのメッセージ受信したとき
     socket.on('message', function(data) {
