@@ -316,7 +316,7 @@ router.post('/slack/bgm', function(req, res, next) {
 
 router.post('/commits_regist', function(req, res, next) {
   console.log('POST request to the /commits_regist');
-  res.setHeader('Content-Type', 'application/json');
+  // res.setHeader('Content-Type', 'application/json');
 
   repo_name = JSON.parse(req.body.payload);
   
@@ -327,7 +327,7 @@ router.post('/commits_regist', function(req, res, next) {
   
     console.log(repo_name);
   
-    res.send('POST request to the homepage');
+    // res.send('POST request to the homepage');
   
     repository_url="https://github.com/"+repo_name;
   
