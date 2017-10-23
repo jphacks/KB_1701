@@ -39,16 +39,23 @@ $(window).load(function(){
     // サーバとpeerに接続
     multiparty.start();
     
-    var socket = io.connect('https://ec2-13-115-41-122.ap-northeast-1.compute.amazonaws.com:8081');
-    // 接続したとき
-    socket.on('connect', function () {
-        var json = JSON.stringify({ message: 'Hello ' });
-        socket.emit(json);
-    });
+    var socket;
+    socket = new WebSocket('wss://ec2-13-115-41-122.ap-northeast-1.compute.amazonaws.com:8081');
     
-    // メッセージを受信したとき
-    socket.on('message', function(message) {
-        //document.body.innerHTML = new Date().toString() + '<span>' + message + '</span><br>' + document.body.innerHTML;
-    });
+    // サーバーに接続したとき
+    socket.onopen = function(msg) { 
+      alert('online at skyway');
+    };
+    
+    // サーバーからデータを受信したとき
+    socket.onmessage = function(msg) {
+      alert(msg.data);
+    };
+    
+    // サーバーから切断したとき
+    socket.onclose = function(msg) {
+      alert('offline'); 
+    };
+    
 });
 
