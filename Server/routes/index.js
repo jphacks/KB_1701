@@ -103,12 +103,13 @@ router.get('/start', function(req, res, next) {
   
       // クライアントが切断したとき
       socket.on('disconnect', function(){
-        WSS(wss);
+        
         console.log('connection disconnect');
       });
   
       // 通信がクローズしたとき
       socket.on('close', function(){
+	WSS(wss);
         console.log('connection close');
       });
   
