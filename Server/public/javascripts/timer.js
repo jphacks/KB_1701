@@ -1,7 +1,7 @@
 // var hostURL = 'https://192.168.128.102:3000';
 // var endpoint = '/regist/limit?limitid=';
 // var hostURL = getHostUlr('https', endpoint);
-var year = "2017";var month = "10";var day = "22";var hour = "17";var minute = "0";var centi = "1";
+var year = "2017";var month = "10";var day = "22";var hour = "18";var minute = "0";var centi = "1";
 // getLimit(1);
 // console.log(minute)
 var convert = "1";var roop = "";
