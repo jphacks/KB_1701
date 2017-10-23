@@ -1,13 +1,20 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const mongoose = require('mongoose');
-var client = require('cheerio-httpcli');//スクレイピング用
-var request = require('request');
+const client = require('cheerio-httpcli');//スクレイピング用
+const request = require('request');
 const http = require('http');
+const fs = require('fs');
 var WSS = require('ws').Server;
 var WebSocketServer = require('websocket').server;
 
 var slackRequests = require('../public/javascripts/server/SlackRequest');
+
+var PORT = 8081;
+var io = require('socket.io').listen(PORT, {
+	key  : fs.readFileSync('../serverKey/localhost.key', 'utf8').toString(),
+	cert : fs.readFileSync('../serverKey/localhost.crt', 'utf8').toString()
+});
 
 //RTM用モジュール
 const RtmClient = require('@slack/client').RtmClient;
@@ -23,46 +30,15 @@ const AccessToken = require('../models/accesstoken');
 const Channel = require('../models/channel');
 const MakeSchema = require('../models/schema');
 
-// var hostURL = 'https://13.115.41.122:3000';
-// var hostURL = 'https://ec2-13-115-41-122.ap-northeast-1.compute.amazonaws.com:3000';
-// var hostURL = 'https://192.168.100.32:3000';
-var hostURL ='https://192.168.128.102:3000'
+
+var hostURL = 'https://ec2-13-115-41-122.ap-northeast-1.compute.amazonaws.com:3000';
+
 
 var musicid = 0;
-
-
-var server = http.createServer(function(request, response) {
-  console.log((new Date()) + ' Received request for ' + request.url);
-  response.writeHead(404);
-  response.end();
-});
-server.listen(8081, function() {
-  console.log((new Date()) + ' Server is listening on port 8081');
-});
-
-
-
-
-
-// Start the websocket server
-// var wss = new WSS({ port: 8081 });
-
-wsServer = new WebSocketServer({
-  httpServer: server,
-  // You should not use autoAcceptConnections for production
-  // applications, as it defeats all standard cross-origin protection
-  // facilities built into the protocol and the browser.  You should
-  // *always* verify the connection's origin and decide whether or not
-  // to accept it.
-  autoAcceptConnections: false
-});
-
-function originIsAllowed(origin) {
-  // put logic here to detect whether the specified origin is allowed.
-  return true;
-}
-
 var slack_access_token;
+
+
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   console.log("GET request to the /")
@@ -91,74 +67,24 @@ router.get('/start', function(req, res, next) {
     })
   })
   //そのアクセストークンを使ってwebsocketの開通
-
-
-  wsServer.on('request', function(request) {
-    if (!originIsAllowed(request.origin)) {
-      // Make sure we only accept requests from an allowed origin
-      request.reject();
-      console.log((new Date()) + ' Connection from origin ' + request.origin + ' rejected.');
-      return;
-    }
-
-    var connection = request.accept();
-
-    console.log((new Date()) + ' Connection accepted.');
-
+  //socket ioによるクライアントとのリアルタイム通信
+  io.sockets.on('connection', function (socket) {
     let rtm = new RtmClient(slack_access_token);
-    slackRequests.startRTM(rtm,slack_access_token,connection);
-
-    connection.on('message', function(message) {
-        if (message.type === 'utf8') {
-            console.log('Received Message: ' + message.utf8Data);
-            connection.sendUTF(message.utf8Data);
-        }
-        else if (message.type === 'binary') {
-            console.log('Received Binary Message of ' + message.binaryData.length + ' bytes');
-            connection.sendBytes(message.binaryData);
-        }
+    slackRequests.startRTM(rtm,slack_access_token,socket);
+    //接続してきたらウェルカムメッセージを送信する
+    setTimeout(function () {
+      socket.emit('message', 'このメッセージが見えていればメッセージの受信に成功していまーす');
+    }, 500);
+    
+    //誰かが接続してきたことをみんなに知らせる
+    socket.broadcast.emit('message', 'だれかが来たようです');
+    
+    //誰かが切断したことをみんなに知らせる
+    socket.on('disconnect', function () {
+      socket.broadcast.emit('message', 'だれかが出て行きました');
     });
-    connection.on('close', function(reasonCode, description) {
-        console.log((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
-    });
-});
+  });
 
-
-
-
-
-
-
-
-
-
-
-  // wss.on('connection', function(socket) {
-  //   console.log('Opened connection ');
-  //   let rtm = new RtmClient(slack_access_token);
-  //   slackRequests.startRTM(rtm,slack_access_token,socket);
-  //   // Send data back to the client
-  //   var json = JSON.stringify({ message: 'Gotcha' });
-  //   socket.send(json);
-
-  //   // When data is received
-  //   socket.on('message', function(message) {
-  //     console.log('Received: ' + message);
-  //   });
-
-
-  //   socket.on('onclose', function() {
-  //     console.log('On Close ');
-  //     // wss = new WSS({ port: 8081 });
-  //   });
-
-  //   // The connection was closed
-  //   socket.on('close', function() {
-  //     console.log('Closed Connection ');
-  //     // wss = new WSS({ port: 8081 });
-  //   });
-
-  // });
   res.render('start', { title: 'Express'});
 });
 

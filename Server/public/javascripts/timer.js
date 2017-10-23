@@ -1,6 +1,6 @@
-// var hostURL = 'https://192.168.128.102:3000';
-// var endpoint = '/regist/limit?limitid=';
-// var hostURL = getHostUlr('https', endpoint);
+var hostURL = 'https://ec2-13-115-41-122.ap-northeast-1.compute.amazonaws.com:3000';
+
+
 var year = "2017";var month = "10";var day = "22";var hour = "18";var minute = "0";var centi = "1";
 // getLimit(1);
 // console.log(minute)
@@ -14,9 +14,8 @@ var font = "arial";var font2 = "7seg4";var size = "60";var l_height = "60";var b
 var space = "0px 0px 0px 0px";
 var align = "2";var img = "";
 var color1 = "00FF00";var color2 = "00FF00";var color3 = "000000";
-// alert(minute)
-// var hostURL = 'https://13.115.41.122:3000';
-// var hostURL = 'https://172.20.11.172:3000';
+
+
 function getLimit(l_id){
   var url = hostURL+l_id; // リクエスト先URL
   var request = new XMLHttpRequest();

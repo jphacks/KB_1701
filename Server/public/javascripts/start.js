@@ -1,17 +1,7 @@
-// var hostURL = 'https://13.115.41.122:3000';
-// var hostURL = 'https://172.20.11.172:3000';
-// var hostURL = 'https://192.168.100.32:3000';
-// import HostUlr from './staticIP';
-// const hostUrl = HostUlr.getHostUlr();
-// alert(hostUrl);
-
-
-// var endpoint = 'https://192.168.128.102:3000/regist/limit';  // リクエスト先URL
-var endpoint = 'https://192.168.128.102:3000/regist/limit'
+var endpoint = 'https://ec2-13-115-41-122.ap-northeast-1.compute.amazonaws.com:3000/regist/limit'
 
 
 function setLimit(){
-    
     // var limitid = document.forms.id_form1.id_tname.value;
     var year = document.forms.id_form1.year.value;
     // alert(year);
@@ -41,7 +31,7 @@ function setLimit(){
 
     request.onreadystatechange = function() {//Call a function when the state changes.
         if(request.readyState == XMLHttpRequest.DONE && request.status == 200) {
-            // alert('ok')
+            alert('ok')
         }
     }
 

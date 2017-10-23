@@ -1,9 +1,7 @@
 var content={}
 
 var id=4;
-var endpoint = 'https://192.168.128.102:3000/regist/schema';
-
-// var endpoint = 'https://localhost:3000/regist/schema';
+var endpoint = 'https://ec2-13-115-41-122.ap-northeast-1.compute.amazonaws.com:3000/regist/schema';
 var userid_key='userid'
 var userid_value='{type: String, require: true, unique: true}'
 // addtoContent(userid_key,userid_value);
@@ -59,7 +57,7 @@ function postrequest(){
   request.setRequestHeader('Content-Type', 'application/json');
   request.onreadystatechange = function() {//Call a function when the state changes.
       if(request.readyState == XMLHttpRequest.DONE && request.status == 200) {
-          // alert('ok')
+          alert('ok')
       }
   }
   // alert(json);

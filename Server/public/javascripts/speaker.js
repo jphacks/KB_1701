@@ -39,28 +39,16 @@ $(window).load(function(){
     // サーバとpeerに接続
     multiparty.start();
     
-    // const socket = io.connect('https://172.20.11.172:8081');
-
-    var socket = new WebSocket('ws://localhost:8081/');
-
-
-    // When a connection is made
-    socket.onopen = function() {
-    console.log('Opened connection ');
-
-    // send data to the server
-    var json = JSON.stringify({ message: 'Hello ' });
-	socket.send(json);
-    };
-
-    // A connection could not be made
-    socket.onerror = function(event) {
-	console.log(event);
-    };
-
-    socket.onmessage = function(event) {
-	let message = JSON.parse(event.data);
-	nicoScreenObj.comments.push(message.text);
-    };
+    var socket = io.connect('https://ec2-13-115-41-122.ap-northeast-1.compute.amazonaws.com:8081');
+    // 接続したとき
+    socket.on('connect', function () {
+        var json = JSON.stringify({ message: 'Hello ' });
+        socket.emit(json);
+    });
+    
+    // メッセージを受信したとき
+    socket.on('message', function(message) {
+        //document.body.innerHTML = new Date().toString() + '<span>' + message + '</span><br>' + document.body.innerHTML;
+    });
 });
 
