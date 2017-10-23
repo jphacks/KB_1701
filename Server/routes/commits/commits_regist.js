@@ -326,6 +326,7 @@ router.post('/', function(request, response){
     if (err) console.log(err);
     // 新規登録
     if (result.length == 0){
+      console.log('commit save');
       var commits = new Commits();
 
       commits.name = repo_name;

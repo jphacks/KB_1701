@@ -10,6 +10,7 @@ const ws = require('websocket.io');
 const https = require('https');
 
 var slackRequests = require('../public/javascripts/server/SlackRequest');
+var commitRegist = require('../public/javascripts/server/CommitRegist');
 
 var PORT = 8081;
 var opts = {
@@ -109,7 +110,7 @@ router.get('/start', function(req, res, next) {
   
       // 通信がクローズしたとき
       socket.on('close', function(){
-	WSS(wss);
+	      WSS(wss);
         console.log('connection close');
       });
   
@@ -311,6 +312,46 @@ router.post('/slack/bgm', function(req, res, next) {
     res.json({ 'status' : 200 });
   });
 });
+
+
+router.post('/commits_regist', function(req, res, next) {
+  console.log('POST request to the /commits_regist');
+  res.setHeader('Content-Type', 'application/json');
+
+  repo_name = JSON.parse(req.body.payload);
+  
+    branch_name = repo_name.ref.slice(11);
+    console.log(branch_name);
+  
+    repo_name = repo_name.repository.full_name
+  
+    console.log(repo_name);
+  
+    res.send('POST request to the homepage');
+  
+    repository_url="https://github.com/"+repo_name;
+  
+    commit_url = commitRegist.commitURL(repository_url);
+    commit_list = commitRegist.Test(commit_url);
+  
+    Commits.find({"name" : repo_name},function(err,result){
+      if (err) console.log(err);
+      // 新規登録
+      if (result.length == 0){
+        console.log('commit save');
+        var commits = new Commits();
+  
+        commits.name = repo_name;
+        commits.commit = commit_list;
+  
+        commits.save(function(err){
+          if (err) console.log(err);
+        });
+      }
+    });
+});
+
+
 
 
 //タイマー制限時間セット用エンドポイント
