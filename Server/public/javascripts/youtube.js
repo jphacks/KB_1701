@@ -40,7 +40,7 @@ function onYouTubeIframeAPIReady() {
 function loadPlayer(videoID) {
   
   /* 埋め込むオブジェクトを生成（すでにある場合は削除）*/
-  if(!player){
+  if(player){
     player = new YT.Player(
       'player',{
         width: '640',   /* 動画プレーヤーの幅 */

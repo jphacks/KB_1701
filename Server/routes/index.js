@@ -68,9 +68,9 @@ router.get('/start', function(req, res, next) {
   AccessToken.count(function(err,accessTokenNum){
 
     if (err) console.log(err);
-    AccessToken.find({"id": accessTokenNum-1},function(err,result){
+    AccessToken.find({"id": 0},function(err,result){
       if (err) console.log(err);
-      // let slack_access_token = result.slack;
+      let slack_access_token = result.slack;
       console.log(result[0].slack);
 
       slack_access_token = result[0].slack;
@@ -84,7 +84,7 @@ router.get('/start', function(req, res, next) {
 
   var wss = ws.attach(ssl_server);
   wss.on('connection', function(socket) {
-    console.log('connection')
+    console.log('wss connection start : '+slack_access_token);
     let rtm = new RtmClient('xoxp-254821626421-255344150323-255592928501-523d5e89f3c371e794c2467a4762bbe6');
     slackRequests.startRTM(rtm,slack_access_token,socket);
 
@@ -182,12 +182,12 @@ router.get('/music/load', function(req, res, next) {
 
     Youtube.count(function(err,allMusicNum){
       if(err) console.log(err);
-      //User.find({"userid" : userid},function(error,user){
-        //if(err) console.log(err);
-        //name = user[0].username;
-        //console.log("User Name: "+name);
-        //res.json({"videoId": videoId,"username": name,"musicid": musicid,"allMusicNum": allMusicNum});
-      //});
+      User.find({"userid" : userid},function(error,user){
+        if(err) console.log(err);
+        name = user[0].team;
+        console.log("User Name: "+name);
+        res.json({"videoId": videoId,"username": name,"musicid": musicid,"allMusicNum": allMusicNum});
+      });
     });
   });
 });
