@@ -83,36 +83,42 @@ router.get('/start', function(req, res, next) {
   //socket ioによるクライアントとのリアルタイム通信
 
   var wss = ws.attach(ssl_server);
-  wss.on('connection', function(socket) {
-    console.log('connection')
-    let rtm = new RtmClient('xoxp-254821626421-255344150323-255592928501-523d5e89f3c371e794c2467a4762bbe6');
-    slackRequests.startRTM(rtm,slack_access_token,socket);
-
-    // 受信したメッセージを全てのクライアントに送信する
-    wss.clients.forEach(function(client) {
-      client.send("test wss");
+  WSS(wss);
+  
+  function WSS(wss){
+    wss.on('connection', function(socket) {
+      console.log('connection')
+      let rtm = new RtmClient('xoxp-254821626421-255344150323-255592928501-523d5e89f3c371e794c2467a4762bbe6');
+      slackRequests.startRTM(rtm,slack_access_token,socket);
+  
+      // 受信したメッセージを全てのクライアントに送信する
+      wss.clients.forEach(function(client) {
+        client.send("test wss");
+      });
+  
+      // クライアントからのメッセージ受信したとき
+      socket.on('message', function(data) {
+          console.log('data');
+      });
+  
+      // クライアントが切断したとき
+      socket.on('disconnect', function(){
+        WSS(wss);
+        console.log('connection disconnect');
+      });
+  
+      // 通信がクローズしたとき
+      socket.on('close', function(){
+        console.log('connection close');
+      });
+  
+      // エラーが発生したとき
+      socket.on('error', function(err){
+        console.log(err);
+      });
     });
-
-    // クライアントからのメッセージ受信したとき
-    socket.on('message', function(data) {
-        console.log('data');
-    });
-
-    // クライアントが切断したとき
-    socket.on('disconnect', function(){
-      console.log('connection disconnect');
-    });
-
-    // 通信がクローズしたとき
-    socket.on('close', function(){
-      console.log('connection close');
-    });
-
-    // エラーが発生したとき
-    socket.on('error', function(err){
-      console.log(err);
-    });
-  });
+  }
+  
 
 
 
