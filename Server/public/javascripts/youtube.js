@@ -16,7 +16,7 @@ socket = new WebSocket('wss://ec2-13-115-41-122.ap-northeast-1.compute.amazonaws
 
 // サーバーに接続したとき
 socket.onopen = function(msg) { 
-  alert('online');
+  alert('online at youtube');
 };
 
 // サーバーからデータを受信したとき
