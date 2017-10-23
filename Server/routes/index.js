@@ -334,21 +334,19 @@ router.post('/commits_regist', function(req, res, next) {
     commit_url = commitRegist.commitURL(repository_url);
     commit_list = commitRegist.Test(commit_url);
   
-    // Commits.find({"name" : repo_name},function(err,result){
-    //   if (err) console.log(err);
-    //   // 新規登録
-    //   if (result.length == 0){
-    //     console.log('commit save');
-    //     var commits = new Commits();
-  
-    //     commits.name = repo_name;
-    //     commits.commit = commit_list;
-  
-    //     commits.save(function(err){
-    //       if (err) console.log(err);
-    //     });
-    //   }
-    // });
+    Commits.find({"name" : repo_name},function(err,result){
+      if (err) console.log(err);
+      // 新規登録
+      if (result.length == 0){
+        console.log('commit save');
+        var commits = new Commits();
+        commits.name = repo_name;
+        // commits.commit = commit_list;
+        commits.save(function(err){
+          if (err) console.log(err);
+        });
+      }
+    });
 });
 
 
