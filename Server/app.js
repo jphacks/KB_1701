@@ -72,6 +72,15 @@ app.use(function(err, req, res, next) {
 });
 
 // サーバ立ち上げ
+
+//var PORT = 8081;
+//var io = require('socket.io').listen(PORT, {
+//	key  : fs.readFileSync(path.join(__dirname, './serverKey') + '/localhost.key', 'utf8').toString(),
+//	cert : fs.readFileSync(path.join(__dirname, './serverKey') + '/localhost.crt', 'utf8').toString()
+//},function(){
+//	console.log('open websocket on port' + PORT);
+//});
+
 var server = https.createServer(ssloptions,app).listen(app.get('httpsport'), function(){
     console.log('Express HTTPS server listening on port ' + app.get('httpsport'));
     mongoose.connect(mongodbUri, mongOptions);
