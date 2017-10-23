@@ -49,7 +49,8 @@ $(window).load(function(){
     
     // サーバーからデータを受信したとき
     socket.onmessage = function(msg) {
-      alert(msg.data);
+        let message = JSON.parse(msg.data);
+        nicoScreenObj.comments.push(message.text);
     };
     
     // サーバーから切断したとき
