@@ -15,7 +15,7 @@ const index = require('./routes/index');
 const users = require('./routes/users');
 const oauth = require('./routes/oauth');
 const lablive = require('./routes/lablive');
-// const commits_regist = require('./routes/commits/commits_regist');
+const commits_regist = require('./routes/commits/commits_regist');
 
 const ssloptions = {
   key: fs.readFileSync('./serverKey/localhost.key', 'utf8'),
@@ -51,7 +51,7 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/oauth', oauth);
 app.use('/live', lablive);
-// app.use('/commits_regist', commits_regist);
+app.use('/commits_regist', commits_regist);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -314,40 +314,40 @@ router.post('/slack/bgm', function(req, res, next) {
 });
 
 
-router.post('/commits_regist', function(req, res, next) {
-  console.log('POST request to the /commits_regist');
-  // res.setHeader('Content-Type', 'application/json');
+// router.post('/commits_regist', function(req, res, next) {
+//   console.log('POST request to the /commits_regist');
+//   // res.setHeader('Content-Type', 'application/json');
 
-  repo_name = JSON.parse(req.body.payload);
+//   repo_name = JSON.parse(req.body.payload);
   
-    branch_name = repo_name.ref.slice(11);
-    console.log(branch_name);
+//     branch_name = repo_name.ref.slice(11);
+//     console.log(branch_name);
   
-    repo_name = repo_name.repository.full_name
+//     repo_name = repo_name.repository.full_name
   
-    console.log(repo_name);
+//     console.log(repo_name);
   
-    // res.send('POST request to the homepage');
+//     // res.send('POST request to the homepage');
   
-    repository_url="https://github.com/"+repo_name;
+//     repository_url="https://github.com/"+repo_name;
   
-    commit_url = commitRegist.commitURL(repository_url);
-    commit_list = commitRegist.Test(commit_url);
+//     commit_url = commitRegist.commitURL(repository_url);
+//     commit_list = commitRegist.Test(commit_url);
   
-    Commits.find({"name" : repo_name},function(err,result){
-      if (err) console.log(err);
-      // 新規登録
-      if (result.length == 0){
-        console.log('commit save');
-        var commits = new Commits();
-        commits.name = repo_name;
-        commits.commit = commit_list;
-        commits.save(function(err){
-          if (err) console.log(err);
-        });
-      }
-    });
-});
+//     Commits.find({"name" : repo_name},function(err,result){
+//       if (err) console.log(err);
+//       // 新規登録
+//       if (result.length == 0){
+//         console.log('commit save');
+//         var commits = new Commits();
+//         commits.name = repo_name;
+//         commits.commit = commit_list;
+//         commits.save(function(err){
+//           if (err) console.log(err);
+//         });
+//       }
+//     });
+// });
 
 
 
