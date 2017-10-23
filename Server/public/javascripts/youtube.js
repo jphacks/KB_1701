@@ -21,7 +21,7 @@ socket.onopen = function(msg) {
 
 // サーバーからデータを受信したとき
 socket.onmessage = function(msg) {
-  alert.log(msg.data);
+  alert(msg.data);
 };
 
 // サーバーから切断したとき

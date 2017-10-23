@@ -91,7 +91,7 @@ router.get('/start', function(req, res, next) {
 
     
     // 受信したメッセージを全てのクライアントに送信する
-    server.clients.forEach(function(client) {
+    wss.clients.forEach(function(client) {
       client.send("test wss");
     });
 
