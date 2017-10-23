@@ -6,16 +6,16 @@ const client = require('cheerio-httpcli');//スクレイピング用
 const request = require('request');
 const http = require('http');
 const fs = require('fs');
-var WSS = require('ws').Server;
-var WebSocketServer = require('websocket').server;
+const ws = require('websocket.io');
+const https = require('https');
 
 var slackRequests = require('../public/javascripts/server/SlackRequest');
 
 var PORT = 8081;
-var io = require('socket.io').listen(PORT, {
-	key  : fs.readFileSync(path.join(__dirname, '../serverKey') + '/localhost.key', 'utf8').toString(),
-	cert : fs.readFileSync(path.join(__dirname, '../serverKey') + '/localhost.crt', 'utf8').toString()
-});
+var opts = {
+	key  : fs.readFileSync(path.join(__dirname, '../serverKey') + '/localhost.key', 'utf8'),
+	cert : fs.readFileSync(path.join(__dirname, '../serverKey') + '/localhost.crt', 'utf8')
+};
 
 //RTM用モジュール
 const RtmClient = require('@slack/client').RtmClient;
@@ -39,6 +39,15 @@ var musicid = 0;
 var slack_access_token;
 
 
+
+var ssl_server = https.createServer(opts, function(req, res) {
+  res.end();
+});
+
+ssl_server.listen(PORT, function() {
+  console.log('Listening on ' + PORT);
+});
+ 
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -73,22 +82,31 @@ router.get('/start', function(req, res, next) {
   slackRequests.startRTM(rtm,slack_access_token,'test');
   //そのアクセストークンを使ってwebsocketの開通
   //socket ioによるクライアントとのリアルタイム通信
-  io.sockets.on('connection', function (socket) {
-    let rtm = new RtmClient(slack_access_token);
-    slackRequests.startRTM(rtm,slack_access_token,socket);
-    //接続してきたらウェルカムメッセージを送信する
-    setTimeout(function () {
-      socket.emit('message', 'このメッセージが見えていればメッセージの受信に成功していまーす');
-    }, 500);
-    
-    //誰かが接続してきたことをみんなに知らせる
-    socket.broadcast.emit('message', 'だれかが来たようです');
-    
-    //誰かが切断したことをみんなに知らせる
-    socket.on('disconnect', function () {
-      socket.broadcast.emit('message', 'だれかが出て行きました');
+
+  var wss = ws.attach(ssl_server);
+  wss.on('connection', function(socket) {
+    // クライアントからのメッセージ受信したとき
+    socket.on('message', function(data) {
+        console.log('data');
+    });
+
+    // クライアントが切断したとき
+    socket.on('disconnect', function(){
+      console.log('connection disconnect');
+    });
+
+    // 通信がクローズしたとき
+    socket.on('close', function(){
+      console.log('connection close');
+    });
+
+    // エラーが発生したとき
+    socket.on('error', function(err){
+      console.log(err);
     });
   });
+
+
 
   res.render('start', { title: 'Express'});
 });
