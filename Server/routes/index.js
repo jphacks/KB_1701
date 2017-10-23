@@ -12,8 +12,8 @@ var slackRequests = require('../public/javascripts/server/SlackRequest');
 
 var PORT = 8081;
 var io = require('socket.io').listen(PORT, {
-	key  : fs.readFileSync('../serverKey/localhost.key', 'utf8').toString(),
-	cert : fs.readFileSync('../serverKey/localhost.crt', 'utf8').toString()
+	key  : fs.readFileSync('./localhost.key', 'utf8').toString(),
+	cert : fs.readFileSync('./localhost.crt', 'utf8').toString()
 });
 
 //RTM用モジュール
