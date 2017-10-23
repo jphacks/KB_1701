@@ -341,7 +341,7 @@ router.post('/commits_regist', function(req, res, next) {
         console.log('commit save');
         var commits = new Commits();
         commits.name = repo_name;
-        // commits.commit = commit_list;
+        commits.commit = commit_list;
         commits.save(function(err){
           if (err) console.log(err);
         });
