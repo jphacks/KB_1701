@@ -12,6 +12,45 @@ router.get('/', function(req, res, next) {
   res.render('index',{ title: 'Express'});
 });
 
+router.post('/', function(request, response){
+  
+  // リクエストボディを出力
+
+  repo_name = JSON.parse(request.body.payload);
+
+  branch_name = repo_name.ref.slice(11);
+  console.log(branch_name);
+
+  repo_name = repo_name.repository.full_name
+
+  console.log(repo_name);
+
+  response.send('POST request to the homepage');
+
+  repository_url="https://github.com/"+repo_name;
+
+  commit_url = commitURL(repository_url);
+  commit_list = Test(commit_url);
+
+  Commits.find({"name" : repo_name},function(err,result){
+    if (err) console.log(err);
+    // 新規登録
+    if (result.length == 0){
+      console.log('commit save');
+      var commits = new Commits();
+
+      commits.name = repo_name;
+      commits.commit = commit_list;
+
+      commits.save(function(err){
+        if (err) console.log(err);
+      });
+    }
+
+  });
+
+});
+
 
 function Test(url){
   //asyncをrequire
@@ -302,43 +341,6 @@ router.use(bodyParser.urlencoded({
 }));
 router.use(bodyParser.json());
 
-router.post('/', function(request, response){
 
-  // リクエストボディを出力
-
-  repo_name = JSON.parse(request.body.payload);
-
-  branch_name = repo_name.ref.slice(11);
-  console.log(branch_name);
-
-  repo_name = repo_name.repository.full_name
-
-  console.log(repo_name);
-
-  response.send('POST request to the homepage');
-
-  repository_url="https://github.com/"+repo_name;
-
-  commit_url = commitURL(repository_url);
-  commit_list = Test(commit_url);
-
-  Commits.find({"name" : repo_name},function(err,result){
-    if (err) console.log(err);
-    // 新規登録
-    if (result.length == 0){
-      console.log('commit save');
-      var commits = new Commits();
-
-      commits.name = repo_name;
-      commits.commit = commit_list;
-
-      commits.save(function(err){
-        if (err) console.log(err);
-      });
-    }
-
-  });
-
-});
 
 module.exports = router;
