@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const path = require('path');
 const mongoose = require('mongoose');
 const client = require('cheerio-httpcli');//スクレイピング用
 const request = require('request');
@@ -12,8 +13,8 @@ var slackRequests = require('../public/javascripts/server/SlackRequest');
 
 var PORT = 8081;
 var io = require('socket.io').listen(PORT, {
-	key  : fs.readFileSync('./localhost.key', 'utf8').toString(),
-	cert : fs.readFileSync('./localhost.crt', 'utf8').toString()
+	key  : fs.readFileSync(path.join(__dirname, '../serverKey') + '/localhost.key', 'utf8').toString(),
+	cert : fs.readFileSync(path.join(__dirname, '../serverKey') + '/localhost.crt', 'utf8').toString()
 });
 
 //RTM用モジュール
@@ -66,6 +67,10 @@ router.get('/start', function(req, res, next) {
       slack_access_token = result[0].slack;
     })
   })
+  
+  console.log(slack_access_token);
+  let rtm = new RtmClient('xoxp-254821626421-255344150323-255592928501-523d5e89f3c371e794c2467a4762bbe6');
+  slackRequests.startRTM(rtm,slack_access_token,'test');
   //そのアクセストークンを使ってwebsocketの開通
   //socket ioによるクライアントとのリアルタイム通信
   io.sockets.on('connection', function (socket) {
@@ -149,12 +154,12 @@ router.get('/music/load', function(req, res, next) {
 
     Youtube.count(function(err,allMusicNum){
       if(err) console.log(err);
-      User.find({"userid" : userid},function(error,user){
-        if(err) console.log(err);
-        name = user[0].username;
-        console.log("User Name: "+name);
-        res.json({"videoId": videoId,"username": name,"musicid": musicid,"allMusicNum": allMusicNum});
-      });
+      //User.find({"userid" : userid},function(error,user){
+        //if(err) console.log(err);
+        //name = user[0].username;
+        //console.log("User Name: "+name);
+        //res.json({"videoId": videoId,"username": name,"musicid": musicid,"allMusicNum": allMusicNum});
+      //});
     });
   });
 });
