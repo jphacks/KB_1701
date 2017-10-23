@@ -1,3 +1,17 @@
+var express = require('express');
+var bodyParser = require('body-parser');
+var router = express.Router();
+var mongoose = require('mongoose');
+
+//モデルの宣言
+var Commits = require('../../models/commits');
+
+
+router.get('/', function(req, res, next) {
+  console.log("GET request to the /commits_regist")
+  res.render('index',{ title: 'Express'});
+});
+
 
 function Test(url){
   //asyncをrequire
@@ -281,15 +295,7 @@ function registCommit(commits_data){
 }
 
 
-var express = require('express');
-var bodyParser = require('body-parser');
-var router = express.Router();
-var mongoose = require('mongoose');
 
-
-
-//モデルの宣言
-var Commits = require('../../models/commits');
 
 router.use(bodyParser.urlencoded({
     extended: true
@@ -315,6 +321,22 @@ router.post('/', function(request, response){
 
   commit_url = commitURL(repository_url);
   commit_list = Test(commit_url);
+
+  Commits.find({"name" : repo_name},function(err,result){
+    if (err) console.log(err);
+    // 新規登録
+    if (result.length == 0){
+      var commits = new Commits();
+
+      commits.name = repo_name;
+      commits.commit = commit_list;
+
+      commits.save(function(err){
+        if (err) console.log(err);
+      });
+    }
+
+  });
 
 });
 
