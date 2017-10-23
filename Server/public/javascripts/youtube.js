@@ -11,7 +11,6 @@ tag.src = "https://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-
 var socket;
 socket = new WebSocket('wss://ec2-13-115-41-122.ap-northeast-1.compute.amazonaws.com:8081');
 
@@ -22,8 +21,7 @@ socket.onopen = function(msg) {
 
 // サーバーからデータを受信したとき
 socket.onmessage = function(msg) {
-  console.log(msg.data);
-  var jmsg = $.parseJSON(msg.data);
+  alert.log(msg.data);
 };
 
 // サーバーから切断したとき
