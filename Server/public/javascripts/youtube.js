@@ -94,7 +94,7 @@ function getMovieId(url){
       // 取得成功
 
       result = JSON.parse(request.responseText);
-      m_id = result.musicid+1;
+      m_id = Number(result.musicid)+1;
       alert(result.musicid);
       alert(m_id);
       loadPlayer(result.videoId);
