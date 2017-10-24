@@ -181,7 +181,12 @@ router.get('/music/load', function(req, res, next) {
   //DBからyoutubeの動画IDを取得してフロントのyoutube.jsのvideoIdにセット
   Youtube.find({"musicid" : musicid},function(err,youtube){
     if(err) console.log(err);
-    videoId = youtube[0].url;
+    if(!youtube[0].url){
+      videoId = 'G5rULR53uMk';
+    }else{
+      videoId = youtube[0].url;
+    }
+    
     userid = youtube[0].userid;
     console.log(youtube[0].url);
     console.log(youtube[0].userid);
