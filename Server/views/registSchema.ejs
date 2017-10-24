@@ -1,20 +1,16 @@
 <!DOCTYPE html>
 <html>
-<!-- <div class="example">
-  <img src="/views/sample.jpg" />
-  <p>SUNSET</p>
-</div> -->
-
 <head>
-     <link rel="stylesheet" href="/stylesheets/registschema.css" />
-
-    <!--スクリプト読み込み-->
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script type="text/javascript" src="/javascripts/registschema.js"></script>
-    <title>HackHack</title>
+    <link rel="stylesheet" href="/stylesheets/registschema.css" />
     <link rel="shortcut icon" href="/stylesheets/img/icon.png" type="image/png">
 
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/javascripts/staticIP.js"></script>
+    <script type="text/javascript" src="/javascripts/registschema.js"></script>
+
+    <title>HackHack</title>
 </head>
+
     <body>
         <h1>自己紹介フォーマット作成</h1>
         <div class="boxContainer">
@@ -34,15 +30,16 @@
         </div>
 
         <div class="box2">
+
           <!-- <img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" onclick="initContent();"/> -->
           <button class="button_bottom" type="submit" onclick="initContent();">修正</button>
           <!-- <img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" onclick="initContent();"/> -->
               <!-- <img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" onclick="postrequest();"/> -->
 
 
-        <a href="https://ec2-13-115-41-122.ap-northeast-1.compute.amazonaws.com:3000/start">
-            <button class="button_bottom" type="submit" onclick="postrequest();">送信</button>
-              <!-- <img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" onclick="postrequest();"/> -->
+
+          <a href="https://ec2-13-115-41-122.ap-northeast-1.compute.amazonaws.com:3000/start">
+              <button class="button_bottom" type="submit" onclick="postrequest();">送信</button>
           </a>
         </div>
         <script>

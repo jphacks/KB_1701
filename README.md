@@ -1,6 +1,10 @@
 # HackHack
+<!--
+<video src="https://www.youtube.com/watch?v=hfHlXvLpXoc&feature=youtu.be" controls></video>
+-->
 
-[![Product name](https://github.com/jphacks/KB_1701/blob/readme/Server/public/stylesheets/img/icon.png)](https://www.youtube.com/channel/UC4PtjOfZTbVp9DwtJv82Lzg)
+[![Product name](https://github.com/jphacks/KB_1701/blob/readme/Server/public/stylesheets/img/icon.png)](https://www.youtube.com/watch?v=hfHlXvLpXoc&feature=youtu.be)
+※上のアイコンは動画
 
 
 ## 製品概要
@@ -92,4 +96,6 @@ slack上の専用チャンネルを用意し，投稿した情報をスクリー
 - Slack上で行われた自己紹介情報をJSONに変換し，DBに登録する機能
 <!--
 * 特に力を入れた部分をファイルリンク、またはcommit_idを記載してください（任意）
+
 -->
+

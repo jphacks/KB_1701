@@ -1,12 +1,22 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const path = require('path');
 const mongoose = require('mongoose');
-var client = require('cheerio-httpcli');//スクレイピング用
-var request = require('request');
-
-var WSS = require('ws').Server;
+const client = require('cheerio-httpcli');//スクレイピング用
+const request = require('request');
+const http = require('http');
+const fs = require('fs');
+const ws = require('websocket.io');
+const https = require('https');
 
 var slackRequests = require('../public/javascripts/server/SlackRequest');
+var commitRegist = require('../public/javascripts/server/CommitRegist');
+
+var PORT = 8081;
+var opts = {
+	key  : fs.readFileSync(path.join(__dirname, '../serverKey') + '/localhost.key', 'utf8'),
+	cert : fs.readFileSync(path.join(__dirname, '../serverKey') + '/localhost.crt', 'utf8')
+};
 
 //RTM用モジュール
 const RtmClient = require('@slack/client').RtmClient;
@@ -22,18 +32,24 @@ const AccessToken = require('../models/accesstoken');
 const Channel = require('../models/channel');
 const MakeSchema = require('../models/schema');
 
-// var hostURL = 'https://13.115.41.122:3000';
+
 var hostURL = 'https://ec2-13-115-41-122.ap-northeast-1.compute.amazonaws.com:3000';
-// var hostURL = 'https://192.168.100.32:3000';
-// var hostURL ='https://192.168.128.102:3000'
+
 
 var musicid = 0;
-
-
-// Start the websocket server
-var wss = new WSS({ port: 8081 });
-
 var slack_access_token;
+
+
+
+var ssl_server = https.createServer(opts, function(req, res) {
+  res.end();
+});
+
+ssl_server.listen(PORT, function() {
+  console.log('Listening on ' + PORT);
+});
+ 
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   console.log("GET request to the /")
@@ -53,42 +69,62 @@ router.get('/start', function(req, res, next) {
   AccessToken.count(function(err,accessTokenNum){
 
     if (err) console.log(err);
-    AccessToken.find({"id": accessTokenNum-1},function(err,result){
+    AccessToken.find({"id": 0},function(err,result){
       if (err) console.log(err);
-      // let slack_access_token = result.slack;
+      let slack_access_token = result.slack;
       console.log(result[0].slack);
 
       slack_access_token = result[0].slack;
     })
   })
+  
+  console.log(slack_access_token);
+  
   //そのアクセストークンを使ってwebsocketの開通
+  //socket ioによるクライアントとのリアルタイム通信
 
-  wss.on('connection', function(socket) {
-    console.log('Opened connection ');
-    let rtm = new RtmClient(slack_access_token);
-    slackRequests.startRTM(rtm,slack_access_token,socket);
-    // Send data back to the client
-    var json = JSON.stringify({ message: 'Gotcha' });
-    socket.send(json);
+  var wss = ws.attach(ssl_server);
+  WSS(wss);
+  
+  function WSS(wss){
+    wss.on('connection', function(socket) {
+      console.log('connection')
+      let rtm = new RtmClient('xoxp-254821626421-255344150323-255592928501-523d5e89f3c371e794c2467a4762bbe6');
+      slackRequests.startRTM(rtm,slack_access_token,socket);
+  
+      // 受信したメッセージを全てのクライアントに送信する
+      wss.clients.forEach(function(client) {
+        client.send("test wss");
+      });
+  
+      // クライアントからのメッセージ受信したとき
+      socket.on('message', function(data) {
+          console.log('data');
+      });
+  
+      // クライアントが切断したとき
+      socket.on('disconnect', function(){
+        
+        console.log('connection disconnect');
+      });
+  
+      // 通信がクローズしたとき
+      socket.on('close', function(){
+	      WSS(wss);
+        console.log('connection close');
+      });
+  
+      // エラーが発生したとき
+      socket.on('error', function(err){
+        console.log(err);
+      });
 
-    // When data is received
-    socket.on('message', function(message) {
-      console.log('Received: ' + message);
     });
+  }
+  
 
 
-    socket.on('onclose', function() {
-      console.log('On Close ');
-      // wss = new WSS({ port: 8081 });
-    });
 
-    // The connection was closed
-    socket.on('close', function() {
-      console.log('Closed Connection ');
-      // wss = new WSS({ port: 8081 });
-    });
-
-  });
   res.render('start', { title: 'Express'});
 });
 
@@ -146,19 +182,19 @@ router.get('/music/load', function(req, res, next) {
   Youtube.find({"musicid" : musicid},function(err,youtube){
     if(err) console.log(err);
     videoId = youtube[0].url;
-    //userid = youtube[0].userid;
+    userid = youtube[0].userid;
     console.log(youtube[0].url);
     console.log(youtube[0].userid);
 
 
     Youtube.count(function(err,allMusicNum){
       if(err) console.log(err);
-      //User.find({"userid" : userid},function(error,user){
-        //if(err) console.log(err);
-        //name = user[0].username;
-        //console.log("User Name: "+name);
+      User.find({"userid" : userid},function(error,user){
+        if(err) console.log(err);
+        name = user[0].team;
+        console.log("User Name: "+name);
         res.json({"videoId": videoId,"username": name,"musicid": musicid,"allMusicNum": allMusicNum});
-      //});
+      });
     });
   });
 });
@@ -276,6 +312,44 @@ router.post('/slack/bgm', function(req, res, next) {
     res.json({ 'status' : 200 });
   });
 });
+
+
+// router.post('/commits_regist', function(req, res, next) {
+//   console.log('POST request to the /commits_regist');
+//   // res.setHeader('Content-Type', 'application/json');
+
+//   repo_name = JSON.parse(req.body.payload);
+  
+//     branch_name = repo_name.ref.slice(11);
+//     console.log(branch_name);
+  
+//     repo_name = repo_name.repository.full_name
+  
+//     console.log(repo_name);
+  
+//     // res.send('POST request to the homepage');
+  
+//     repository_url="https://github.com/"+repo_name;
+  
+//     commit_url = commitRegist.commitURL(repository_url);
+//     commit_list = commitRegist.Test(commit_url);
+  
+//     Commits.find({"name" : repo_name},function(err,result){
+//       if (err) console.log(err);
+//       // 新規登録
+//       if (result.length == 0){
+//         console.log('commit save');
+//         var commits = new Commits();
+//         commits.name = repo_name;
+//         commits.commit = commit_list;
+//         commits.save(function(err){
+//           if (err) console.log(err);
+//         });
+//       }
+//     });
+// });
+
+
 
 
 //タイマー制限時間セット用エンドポイント

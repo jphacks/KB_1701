@@ -71,7 +71,8 @@ module.exports.startRTM = function(rtm,slack_access_token,socket){
     });
 
     rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, function () {
-        rtm.sendMessage("Hello!", 'C7GMP2G2G');
+        // rtm.sendMessage("Hello!", 'C7GMP2G2G');
+        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa connect")
     });
 
 

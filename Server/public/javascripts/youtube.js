@@ -1,5 +1,3 @@
-// var hostURL = 'https://13.115.41.122:3000';
-// var hostURL = 'https://172.20.11.172:3000';
 var hostURL = 'https://ec2-13-115-41-122.ap-northeast-1.compute.amazonaws.com:3000';
 
 
@@ -13,40 +11,23 @@ tag.src = "https://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-var player;
-var socket = new WebSocket('ws://ec2-13-115-41-122.ap-northeast-1.compute.amazonaws.com:8081/');
+var socket;
+socket = new WebSocket('wss://ec2-13-115-41-122.ap-northeast-1.compute.amazonaws.com:8081');
 
+// サーバーに接続したとき
+socket.onopen = function(msg) { 
+  alert('online at youtube');
+};
 
-// When a connection is made
-socket.onopen = function() {
-  console.log('Opened connection ');
+// サーバーからデータを受信したとき
+socket.onmessage = function(msg) {
+  alert(msg.data);
+};
 
-  // send data to the server
-  var json = JSON.stringify({ message: 'Hello ' });
-  socket.send(json);
-}
-
-// When data is received
-socket.onmessage = function(event) {
-  console.log(event.data);
-  // alert(event.data);
-}
-
-// A connection could not be made
-socket.onerror = function(event) {
-  console.log(event);
-}
-
-// A connection was closed
-// socket.onclose = function(code, reason) {
-//   console.log(code, reason);
-// }
-
-// Close the connection when the window is closed
-// window.addEventListener('beforeunload', function() {
-//   socket.close();
-// });
-
+// サーバーから切断したとき
+socket.onclose = function(msg) {
+  alert('offline'); 
+};
 
 
 function onYouTubeIframeAPIReady() {
@@ -57,8 +38,9 @@ function onYouTubeIframeAPIReady() {
 
 
 function loadPlayer(videoID) {
+  
   /* 埋め込むオブジェクトを生成（すでにある場合は削除）*/
-  if(!player){
+  if(player){
     player = new YT.Player(
       'player',{
         width: '640',   /* 動画プレーヤーの幅 */
@@ -117,10 +99,10 @@ function getMovieId(url){
       result = JSON.parse(request.responseText);
 
       loadPlayer(result.videoId);
-     //document.getElementById("username").textContent=result.username;
-      //document.getElementById("musicid").textContent=result.musicid;
-      //document.getElementById("allMusicNum").textContent=result.allMusicNum;
-      // alert(result);
+      document.getElementById("username").textContent=result.username;
+      document.getElementById("musicid").textContent=result.musicid;
+      document.getElementById("allMusicNum").textContent=result.allMusicNum;
+      alert(result);
 
     }
   };
