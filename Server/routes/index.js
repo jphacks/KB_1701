@@ -11,6 +11,7 @@ const https = require('https');
 
 var slackRequests = require('../public/javascripts/server/SlackRequest');
 var commitRegist = require('../public/javascripts/server/CommitRegist');
+var token = require('../public/javascripts/server/token');
 
 var PORT = 8081;
 var opts = {
@@ -66,19 +67,20 @@ router.get('/main', function(req, res, next) {
 router.get('/start', function(req, res, next) {
   console.log("GET request to the /start")
   //AccessToken DBからslackのaccessトークンを取得
-  AccessToken.count(function(err,accessTokenNum){
+  // AccessToken.count(function(err,accessTokenNum){
 
-    if (err) console.log(err);
-    AccessToken.find({"id": 0},function(err,result){
-      if (err) console.log(err);
-      let slack_access_token = result.slack;
-      console.log(result[0].slack);
+  //   if (err) console.log(err);
+  //   AccessToken.find({"id": 0},function(err,result){
+  //     if (err) console.log(err);
+  //     let slack_access_token = result.slack;
+  //     console.log(result[0].slack);
 
-      slack_access_token = result[0].slack;
-    })
-  })
+  //     slack_access_token = result[0].slack;
+  //   })
+  // })
+  slack_access_token = token.slack;
   
-  console.log(slack_access_token);
+  console.log('token.slack: '+slack_access_token);
   
   //そのアクセストークンを使ってwebsocketの開通
   //socket ioによるクライアントとのリアルタイム通信
@@ -89,7 +91,7 @@ router.get('/start', function(req, res, next) {
   function WSS(wss){
     wss.on('connection', function(socket) {
       console.log('connection')
-      let rtm = new RtmClient('xoxp-254821626421-255344150323-255592928501-523d5e89f3c371e794c2467a4762bbe6');
+      let rtm = new RtmClient(slack_access_token);
       slackRequests.startRTM(rtm,slack_access_token,socket);
   
       // 受信したメッセージを全てのクライアントに送信する
@@ -179,22 +181,28 @@ router.get('/music/load', function(req, res, next) {
   var name;
   var allMusicNum;
   //DBからyoutubeの動画IDを取得してフロントのyoutube.jsのvideoIdにセット
-  Youtube.find({"musicid" : musicid},function(err,youtube){
-    if(err) console.log(err);
-    videoId = youtube[0].url;
-    userid = youtube[0].userid;
-    console.log(youtube[0].url);
-    console.log(youtube[0].userid);
-
-
-    Youtube.count(function(err,allMusicNum){
+  Youtube.count(function(err,allMusicNum){
+    Youtube.find({"musicid" : musicid},function(err,youtube){
       if(err) console.log(err);
-      User.find({"userid" : userid},function(error,user){
-        if(err) console.log(err);
-        name = user[0].team;
-        console.log("User Name: "+name);
+      if(allMusicNum == 0 || musicid > allMusicNum){
+        username = "musicチャンネルに動画リクエストを！！！"
+        videoId = 'G5rULR53uMk';
+        musicid = allMusicNum;
         res.json({"videoId": videoId,"username": name,"musicid": musicid,"allMusicNum": allMusicNum});
-      });
+      }else{
+        if(err) console.log(err);
+        userid = youtube[0].userid;
+        videoId = youtube[0].url;
+        musicid = youtube[0].musicid;
+        console.log(youtube[0].url);
+        console.log(youtube[0].userid);
+        User.find({"userid" : userid},function(error,user){
+          if(err) console.log(err);
+          name = user[0].team;
+          console.log("User Name: "+name);
+          res.json({"videoId": videoId,"username": name,"musicid": musicid,"allMusicNum": allMusicNum});
+        });
+      }
     });
   });
 });

@@ -8,6 +8,7 @@ var headers = {'Content-Type':'application/json'};
 
 //自作jsの読み込み
 var slackRequests = require('../public/javascripts/server/SlackRequest');
+var token = require('../public/javascripts/server/token');
 var IPv4 = require('./modules/getMyIP');
 
 const AccessToken = require('../models/accesstoken');
@@ -52,6 +53,7 @@ router.get('/slack', function(req, res, next) {
   request.get(options, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       slack_access_token = body.access_token;
+      token.slack = slack_access_token;
 
       console.log(body.scope+'\n');
       console.log('Slack Token : '+slack_access_token+'\n');
@@ -78,16 +80,18 @@ router.get('/github', function(req, res, next) {
   request.get(options, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       github_access_token = body.access_token;
+      token.github = github_access_token;
       console.log('Github Token : '+github_access_token+'\n');
-      res.redirect(hostURL+'/oauth/makechannel');//Githubのoauth認証後はSlackのチャンネル生成へ
+      res.redirect(hostURL+'/oauth/save');//Githubのoauth認証後はSlackのチャンネル生成へ
     } else {
       console.log('error: '+ response.statusCode);
     }
   });
 });
 
-router.get('/makechannel', function(req, res, next) {
-  console.log('GET request to the /oauth/makechannel');
+
+router.get('/save', function(req, res, next) {
+  console.log('GET request to the /oauth/save');
   AccessToken.find({"slack": slack_access_token},function(err,result){
     if (err) console.log(err);
     AccessToken.count(function(err,allAccessTokenNum){
@@ -95,7 +99,7 @@ router.get('/makechannel', function(req, res, next) {
        // 新規登録
       if (result.length == 0){
         var accesstoken = new AccessToken();
-        accesstoken.id = allAccessTokenNum;
+        accesstoken.id = allAccessTokenNum-1;
         accesstoken.slack  = slack_access_token;
         accesstoken.github = github_access_token; 
         
@@ -106,6 +110,20 @@ router.get('/makechannel', function(req, res, next) {
     })
     // res.json({ 'status' : 200 });
   });
+  console.log('Slack Token : '+slack_access_token+'\n');
+  console.log('Github Token : '+github_access_token+'\n');
+
+
+  res.redirect(hostURL+'/oauth/makechannel');//チャンネル生成後は/regist/schemaへ
+  // res.redirect(hostURL+'/main');//チャンネル生成後はmainへ
+  
+});
+
+
+
+
+router.get('/makechannel', function(req, res, next) {
+  console.log('GET request to the /oauth/makechannel');
   console.log('Slack Token : '+slack_access_token+'\n');
   console.log('Github Token : '+github_access_token+'\n');
 
