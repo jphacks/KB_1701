@@ -181,13 +181,13 @@ router.get('/music/load', function(req, res, next) {
   var name;
   var allMusicNum;
   //DBからyoutubeの動画IDを取得してフロントのyoutube.jsのvideoIdにセット
-  Youtube.find({"musicid" : musicid},function(err,youtube){
-    if(err) console.log(err);
-    Youtube.count(function(err,allMusicNum){
+  Youtube.count(function(err,allMusicNum){
+    Youtube.find({"musicid" : musicid},function(err,youtube){
+      if(err) console.log(err);
       if(allMusicNum == 0 || musicid > allMusicNum){
         username = "musicチャンネルに動画リクエストを！！！"
         videoId = 'G5rULR53uMk';
-        musicid = youtube[0].allMusicNum;
+        musicid = allMusicNum;
         res.json({"videoId": videoId,"username": name,"musicid": musicid,"allMusicNum": allMusicNum});
       }else{
         if(err) console.log(err);
