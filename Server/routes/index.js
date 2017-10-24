@@ -192,6 +192,7 @@ router.get('/music/load', function(req, res, next) {
         if(err) console.log(err);
         userid = youtube[0].userid;
         videoId = youtube[0].url;
+        musicid = youtube[0].musicid;
         console.log(youtube[0].url);
         console.log(youtube[0].userid);
         User.find({"userid" : userid},function(error,user){

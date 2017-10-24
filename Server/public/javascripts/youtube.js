@@ -70,8 +70,6 @@ function onPlayerStateChange(event) {
     //ここでサーバ側に次の動画IDを取りに行く(GET:/music/load?musicid=[num])
     getMovieId(hostURL+'/music/load?musicid='+m_id);
 
-    loadPlayer('z94oQMmqF8s');
-
   }else if(event.data == YT.PlayerState.CUED){
     event.target.playVideo();
   }
@@ -98,6 +96,7 @@ function getMovieId(url){
       result = JSON.parse(request.responseText);
 
       loadPlayer(result.videoId);
+      m_id = result.musicid;
       document.getElementById("username").textContent=result.username;
       document.getElementById("musicid").textContent=result.musicid;
       document.getElementById("allMusicNum").textContent=result.allMusicNum;
