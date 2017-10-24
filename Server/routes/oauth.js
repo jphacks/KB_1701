@@ -114,7 +114,7 @@ router.get('/save', function(req, res, next) {
   console.log('Github Token : '+github_access_token+'\n');
 
 
-  res.redirect(hostURL+'/regist/makechannel');//チャンネル生成後は/regist/schemaへ
+  res.redirect(hostURL+'/oauth/makechannel');//チャンネル生成後は/regist/schemaへ
   // res.redirect(hostURL+'/main');//チャンネル生成後はmainへ
   
 });
