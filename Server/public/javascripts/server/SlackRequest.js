@@ -2,7 +2,6 @@ var express = require('express');
 var request = require('request');
 
 var accessDB = require('./AccessDB');
-
 var ToJson = require('./TextToJson')
 
 //RTM用モジュール
@@ -127,7 +126,6 @@ module.exports.startRTM = function(rtm,slack_access_token,socket){
                 let user = ToJson.textToJson(messageJson);
                 console.log(user);
                 
-
             }
         }
     });

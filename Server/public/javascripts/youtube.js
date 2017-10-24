@@ -3,7 +3,7 @@ var hostURL = 'https://ec2-13-115-41-122.ap-northeast-1.compute.amazonaws.com:30
 
 var nextMovieId;
 var result;
-
+var player;
 
 var tag = document.createElement('script');
 
@@ -40,7 +40,7 @@ function onYouTubeIframeAPIReady() {
 function loadPlayer(videoID) {
   
   /* 埋め込むオブジェクトを生成（すでにある場合は削除）*/
-  if(player){
+  if(!player){
     player = new YT.Player(
       'player',{
         width: '640',   /* 動画プレーヤーの幅 */
@@ -76,7 +76,6 @@ function onPlayerStateChange(event) {
     event.target.playVideo();
   }
 }
-
 
 function stopVideo() {
   player.stopVideo();
