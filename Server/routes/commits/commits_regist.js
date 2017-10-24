@@ -32,6 +32,7 @@ router.post('/', function(request, response){
 
   commit_url = commitURL(repository_url);
   commit_list = Test(commit_url);
+  console.log(token.github);
 
   Commits.find({"name" : repo_name},function(err,result){
     if (err) console.log(err);
