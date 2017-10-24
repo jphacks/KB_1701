@@ -6,6 +6,7 @@ var mongoose = require('mongoose');
 //モデルの宣言
 var Commits = require('../../models/commits');
 
+var token = require('../../public/javascripts/server/token');
 
 router.get('/', function(req, res, next) {
   console.log("GET request to the /commits_regist")
@@ -71,7 +72,7 @@ function Test(url){
       url: get_sha_url,
       headers: {
         'User-Agent': 'request',
-        'Authorization':'token c2d3babdfc93816c0a8f83b0694be2bfa3c9e1b6'
+        'Authorization':'token '+token.github//c2d3babdfc93816c0a8f83b0694be2bfa3c9e1b6'
       },
       json:true
     }, function (error, response, body) {
@@ -135,7 +136,7 @@ function Test(url){
         url: single_commit_url,
         headers: {
           'User-Agent': 'request',
-          'Authorization':'token c2d3babdfc93816c0a8f83b0694be2bfa3c9e1b6'
+          'Authorization':'token '+token.github//c2d3babdfc93816c0a8f83b0694be2bfa3c9e1b6'
         },
         json:true
       }, function (error, response, body) {
