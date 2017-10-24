@@ -1,6 +1,6 @@
 # HackHack
 
-[![Product name](https://github.com/jphacks/KB_1701/blob/readme/Server/public/stylesheets/img/icon.png)](https://www.youtube.com/channel/UC4PtjOfZTbVp9DwtJv82Lzg)
+[![Product name](https://github.com/jphacks/KB_1701/blob/readme/Server/public/stylesheets/img/icon.png)](https://www.youtube.com/watch?v=hfHlXvLpXoc&feature=youtu.be)
 
 ## 製品概要
 ### 'X Tech' × Tech
