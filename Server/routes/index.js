@@ -11,6 +11,7 @@ const https = require('https');
 
 var slackRequests = require('../public/javascripts/server/SlackRequest');
 var commitRegist = require('../public/javascripts/server/CommitRegist');
+var oauth = require('./oauth')
 
 var PORT = 8081;
 var opts = {
@@ -66,17 +67,18 @@ router.get('/main', function(req, res, next) {
 router.get('/start', function(req, res, next) {
   console.log("GET request to the /start")
   //AccessToken DBからslackのaccessトークンを取得
-  AccessToken.count(function(err,accessTokenNum){
+  // AccessToken.count(function(err,accessTokenNum){
 
-    if (err) console.log(err);
-    AccessToken.find({"id": 0},function(err,result){
-      if (err) console.log(err);
-      let slack_access_token = result.slack;
-      console.log(result[0].slack);
+  //   if (err) console.log(err);
+  //   AccessToken.find({"id": 0},function(err,result){
+  //     if (err) console.log(err);
+  //     let slack_access_token = result.slack;
+  //     console.log(result[0].slack);
 
-      slack_access_token = result[0].slack;
-    })
-  })
+  //     slack_access_token = result[0].slack;
+  //   })
+  // })
+  slack_access_token = oauth.slack_access_token;
   
   console.log(slack_access_token);
   
@@ -89,7 +91,7 @@ router.get('/start', function(req, res, next) {
   function WSS(wss){
     wss.on('connection', function(socket) {
       console.log('connection')
-      let rtm = new RtmClient('xoxp-254821626421-255344150323-255592928501-523d5e89f3c371e794c2467a4762bbe6');
+      let rtm = new RtmClient(slack_access_token);
       slackRequests.startRTM(rtm,slack_access_token,socket);
   
       // 受信したメッセージを全てのクライアントに送信する
