@@ -17,17 +17,17 @@ socket = new WebSocket('wss://ec2-13-115-41-122.ap-northeast-1.compute.amazonaws
 
 // サーバーに接続したとき
 socket.onopen = function(msg) { 
-  alert('online at youtube');
+  // alert('online at youtube');
 };
 
 // サーバーからデータを受信したとき
 socket.onmessage = function(msg) {
-  alert(msg.data);
+  // alert(msg.data);
 };
 
 // サーバーから切断したとき
 socket.onclose = function(msg) {
-  alert('offline'); 
+  // alert('offline'); 
 };
 
 
@@ -95,13 +95,13 @@ function getMovieId(url){
 
       result = JSON.parse(request.responseText);
       m_id = Number(result.musicid)+1;
-      alert(result.musicid);
-      alert(m_id);
+      // alert(result.musicid);
+      // alert(m_id);
       loadPlayer(result.videoId);
       document.getElementById("username").textContent=result.username;
       document.getElementById("musicid").textContent=result.musicid;
       document.getElementById("allMusicNum").textContent=result.allMusicNum;
-      alert(result);
+      // alert(result);
 
     }
   };
