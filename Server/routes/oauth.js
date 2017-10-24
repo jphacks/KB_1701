@@ -8,6 +8,7 @@ var headers = {'Content-Type':'application/json'};
 
 //自作jsの読み込み
 var slackRequests = require('../public/javascripts/server/SlackRequest');
+var token = require('../public/javascripts/server/token');
 var IPv4 = require('./modules/getMyIP');
 
 const AccessToken = require('../models/accesstoken');
@@ -52,7 +53,7 @@ router.get('/slack', function(req, res, next) {
   request.get(options, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       slack_access_token = body.access_token;
-      exports.slack_access_token = slack_access_token;
+      token.slack = slack_access_token;
 
       console.log(body.scope+'\n');
       console.log('Slack Token : '+slack_access_token+'\n');
@@ -79,7 +80,7 @@ router.get('/github', function(req, res, next) {
   request.get(options, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       github_access_token = body.access_token;
-      exports.github_access_token = github_access_token;
+      token.github = github_access_token;
       console.log('Github Token : '+github_access_token+'\n');
       res.redirect(hostURL+'/oauth/save');//Githubのoauth認証後はSlackのチャンネル生成へ
     } else {

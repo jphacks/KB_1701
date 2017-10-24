@@ -11,7 +11,7 @@ const https = require('https');
 
 var slackRequests = require('../public/javascripts/server/SlackRequest');
 var commitRegist = require('../public/javascripts/server/CommitRegist');
-var oauth = require('./oauth')
+var token = require('../public/javascripts/server/token');
 
 var PORT = 8081;
 var opts = {
@@ -78,9 +78,9 @@ router.get('/start', function(req, res, next) {
   //     slack_access_token = result[0].slack;
   //   })
   // })
-  slack_access_token = oauth.slack_access_token;
+  slack_access_token = token.slack;
   
-  console.log(slack_access_token);
+  console.log('token.slack: '+slack_access_token);
   
   //そのアクセストークンを使ってwebsocketの開通
   //socket ioによるクライアントとのリアルタイム通信
