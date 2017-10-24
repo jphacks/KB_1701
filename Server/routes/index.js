@@ -183,25 +183,23 @@ router.get('/music/load', function(req, res, next) {
   //DBからyoutubeの動画IDを取得してフロントのyoutube.jsのvideoIdにセット
   Youtube.find({"musicid" : musicid},function(err,youtube){
     if(err) console.log(err);
-    if(!youtube[0].url){
-      videoId = 'G5rULR53uMk';
-    }else{
-      videoId = youtube[0].url;
-    }
-    
-    userid = youtube[0].userid;
-    console.log(youtube[0].url);
-    console.log(youtube[0].userid);
-
-
     Youtube.count(function(err,allMusicNum){
-      if(err) console.log(err);
-      User.find({"userid" : userid},function(error,user){
-        if(err) console.log(err);
-        name = user[0].team;
-        console.log("User Name: "+name);
+      if(allMusicNum == 0 || musicid > allMusicNum){
+        username = "musicチャンネルに動画リクエストを！！！"
+        videoId = 'G5rULR53uMk';
         res.json({"videoId": videoId,"username": name,"musicid": musicid,"allMusicNum": allMusicNum});
-      });
+      }else{
+        if(err) console.log(err);
+        userid = youtube[0].userid;
+        console.log(youtube[0].url);
+        console.log(youtube[0].userid);
+        User.find({"userid" : userid},function(error,user){
+          if(err) console.log(err);
+          name = user[0].team;
+          console.log("User Name: "+name);
+          res.json({"videoId": videoId,"username": name,"musicid": musicid,"allMusicNum": allMusicNum});
+        });
+      }
     });
   });
 });
