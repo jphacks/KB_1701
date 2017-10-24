@@ -187,6 +187,7 @@ router.get('/music/load', function(req, res, next) {
       if(allMusicNum == 0 || musicid > allMusicNum){
         username = "musicチャンネルに動画リクエストを！！！"
         videoId = 'G5rULR53uMk';
+        musicid = youtube[0].allMusicNum;
         res.json({"videoId": videoId,"username": name,"musicid": musicid,"allMusicNum": allMusicNum});
       }else{
         if(err) console.log(err);

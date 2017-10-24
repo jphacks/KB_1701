@@ -4,6 +4,7 @@ var hostURL = 'https://ec2-13-115-41-122.ap-northeast-1.compute.amazonaws.com:30
 var nextMovieId;
 var result;
 var player;
+var m_id = 0;
 
 var tag = document.createElement('script');
 
@@ -33,7 +34,7 @@ socket.onclose = function(msg) {
 function onYouTubeIframeAPIReady() {
   //最初に再生する動画IDを取りに行く
   m_id=1;
-  getMovieId(hostURL+'/music/load?musicid='+m_id);
+  getMovieId(hostURL+'/music/load?musicid=');
 }
 
 
@@ -66,9 +67,8 @@ function onPlayerStateChange(event) {
     //ここは動画がPlayingの時の処理
 
   }else if (event.data == YT.PlayerState.ENDED ) {
-    m_id = m_id + 1;
     //ここでサーバ側に次の動画IDを取りに行く(GET:/music/load?musicid=[num])
-    getMovieId(hostURL+'/music/load?musicid='+m_id);
+    getMovieId(hostURL+'/music/load?musicid=');
 
   }else if(event.data == YT.PlayerState.CUED){
     event.target.playVideo();
@@ -82,7 +82,7 @@ function stopVideo() {
 
 
 function getMovieId(url){
-  var url = url; // リクエスト先URL
+  var url = url + m_id; // リクエスト先URL
   var request = new XMLHttpRequest();
 
   request.onreadystatechange = function () {
@@ -94,9 +94,8 @@ function getMovieId(url){
       // 取得成功
 
       result = JSON.parse(request.responseText);
-
-      loadPlayer(result.videoId);
       m_id = result.musicid;
+      loadPlayer(result.videoId);
       document.getElementById("username").textContent=result.username;
       document.getElementById("musicid").textContent=result.musicid;
       document.getElementById("allMusicNum").textContent=result.allMusicNum;
