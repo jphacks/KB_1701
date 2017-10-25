@@ -53,8 +53,6 @@ module.exports.makeChannnel = function(slack_access_token,chName){
 }
 
 
-
-
 module.exports.startRTM = function(rtm,slack_access_token,socket){
     rtm.start();
     rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED, function (rtmStartData) {

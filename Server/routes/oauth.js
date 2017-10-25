@@ -108,14 +108,29 @@ router.get('/save', function(req, res, next) {
         });
       }
     })
-    // res.json({ 'status' : 200 });
   });
   console.log('Slack Token : '+slack_access_token+'\n');
   console.log('Github Token : '+github_access_token+'\n');
 
 
-  res.redirect(hostURL+'/oauth/makechannel');//チャンネル生成後は/regist/schemaへ
-  // res.redirect(hostURL+'/main');//チャンネル生成後はmainへ
+  var options = {
+    url: 'https://slack.com/api/users.list?token='+ slack_access_token,
+    json: true
+  };
+
+  request.get(options, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      for (const m of body.members) {
+        console.log(m.name + ' : ' + m.id);
+      }
+      res.redirect(hostURL+'/oauth/makechannel');//チャンネル生成後は/regist/schemaへ  
+    } else {
+      console.log('error: '+ response.statusCode);
+    }
+  });
+
+
+
   
 });
 
@@ -127,11 +142,12 @@ router.get('/makechannel', function(req, res, next) {
   console.log('Slack Token : '+slack_access_token+'\n');
   console.log('Github Token : '+github_access_token+'\n');
 
-  slackRequests.makeChannnel(slack_access_token,'regist DB test');
-
+  slackRequests.makeChannnel(slack_access_token,'music');
+  slackRequests.makeChannnel(slack_access_token,'self_introduction');
+  slackRequests.makeChannnel(slack_access_token,'all_fukuoka');
+  slackRequests.makeChannnel(slack_access_token,'all_kobe');
 
   res.redirect(hostURL+'/regist/schema');//チャンネル生成後は/regist/schemaへ
-  // res.redirect(hostURL+'/main');//チャンネル生成後はmainへ
   
 });
 module.exports = router;
