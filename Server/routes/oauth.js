@@ -134,8 +134,8 @@ router.get('/save', function(req, res, next) {
             user.save(function(err){
               if (err) console.log(err);
             });
-          }else{
-            user.username  = m.name;
+          }else if (result.length == 1){
+            // user.username  = m.name;
           }
         })
       }
