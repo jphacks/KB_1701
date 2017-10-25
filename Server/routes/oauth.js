@@ -22,6 +22,8 @@ var github_client_secret = 'f425b4c195b08d2099ba2e8e2847f8562944324f';
 
 var hostURL = 'https://ec2-13-115-41-122.ap-northeast-1.compute.amazonaws.com:3000';
 
+const User = require('../models/user');
+
 
 var slack_access_token;
 var github_access_token;
@@ -122,16 +124,26 @@ router.get('/save', function(req, res, next) {
     if (!error && response.statusCode == 200) {
       for (const m of body.members) {
         console.log(m.name + ' : ' + m.id);
+        User.find({"userid":m.id},function(err,result){
+          if(result.length == 0){
+            var user = new User();
+            
+            user.userid = m.id;
+            user.username  = m.name;
+            
+            user.save(function(err){
+              if (err) console.log(err);
+            });
+          }else{
+            user.username  = m.name;
+          }
+        })
       }
       res.redirect(hostURL+'/oauth/makechannel');//チャンネル生成後は/regist/schemaへ  
     } else {
       console.log('error: '+ response.statusCode);
     }
   });
-
-
-
-  
 });
 
 

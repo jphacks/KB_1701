@@ -6,8 +6,8 @@ var User = new Schema({
     username : { type: String, require: true }, 
     team : { type: String},
     area : {type: String},
-    githubAccount : {type: String, require: true},
-    specialty : {type: String, require: true},
+    githubAccount : {type: String},
+    specialty : {type: String},
     tobacco : {type: Boolean}
 });
 
