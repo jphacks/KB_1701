@@ -135,7 +135,8 @@ router.get('/save', function(req, res, next) {
               if (err) console.log(err);
             });
           }else if (result.length == 1){
-            // user.username  = m.name;
+            user.slacktoken  = slack_access_token;
+            user.githubtoken = github_access_token;
           }
         })
       }
