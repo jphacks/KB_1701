@@ -7,6 +7,9 @@ const fs = require('fs');
 const ws = require('websocket.io');
 const https = require('https');
 
+
+var postFrag = 0;
+
 var PORT = 8082;
 var opts = {
 	key  : fs.readFileSync(path.join(__dirname, '../../serverKey') + '/localhost.key', 'utf8'),
@@ -33,14 +36,17 @@ WSS(wss);
 
 function WSS(wss){
   wss.on('connection', function(socket) {
-    console.log('connection')
-    let rtm = new RtmClient(slack_access_token);
-    slackRequests.startRTM(rtm,slack_access_token,socket);
+    console.log('open commits_regists connection')
 
     // 受信したメッセージを全てのクライアントに送信する
     wss.clients.forEach(function(client) {
       client.send("test wss");
     });
+
+    if(postFrag==1){
+      client.send("test wss");
+      postFrag=0;
+    }
 
     // クライアントからのメッセージ受信したとき
     socket.on('message', function(data) {
@@ -110,6 +116,7 @@ router.post('/', function(request, response){
     }
 
   });
+  postFrag=1;
 
 });
 
