@@ -3,10 +3,70 @@ var bodyParser = require('body-parser');
 var router = express.Router();
 var mongoose = require('mongoose');
 
+const fs = require('fs');
+const ws = require('websocket.io');
+const https = require('https');
+
+var PORT = 8082;
+var opts = {
+	key  : fs.readFileSync(path.join(__dirname, '../serverKey') + '/localhost.key', 'utf8'),
+	cert : fs.readFileSync(path.join(__dirname, '../serverKey') + '/localhost.crt', 'utf8')
+};
+
+var ssl_server = https.createServer(opts, function(req, res) {
+  res.end();
+});
+
+ssl_server.listen(PORT, function() {
+  console.log('Listening on ' + PORT);
+});
+
+
 //モデルの宣言
 var Commits = require('../../models/commits');
 
 var token = require('../../public/javascripts/server/token');
+
+
+var wss = ws.attach(ssl_server);
+WSS(wss);
+
+function WSS(wss){
+  wss.on('connection', function(socket) {
+    console.log('connection')
+    let rtm = new RtmClient(slack_access_token);
+    slackRequests.startRTM(rtm,slack_access_token,socket);
+
+    // 受信したメッセージを全てのクライアントに送信する
+    wss.clients.forEach(function(client) {
+      client.send("test wss");
+    });
+
+    // クライアントからのメッセージ受信したとき
+    socket.on('message', function(data) {
+        console.log('data');
+    });
+
+    // クライアントが切断したとき
+    socket.on('disconnect', function(){
+      
+      console.log('connection disconnect');
+    });
+
+    // 通信がクローズしたとき
+    socket.on('close', function(){
+      WSS(wss);
+      console.log('connection close');
+    });
+
+    // エラーが発生したとき
+    socket.on('error', function(err){
+      console.log(err);
+    });
+
+  });
+}
+
 
 router.get('/', function(req, res, next) {
   console.log("GET request to the /commits_regist")
