@@ -225,7 +225,7 @@ router.post('/regist/schema', function(req, res, next) {
           if (err) console.log(err);
         });
       }
-      res.redirect(hostURL+'/oepnws');
+      res.redirect(hostURL+'/openws');
 
   })
 });
