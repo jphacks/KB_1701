@@ -75,6 +75,13 @@ router.get('/start', function(req, res, next) {
   //そのアクセストークンを使ってwebsocketの開通
   //socket ioによるクライアントとのリアルタイム通信
 
+  
+  
+  res.render('start', { title: 'Express'});
+});
+
+
+router.get('/openws',function(req,res,next){
   var wss = ws.attach(ssl_server);
   WSS(wss);
   
@@ -103,7 +110,6 @@ router.get('/start', function(req, res, next) {
   
       // 通信がクローズしたとき
       socket.on('close', function(){
-	      WSS(wss);
         console.log('connection close');
       });
   
@@ -114,17 +120,14 @@ router.get('/start', function(req, res, next) {
 
     });
   }
-  
-  res.render('start', { title: 'Express'});
-});
+  res.redirect(hostURL+'/main');
+})
 
 router.get('/regist/schema', function(req, res, next) {
   console.log("GET request to the /regist/schema")
   //DBから
   res.render('registSchema', { title: 'Express'});
 });
-
-
 
 
 router.get('/regist/limit', function(req, res, next) {
@@ -147,24 +150,22 @@ router.get('/regist/limit', function(req, res, next) {
   });
 });
 
-router.get('/slack/get/channel', function(req, res, next) {
-  console.log("GET request to the /regist/limit")
-  var channelName = req.query.channelName;
-  // var channelId;
+// router.get('/slack/get/channel', function(req, res, next) {
+//   console.log("GET request to the /regist/limit")
+//   var channelName = req.query.channelName;
+//   // var channelId;
 
-  Channel.find({"channelName" : channelName},function(err,channel){
-    if(err) console.log(err);
-    var channelId = channel[0].channelId;
+//   Channel.find({"channelName" : channelName},function(err,channel){
+//     if(err) console.log(err);
+//     var channelId = channel[0].channelId;
 
-    res.json({"channelId": channelId});
-  });
-});
+//     res.json({"channelId": channelId});
+//   });
+// });
 
 
 router.get('/music/load', function(req, res, next) {
   console.log("GET request to the /music/load")
-  
-  postFrag.send("test");
   console.log(req.query.musicid);
   var musicid = req.query.musicid;
   var videoId;
@@ -224,60 +225,11 @@ router.post('/regist/schema', function(req, res, next) {
           if (err) console.log(err);
         });
       }
-    res.json({ 'status' : 200 });
+      res.redirect(hostURL+'/oepnws');
 
   })
 });
 
-//自己紹介から取得したデータをDBへ格納
-router.post('/slack/introduction', function(req, res, next) {
-    console.log('POST request to the /slack/introduction');
-    res.setHeader('Content-Type', 'application/json');
-
-    var userid = req.body.userid;
-    var username  = req.body.username;
-    var team   = req.body.team;
-    var area   = req.body.area;
-    var githubAccount = req.body.githubAccount;
-    var specialty = req.body.specialty;
-    var tobacco = req.body.tobacco;
-
-    User.find({ 'userid' : userid }, function(err, result){
-      if (err) console.log(err);
-
-    // DBにuserを格納．userの構造は以下の通り
-    // user = {
-    //     userid : userid
-    //     username : username;
-    //     team : team;
-    //     area : area;
-    //     githubAccount : githubAccount;
-    //     specialty : specialty;
-    //     tobacco : tobacco;
-    // }
-
-    // 新規登録
-      if (result.length == 0){
-        var user = new User();
-
-        user.userid = userid;
-        user.username  = username;
-        user.team   = team;
-        user.area = area;
-        user.githubAccount = githubAccount;
-        user.specialty = specialty;
-        user.tobacco = tobacco;
-
-        user.save(function(err){
-          if (err) console.log(err);
-        });
-      }
-    res.json({ 'status' : 200 });
-  });
-
-  User.find({ 'tobacco' : true }, function(err, result){
-  });
-});
 
 
 //タイマー制限時間セット用エンドポイント
