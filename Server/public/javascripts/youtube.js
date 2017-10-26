@@ -12,23 +12,23 @@ tag.src = "https://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-var socket;
-socket = new WebSocket('wss://ec2-13-115-41-122.ap-northeast-1.compute.amazonaws.com:8081');
+// var socket;
+// socket = new WebSocket('wss://ec2-13-115-41-122.ap-northeast-1.compute.amazonaws.com:8081');
 
-// サーバーに接続したとき
-socket.onopen = function(msg) { 
-  // alert('online at youtube');
-};
+// // サーバーに接続したとき
+// socket.onopen = function(msg) { 
+//   // alert('online at youtube');
+// };
 
-// サーバーからデータを受信したとき
-socket.onmessage = function(msg) {
-  // alert(msg.data);
-};
+// // サーバーからデータを受信したとき
+// socket.onmessage = function(msg) {
+//   // alert(msg.data);
+// };
 
-// サーバーから切断したとき
-socket.onclose = function(msg) {
-  // alert('offline'); 
-};
+// // サーバーから切断したとき
+// socket.onclose = function(msg) {
+//   // alert('offline'); 
+// };
 
 
 function onYouTubeIframeAPIReady() {

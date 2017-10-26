@@ -13,6 +13,8 @@ var slackRequests = require('../public/javascripts/server/SlackRequest');
 var commitRegist = require('../public/javascripts/server/CommitRegist');
 var token = require('../public/javascripts/server/token');
 
+var postFrag;
+
 var PORT = 8081;
 var opts = {
 	key  : fs.readFileSync(path.join(__dirname, '../serverKey') + '/localhost.key', 'utf8'),
@@ -66,18 +68,6 @@ router.get('/main', function(req, res, next) {
 
 router.get('/start', function(req, res, next) {
   console.log("GET request to the /start")
-  //AccessToken DBからslackのaccessトークンを取得
-  // AccessToken.count(function(err,accessTokenNum){
-
-  //   if (err) console.log(err);
-  //   AccessToken.find({"id": 0},function(err,result){
-  //     if (err) console.log(err);
-  //     let slack_access_token = result.slack;
-  //     console.log(result[0].slack);
-
-  //     slack_access_token = result[0].slack;
-  //   })
-  // })
   slack_access_token = token.slack;
   
   console.log('token.slack: '+slack_access_token);
@@ -85,19 +75,25 @@ router.get('/start', function(req, res, next) {
   //そのアクセストークンを使ってwebsocketの開通
   //socket ioによるクライアントとのリアルタイム通信
 
+  res.render('start', { title: 'Express'});
+});
+
+
+router.get('/openws',function(req,res,next){
   var wss = ws.attach(ssl_server);
   WSS(wss);
   
   function WSS(wss){
     wss.on('connection', function(socket) {
+      postFrag = socket;
       console.log('connection')
       let rtm = new RtmClient(slack_access_token);
       slackRequests.startRTM(rtm,slack_access_token,socket);
   
       // 受信したメッセージを全てのクライアントに送信する
-      wss.clients.forEach(function(client) {
-        client.send("test wss");
-      });
+      //wss.clients.forEach(function(client) {
+      //  client.send("test wss");
+      //});
   
       // クライアントからのメッセージ受信したとき
       socket.on('message', function(data) {
@@ -112,7 +108,6 @@ router.get('/start', function(req, res, next) {
   
       // 通信がクローズしたとき
       socket.on('close', function(){
-	      WSS(wss);
         console.log('connection close');
       });
   
@@ -123,20 +118,14 @@ router.get('/start', function(req, res, next) {
 
     });
   }
-  
-
-
-
-  res.render('start', { title: 'Express'});
-});
+  res.redirect(hostURL+'/main');
+})
 
 router.get('/regist/schema', function(req, res, next) {
   console.log("GET request to the /regist/schema")
   //DBから
   res.render('registSchema', { title: 'Express'});
 });
-
-
 
 
 router.get('/regist/limit', function(req, res, next) {
@@ -159,18 +148,18 @@ router.get('/regist/limit', function(req, res, next) {
   });
 });
 
-router.get('/slack/get/channel', function(req, res, next) {
-  console.log("GET request to the /regist/limit")
-  var channelName = req.query.channelName;
-  // var channelId;
+// router.get('/slack/get/channel', function(req, res, next) {
+//   console.log("GET request to the /regist/limit")
+//   var channelName = req.query.channelName;
+//   // var channelId;
 
-  Channel.find({"channelName" : channelName},function(err,channel){
-    if(err) console.log(err);
-    var channelId = channel[0].channelId;
+//   Channel.find({"channelName" : channelName},function(err,channel){
+//     if(err) console.log(err);
+//     var channelId = channel[0].channelId;
 
-    res.json({"channelId": channelId});
-  });
-});
+//     res.json({"channelId": channelId});
+//   });
+// });
 
 
 router.get('/music/load', function(req, res, next) {
@@ -234,129 +223,10 @@ router.post('/regist/schema', function(req, res, next) {
           if (err) console.log(err);
         });
       }
-    res.json({ 'status' : 200 });
+      res.redirect(hostURL+'/openws');
 
   })
 });
-
-//自己紹介から取得したデータをDBへ格納
-router.post('/slack/introduction', function(req, res, next) {
-    console.log('POST request to the /slack/introduction');
-    res.setHeader('Content-Type', 'application/json');
-
-    var userid = req.body.userid;
-    var username  = req.body.username;
-    var team   = req.body.team;
-    var area   = req.body.area;
-    var githubAccount = req.body.githubAccount;
-    var specialty = req.body.specialty;
-    var tobacco = req.body.tobacco;
-
-    User.find({ 'userid' : userid }, function(err, result){
-      if (err) console.log(err);
-
-    // DBにuserを格納．userの構造は以下の通り
-    // user = {
-    //     userid : userid
-    //     username : username;
-    //     team : team;
-    //     area : area;
-    //     githubAccount : githubAccount;
-    //     specialty : specialty;
-    //     tobacco : tobacco;
-    // }
-
-    // 新規登録
-      if (result.length == 0){
-        var user = new User();
-
-        user.userid = userid;
-        user.username  = username;
-        user.team   = team;
-        user.area = area;
-        user.githubAccount = githubAccount;
-        user.specialty = specialty;
-        user.tobacco = tobacco;
-
-        user.save(function(err){
-          if (err) console.log(err);
-        });
-      }
-    res.json({ 'status' : 200 });
-  });
-
-  User.find({ 'tobacco' : true }, function(err, result){
-  });
-});
-
-
-
-//music DB が空の時に最初の1つめを入れるための臨時エンドポイント
-router.post('/slack/bgm', function(req, res, next) {
-  console.log('POST request to the /slack/bgm')
-  console.log(req.body);
-  musicid = musicid + 1;
-  res.setHeader('Content-Type', 'application/json');
-
-  var url  = req.body.url;
-  var title   = req.body.title; //フロントでスクレイピングする or サーバでスクレイピングする
-  var userid   = req.body.userid;
-  Youtube.find({ 'musicid' : musicid }, function(err, result){
-      if (err) console.log(err);
-
-    // 新規登録
-      if (result.length == 0){
-        var youtube = new Youtube();
-
-        youtube.musicid = 1;
-        youtube.url = url;
-        youtube.title = title;
-        youtube.userid = userid;
-
-        youtube.save(function(err){
-          if (err) console.log(err);
-        });
-      }
-    res.json({ 'status' : 200 });
-  });
-});
-
-
-// router.post('/commits_regist', function(req, res, next) {
-//   console.log('POST request to the /commits_regist');
-//   // res.setHeader('Content-Type', 'application/json');
-
-//   repo_name = JSON.parse(req.body.payload);
-  
-//     branch_name = repo_name.ref.slice(11);
-//     console.log(branch_name);
-  
-//     repo_name = repo_name.repository.full_name
-  
-//     console.log(repo_name);
-  
-//     // res.send('POST request to the homepage');
-  
-//     repository_url="https://github.com/"+repo_name;
-  
-//     commit_url = commitRegist.commitURL(repository_url);
-//     commit_list = commitRegist.Test(commit_url);
-  
-//     Commits.find({"name" : repo_name},function(err,result){
-//       if (err) console.log(err);
-//       // 新規登録
-//       if (result.length == 0){
-//         console.log('commit save');
-//         var commits = new Commits();
-//         commits.name = repo_name;
-//         commits.commit = commit_list;
-//         commits.save(function(err){
-//           if (err) console.log(err);
-//         });
-//       }
-//     });
-// });
-
 
 
 

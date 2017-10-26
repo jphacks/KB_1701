@@ -1,5 +1,25 @@
 var teamnum = 0;
 
+var socket;
+socket = new WebSocket('wss://ec2-13-115-41-122.ap-northeast-1.compute.amazonaws.com:8081');
+
+// サーバーに接続したとき
+socket.onopen = function(msg) { 
+  alert('online at commit_ballon');
+};
+
+// サーバーからデータを受信したとき
+socket.onmessage = function(msg) {
+  viewBalloon();
+};
+
+// サーバーから切断したとき
+socket.onclose = function(msg) {
+  // alert('offline'); 
+};
+
+
+
 function setRandomLeft(imageWidth) {
 	var targetElement = document.getElementById( "commitcontent" ) ;
 	// var clientRect = targetElement.getBoundingClientRect() ;	// 要素の位置座標を取得

@@ -16,6 +16,7 @@ const Team = require('../../../models/team');
 const Message = require('../../../models/message');
 const Channel = require('../../../models/channel');
 
+var channelName;
 
 module.exports.getIcon = function(slack_access_token){
   var options = {
@@ -53,8 +54,6 @@ module.exports.makeChannnel = function(slack_access_token,chName){
 }
 
 
-
-
 module.exports.startRTM = function(rtm,slack_access_token,socket){
     rtm.start();
     rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED, function (rtmStartData) {
@@ -84,9 +83,15 @@ module.exports.startRTM = function(rtm,slack_access_token,socket){
         if('message' in messageJson){
             console.log('have attachments field');
         }else if(messageJson.user != 'USLACKBOT'){
+            Channel.find({"channelId": messageJson.channel},function(err,result){
+                console.log(message.channel);
+                console.log(result[0].channelName);
+                channelName = result[0].channelName;
+                // console.log(channelName);
+            })
 
 
-            if(messageJson.channel == 'C7M9LQ03G'){//regist db test
+            if(channelName == 'self_introduction'){
                 //自己紹介チャンネルにメッセージが届いた時
                 console.log(messageJson);
                 let user = ToJson.textToJson(messageJson);
@@ -107,24 +112,31 @@ module.exports.startRTM = function(rtm,slack_access_token,socket){
                         });
                       }
                 } );
-            }else if(messageJson.channel == 'C7HU7A7T6'){
+            }else if(channelName == 'music'){
                 //musicチャンネルにメッセージが届いた時
-                console.log('on music');
+                console.log('on '+channelName);
                 accessDB.saveData(messageJson.channel,messageJson);
                 console.log(messageJson);
-            }else if(messageJson.channel == 'C7LDL0PM5'){
+            }else if(channelName == 'help'){
                 //helpチャンネルにメッセージが届いた時
+                console.log('on '+channelName);
                 socket.send(JSON.stringify(message));//slackへの投稿をviewへ送信
                 console.log(messageJson);
-            }else if(messageJson.channel == 'C7GL1UJ8J'){ //今はrandom
+            }else if(channelName == 'all_kobe'){ //今はrandom
                 //all_kobeチャンネルにメッセージが届いた時
-                // console.log(messageJson.file.url_private);
+                console.log('on '+channelName);
                 socket.send(JSON.stringify(message));//slackへの投稿をviewへ送信
-                // console.log(messageJson);
-            }else{
                 console.log(messageJson);
-                let user = ToJson.textToJson(messageJson);
-                console.log(user);
+            }else if(channelName == 'all_fukuoka'){
+                console.log('on '+channelName);
+		socket.send(JSON.stringify(message));//slackへの投稿をviewへ送信
+
+            
+            }else{
+                console.log('on '+channelName);
+                // console.log(messageJson);
+                // let user = ToJson.textToJson(messageJson);
+                // console.log(user);
                 
             }
         }
