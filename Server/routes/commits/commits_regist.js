@@ -2,15 +2,15 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var router = express.Router();
 var mongoose = require('mongoose');
-
+const path = require('path');
 const fs = require('fs');
 const ws = require('websocket.io');
 const https = require('https');
 
 var PORT = 8082;
 var opts = {
-	key  : fs.readFileSync(path.join(__dirname, '../serverKey') + '/localhost.key', 'utf8'),
-	cert : fs.readFileSync(path.join(__dirname, '../serverKey') + '/localhost.crt', 'utf8')
+	key  : fs.readFileSync(path.join(__dirname, '../../serverKey') + '/localhost.key', 'utf8'),
+	cert : fs.readFileSync(path.join(__dirname, '../../serverKey') + '/localhost.crt', 'utf8')
 };
 
 var ssl_server = https.createServer(opts, function(req, res) {
