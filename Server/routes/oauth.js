@@ -134,8 +134,6 @@ router.get('/save', function(req, res, next) {
             user.save(function(err){
               if (err) console.log(err);
             });
-          }else if (result.length == 1){
-            
           }
         })
       }
@@ -147,8 +145,6 @@ router.get('/save', function(req, res, next) {
 });
 
 
-
-
 router.get('/makechannel', function(req, res, next) {
   console.log('GET request to the /oauth/makechannel');
   console.log('Slack Token : '+slack_access_token+'\n');
@@ -158,6 +154,7 @@ router.get('/makechannel', function(req, res, next) {
   slackRequests.makeChannnel(slack_access_token,'self_introduction');
   slackRequests.makeChannnel(slack_access_token,'all_fukuoka');
   slackRequests.makeChannnel(slack_access_token,'all_kobe');
+  slackRequests.makeChannnel(slack_access_token,'help');
 
   res.redirect(hostURL+'/regist/schema');//チャンネル生成後は/regist/schemaへ
   

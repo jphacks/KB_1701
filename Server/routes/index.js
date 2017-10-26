@@ -66,18 +66,6 @@ router.get('/main', function(req, res, next) {
 
 router.get('/start', function(req, res, next) {
   console.log("GET request to the /start")
-  //AccessToken DBからslackのaccessトークンを取得
-  // AccessToken.count(function(err,accessTokenNum){
-
-  //   if (err) console.log(err);
-  //   AccessToken.find({"id": 0},function(err,result){
-  //     if (err) console.log(err);
-  //     let slack_access_token = result.slack;
-  //     console.log(result[0].slack);
-
-  //     slack_access_token = result[0].slack;
-  //   })
-  // })
   slack_access_token = token.slack;
   
   console.log('token.slack: '+slack_access_token);

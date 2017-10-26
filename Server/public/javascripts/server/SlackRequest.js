@@ -82,9 +82,12 @@ module.exports.startRTM = function(rtm,slack_access_token,socket){
         if('message' in messageJson){
             console.log('have attachments field');
         }else if(messageJson.user != 'USLACKBOT'){
+            Channel.find({"channelId": messageJson.channel},function(err,result){
+                let channelName = result.channelName;
+            })
 
 
-            if(messageJson.channel == 'C7M9LQ03G'){//regist db test
+            if(channelName == 'self_introduction'){
                 //自己紹介チャンネルにメッセージが届いた時
                 console.log(messageJson);
                 let user = ToJson.textToJson(messageJson);
@@ -105,20 +108,23 @@ module.exports.startRTM = function(rtm,slack_access_token,socket){
                         });
                       }
                 } );
-            }else if(messageJson.channel == 'C7HU7A7T6'){
+            }else if(channelName == 'music'){
                 //musicチャンネルにメッセージが届いた時
                 console.log('on music');
                 accessDB.saveData(messageJson.channel,messageJson);
                 console.log(messageJson);
-            }else if(messageJson.channel == 'C7LDL0PM5'){
+            }else if(channelName == 'help'){
                 //helpチャンネルにメッセージが届いた時
                 socket.send(JSON.stringify(message));//slackへの投稿をviewへ送信
                 console.log(messageJson);
-            }else if(messageJson.channel == 'C7GL1UJ8J'){ //今はrandom
+            }else if(channelName == 'all_kobe'){ //今はrandom
                 //all_kobeチャンネルにメッセージが届いた時
                 // console.log(messageJson.file.url_private);
                 socket.send(JSON.stringify(message));//slackへの投稿をviewへ送信
                 // console.log(messageJson);
+            }else if(channelName == 'all_fukuoka'){
+
+            
             }else{
                 console.log(messageJson);
                 let user = ToJson.textToJson(messageJson);
