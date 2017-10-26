@@ -93,9 +93,9 @@ router.get('/openws',function(req,res,next){
       slackRequests.startRTM(rtm,slack_access_token,socket);
   
       // 受信したメッセージを全てのクライアントに送信する
-      wss.clients.forEach(function(client) {
-        client.send("test wss");
-      });
+      //wss.clients.forEach(function(client) {
+      //  client.send("test wss");
+      //});
   
       // クライアントからのメッセージ受信したとき
       socket.on('message', function(data) {
