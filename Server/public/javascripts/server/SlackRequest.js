@@ -85,7 +85,8 @@ module.exports.startRTM = function(rtm,slack_access_token,socket){
         }else if(messageJson.user != 'USLACKBOT'){
             Channel.find({"channelId": messageJson.channel},function(err,result){
                 console.log(message.channel);
-		channelName = result.channelName;
+                channelName = result.channelName;
+                console.log(channelName);
             })
 
 
