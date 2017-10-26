@@ -68,9 +68,9 @@ router.get('/main', function(req, res, next) {
 
 router.get('/start', function(req, res, next) {
   console.log("GET request to the /start")
-  // slack_access_token = token.slack;
+  slack_access_token = token.slack;
   
-  // console.log('token.slack: '+slack_access_token);
+  console.log('token.slack: '+slack_access_token);
   
   //そのアクセストークンを使ってwebsocketの開通
   //socket ioによるクライアントとのリアルタイム通信
