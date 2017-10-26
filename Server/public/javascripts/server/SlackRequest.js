@@ -116,19 +116,20 @@ module.exports.startRTM = function(rtm,slack_access_token,socket){
                 //musicチャンネルにメッセージが届いた時
                 console.log('on '+channelName);
                 accessDB.saveData(messageJson.channel,messageJson);
-                // console.log(messageJson);
+                console.log(messageJson);
             }else if(channelName == 'help'){
                 //helpチャンネルにメッセージが届いた時
                 console.log('on '+channelName);
                 socket.send(JSON.stringify(message));//slackへの投稿をviewへ送信
-                // console.log(messageJson);
+                console.log(messageJson);
             }else if(channelName == 'all_kobe'){ //今はrandom
                 //all_kobeチャンネルにメッセージが届いた時
                 console.log('on '+channelName);
                 socket.send(JSON.stringify(message));//slackへの投稿をviewへ送信
-                // console.log(messageJson);
+                console.log(messageJson);
             }else if(channelName == 'all_fukuoka'){
                 console.log('on '+channelName);
+		socket.send(JSON.stringify(message));//slackへの投稿をviewへ送信
 
             
             }else{
