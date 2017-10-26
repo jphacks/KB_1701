@@ -16,6 +16,7 @@ const Team = require('../../../models/team');
 const Message = require('../../../models/message');
 const Channel = require('../../../models/channel');
 
+var channelName;
 
 module.exports.getIcon = function(slack_access_token){
   var options = {
@@ -83,7 +84,8 @@ module.exports.startRTM = function(rtm,slack_access_token,socket){
             console.log('have attachments field');
         }else if(messageJson.user != 'USLACKBOT'){
             Channel.find({"channelId": messageJson.channel},function(err,result){
-                let channelName = result.channelName;
+                console.log(message.channel);
+		channelName = result.channelName;
             })
 
 
