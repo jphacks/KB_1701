@@ -13,6 +13,8 @@ var slackRequests = require('../public/javascripts/server/SlackRequest');
 var commitRegist = require('../public/javascripts/server/CommitRegist');
 var token = require('../public/javascripts/server/token');
 
+var postFrag = 0;
+
 var PORT = 8081;
 var opts = {
 	key  : fs.readFileSync(path.join(__dirname, '../serverKey') + '/localhost.key', 'utf8'),
@@ -86,6 +88,10 @@ router.get('/start', function(req, res, next) {
       wss.clients.forEach(function(client) {
         client.send("test wss");
       });
+
+      if(postFrag == 1){
+        client.send("test wss");
+      }
   
       // クライアントからのメッセージ受信したとき
       socket.on('message', function(data) {
@@ -163,6 +169,7 @@ router.get('/slack/get/channel', function(req, res, next) {
 
 router.get('/music/load', function(req, res, next) {
   console.log("GET request to the /music/load")
+  postFrag =1;
   console.log(req.query.musicid);
   var musicid = req.query.musicid;
   var videoId;
