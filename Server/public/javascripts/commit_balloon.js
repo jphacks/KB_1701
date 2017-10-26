@@ -1,7 +1,7 @@
 var teamnum = 0;
 
 var socket;
-socket = new WebSocket('wss://ec2-13-115-41-122.ap-northeast-1.compute.amazonaws.com:8082');
+socket = new WebSocket('wss://ec2-13-115-41-122.ap-northeast-1.compute.amazonaws.com:8081');
 
 // サーバーに接続したとき
 socket.onopen = function(msg) { 
