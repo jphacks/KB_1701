@@ -1,6 +1,11 @@
 # HackHack
+<!--
+<video src="https://www.youtube.com/watch?v=hfHlXvLpXoc&feature=youtu.be" controls></video>
+-->
 
-[![Product name](https://github.com/jphacks/KB_1701/blob/readme/Server/public/stylesheets/img/icon.png)](https://www.youtube.com/channel/UC4PtjOfZTbVp9DwtJv82Lzg)
+[![Product name](https://github.com/jphacks/KB_1701/blob/readme/Server/public/stylesheets/img/icon.png)](https://www.youtube.com/watch?v=hfHlXvLpXoc&feature=youtu.be)
+※上のアイコンは動画
+
 
 ## 製品概要
 ### 'X Tech' × Tech
@@ -39,6 +44,10 @@ slack上の専用チャンネルを用意し，投稿した情報をスクリー
 ### 特長
 本プロダクトは，以下のことが可能となる．
 
+<div align="center">
+<img src="https://github.com/jphacks/KB_1701/blob/lastspart/Server/public/stylesheets/img/main.png" alt="https://github.com/jphacks/KB_1701/blob/lastspart/Server/public/stylesheets/img/main.png" title="Main UI" width="600" height="450">
+</div>
+
 #### 1. 自己紹介情報のフォーマット自動生成
 ##### 運営側はハッカソン開催前に行う自己紹介のフォーマットを容易に形式化でき，slack上で参加者が行う自己紹介情報を簡単にデータベース化できる．
 
@@ -56,7 +65,7 @@ slack上の専用チャンネルを用意し，投稿した情報をスクリー
 参加者間のコミュニケーションを促進できる．
 
 ### 今後の展望
-今回は実現できなかったが、今後改善すること、どのように展開していくことが可能かについて記載をしてください。
+今後は自己紹介情報から参加者の嗜好が似通った人を同一チャンネルに招待し，よりコミュニケーションが行い易い機能を実装する予定である．
 
 
 ## 開発内容・開発技術
@@ -73,17 +82,20 @@ slack上の専用チャンネルを用意し，投稿した情報をスクリー
 * mongoose
 * jQuery
 
+<!--
 ### 研究内容・事前開発プロダクト（任意）
 ご自身やチームの研究内容や、事前に持ち込みをしたプロダクトがある場合は、こちらに実績なども含め記載をして下さい。
 
 * 
 * 
-
+-->
 
 ### 独自開発技術（Hack Dayで開発したもの）
 #### 2日間に開発した独自の機能・技術
 - Slack上で行う自己紹介テンプレートによるDBスキーマ生成
 - Slack上で行われた自己紹介情報をJSONに変換し，DBに登録する機能
-
+<!--
 * 特に力を入れた部分をファイルリンク、またはcommit_idを記載してください（任意）
+
+-->
 
