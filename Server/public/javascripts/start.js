@@ -22,7 +22,7 @@ function setLimit(){
     array.day=day;
     array.hour=hour;
     array.minute=minute;
-
+    alert('adjaj;');
     data=JSON.stringify(array);
     var request = new XMLHttpRequest();
     var url = endpoint;
