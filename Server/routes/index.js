@@ -250,6 +250,10 @@ router.post('/regist/limit', function(req, res, next) {
   var minute = req.body.minute;
 
 
+  Limit.remove({'limitid':limitid},function(err){
+      if (err) console.log(err);
+  });
+
   Limit.find({ 'limitid' : limitid }, function(err, result){
       if (err) console.log(err);
 

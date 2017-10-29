@@ -36,4 +36,7 @@ function getLimit(l_id){
   request.response = 'json';
   request.open('GET', url);
   request.send(null);
+//sleepしないとタイマーが正しくならない
+  var start= new Date();
+  while(new Date()-start<500);
 }
