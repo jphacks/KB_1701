@@ -5,7 +5,7 @@ socket = new WebSocket('wss://ec2-13-115-41-122.ap-northeast-1.compute.amazonaws
 
 // サーバーに接続したとき
 socket.onopen = function(msg) { 
-  alert('online at main');
+  //alert('online at main');
 };
 
 // サーバーからデータを受信したとき
@@ -20,5 +20,5 @@ socket.onmessage = function(msg) {
 
 // サーバーから切断したとき
 socket.onclose = function(msg) {
-  alert('offline'); 
+  //alert('offline'); 
 };
