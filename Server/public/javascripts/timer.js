@@ -2,8 +2,7 @@ var hostURL = 'https://ec2-13-115-41-122.ap-northeast-1.compute.amazonaws.com:30
 
 
 var year = "2017";var month = "10";var day = "22";var hour = "18";var minute = "0";var centi = "1";
-// getLimit(1);
-// console.log(minute)
+getLimit(1);
 var convert = "1";var roop = "";
 var cnt1 = "日";var cnt2 = "：";var cnt3 = "：";var cnt4 = ".";
 var baseoffset = "-9";var cuttime = "";
@@ -17,7 +16,7 @@ var color1 = "00FF00";var color2 = "00FF00";var color3 = "000000";
 
 
 function getLimit(l_id){
-  var url = hostURL+l_id; // リクエスト先URL
+  var url = hostURL+'/regist/limit?limitid='+l_id; // リクエスト先URL
   var request = new XMLHttpRequest();
   request.onreadystatechange = function () {
     if (request.readyState != 4) {
