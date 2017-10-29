@@ -44,7 +44,7 @@ $(window).load(function(){
     
     // サーバーに接続したとき
     socket.onopen = function(msg) { 
-      alert('online at skyway');
+      //alert('online at skyway');
     };
     
     // サーバーからデータを受信したとき
@@ -55,7 +55,7 @@ $(window).load(function(){
     
     // サーバーから切断したとき
     socket.onclose = function(msg) {
-      alert('offline'); 
+      //alert('offline'); 
     };
     
 });
