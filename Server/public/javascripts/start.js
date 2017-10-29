@@ -22,7 +22,6 @@ function setLimit(){
     array.day=day;
     array.hour=hour;
     array.minute=minute;
-
     data=JSON.stringify(array);
     var request = new XMLHttpRequest();
     var url = endpoint;
@@ -31,7 +30,7 @@ function setLimit(){
 
     request.onreadystatechange = function() {//Call a function when the state changes.
         if(request.readyState == XMLHttpRequest.DONE && request.status == 200) {
-            alert('ok')
+		//alert('ok');
         }
     }
 

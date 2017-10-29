@@ -43,7 +43,6 @@ var musicid = 0;
 var slack_access_token;
 
 
-
 var ssl_server = https.createServer(opts, function(req, res) {
   res.end();
 });
@@ -51,6 +50,7 @@ var ssl_server = https.createServer(opts, function(req, res) {
 ssl_server.listen(PORT, function() {
   console.log('Listening on ' + PORT);
 });
+
  
 
 /* GET home page. */
@@ -61,6 +61,9 @@ router.get('/', function(req, res, next) {
 
 router.get('/main', function(req, res, next) {
   console.log("GET request to the /music")
+  
+      //let rtm = new RtmClient(slack_access_token);
+      //slackRequests.startRTM(rtm,slack_access_token,postFrag);
 
 
   res.render('main', { title: 'Express'});
@@ -80,6 +83,8 @@ router.get('/start', function(req, res, next) {
 
 
 router.get('/openws',function(req,res,next){
+  
+
   var wss = ws.attach(ssl_server);
   WSS(wss);
   
