@@ -13,7 +13,7 @@
 </head>
 
     <body>
-
+      <form name="id_form1">
       <input id="year" type="number" name="year" min="2017" max="3000" style="color:black; font-size:2.5em;text-align: center;width:180px;border:none;">
       <font style="font-size:2.5em">/</font>
       <input id="mon" type="number" name="mon" min="1" max="12" value="1"style="color:black; font-size:2.5em;text-align: center;width:100px;border:none;">
@@ -27,7 +27,7 @@
       <br>
 
       <a href="https://ec2-13-115-41-122.ap-northeast-1.compute.amazonaws.com:3000/main">
-          <button class="start_button" type="submit" style="font-size:1.5em">HackTime Start!!</button>
+          <button type="submit" style="font-size:1.5em" onClick="setLimit();">HackTime Start!!</button>
       </a>
 
 
